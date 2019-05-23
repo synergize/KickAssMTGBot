@@ -1,0 +1,112 @@
+﻿using Discord;
+using Discord.Commands;
+using Discord.WebSocket;
+using MTGBot.DataLookup;
+using MTGBot.Embed_Output;
+using System;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
+namespace MTGBot
+{
+    class Program
+    {
+        private DiscordSocketClient Client;
+        private CommandService Commands;
+        static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
+
+
+        private async Task MainAsync()
+        {
+            //CheckDirectory.GetCheckDirectory();
+            //MTGCardsList.GetCardList();
+            //Console.WriteLine("Discord Bot Starting.");
+            Console.WriteLine("Loading Filters.");
+            LegalityDictionary.LoadLegalityDict();
+            Client = new DiscordSocketClient(new DiscordSocketConfig
+            {
+                LogLevel = LogSeverity.Debug
+            });
+
+            Commands = new CommandService(new CommandServiceConfig
+            {
+                CaseSensitiveCommands = true,
+                DefaultRunMode = RunMode.Async,
+                LogLevel = LogSeverity.Debug
+
+            });
+
+            Client.MessageReceived += Client_MessageRecieved;
+            await Commands.AddModulesAsync(Assembly.GetEntryAssembly(), null);
+            Client.Ready += Client_Ready;
+            Client.Log += Log;
+
+            string Token = "NTY4OTY0NzU4NTU3MDMyNDQ4.XLpvvg.F7RriGrRGW4sI2IrfeNWtWNlAGU";
+            await Client.LoginAsync(TokenType.Bot, Token);
+            await Client.StartAsync();
+            await Task.Delay(-1);
+        }
+
+        private Task Log(LogMessage msg)
+        {
+            Console.WriteLine(msg.Message);
+            return Task.CompletedTask;
+        }
+
+        private async Task Client_MessageRecieved(SocketMessage MessageParam)
+        {
+            var Message = MessageParam as SocketUserMessage;
+            var Context = new SocketCommandContext(Client, Message);
+            MTGCardOutput GetCard = new MTGCardOutput();
+
+            if (Context.Message == null || Context.Message.Content == "") return;
+            if (Context.User.IsBot) return;            
+            if (Message.Content.Contains("[") && Message.Content.Contains("]"))
+            {
+                try
+                {
+                    Regex rx = new Regex(@"\[\[(.*?)\]\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                    MatchCollection matches = rx.Matches(Message.Content);
+                    if (matches.Count > 1)
+                    {
+                        await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(1).Build());
+                        return;
+                    }
+                    var CardData = GetScryFallData.PullScryfallData(matches[0].Value);
+                    if (CardData != null)
+                    {
+                        await Context.Channel.SendMessageAsync("", false, GetCard.CardOutput(CardData).Build());
+                    }
+                    else
+                    {
+                        await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(0).Build());
+                    }
+                }
+                catch(Exception msg)
+                {
+                    Console.WriteLine(msg);
+                    throw;
+                }
+            }
+
+            int ArgPos = 0;
+            if (!(Message.HasCharPrefix('!', ref ArgPos) || Message.HasMentionPrefix(Client.CurrentUser, ref ArgPos))) return;
+
+            var Result = await Commands.ExecuteAsync(Context, ArgPos, null);
+            if (!Result.IsSuccess)
+                Console.WriteLine($"{DateTime.Now} at Commands] Something went wrong with executing command. Text: {Context.Message.Content} | Error: {Result.ErrorReason}");
+        }
+        private async Task Client_Ready()
+        {
+            await Client.SetGameAsync("Magic: The Gathering !mtghelp", null, ActivityType.Playing);
+        }
+
+        //If someone adds a reaction, run x code. 
+        private async Task OnReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel Channel, SocketReaction Reaction)
+        {
+            //If a bot sends the reaction, disregard. 
+            if (((SocketUser)Reaction.User).IsBot) return;
+        }
+    }
+}
