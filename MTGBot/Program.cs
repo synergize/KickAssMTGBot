@@ -4,6 +4,7 @@ using Discord.WebSocket;
 using MTGBot.DataLookup;
 using MTGBot.Embed_Output;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -19,11 +20,9 @@ namespace MTGBot
 
         private async Task MainAsync()
         {
-            //CheckDirectory.GetCheckDirectory();
-            //MTGCardsList.GetCardList();
-            //Console.WriteLine("Discord Bot Starting.");
             Console.WriteLine("Loading Filters.");
             LegalityDictionary.LoadLegalityDict();
+
             Client = new DiscordSocketClient(new DiscordSocketConfig
             {
                 LogLevel = LogSeverity.Debug
@@ -68,24 +67,24 @@ namespace MTGBot
                 {
                     Regex rx = new Regex(@"\[\[(.*?)\]\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
                     MatchCollection matches = rx.Matches(Message.Content);
-                    if (matches.Count > 1)
+
+                    foreach (var item in matches)
                     {
-                        await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(1).Build());
-                        return;
-                    }
-                    var CardData = GetScryFallData.PullScryfallData(matches[0].Value);
-                    if (CardData != null)
-                    {
-                        await Context.Channel.SendMessageAsync("", false, GetCard.CardOutput(CardData).Build());
-                    }
-                    else
-                    {
-                        await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(0).Build());
+                        var CardData = GetScryFallData.PullScryfallData(item.ToString());
+                        if (CardData != null)
+                        {
+                            await Context.Channel.SendMessageAsync("", false, GetCard.CardOutput(CardData).Build());
+                        }
+                        else
+                        {
+                            await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(0).Build());
+                        }
                     }
                 }
                 catch(Exception msg)
                 {
                     Console.WriteLine(msg);
+                    await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(3).Build());
                     throw;
                 }
             }
