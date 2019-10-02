@@ -13,8 +13,6 @@ namespace MTGBot.DataLookup.Selenium
         {
             var option = new ChromeOptions();
             option.AddArgument("--headless");
-            option.AddArgument("--ignore-certificate-errors");
-            option.AddArgument("--incognito");
             IWebDriver driver = new ChromeDriver(FilePathingStaticData.BuildFilePathDirectory(FilePathingStaticData._DriverDirectory), option);
             driver.Manage().Window.Maximize();
             try
@@ -22,9 +20,10 @@ namespace MTGBot.DataLookup.Selenium
                 driver.Navigate().GoToUrl(url);
                 return driver;
             }
-            catch
+            catch (Exception msg)
             {
-                return driver;
+                Console.WriteLine(msg);
+                return driver;  
             }
         }
     }

@@ -1,67 +1,71 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "da0ddc37d989455ace082fa1c29c6ede45e8cb72"
+    "signature": "5492285021d831c7416234517cde882bb501ae22"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.2": {
       "MTGBot/1.0.0": {
         "dependencies": {
-          "Discord.Net.Commands": "2.1.0",
-          "Discord.Net.Core": "2.1.0",
-          "Discord.Net.WebSocket": "2.1.0",
-          "Newtonsoft.Json": "12.0.2"
+          "Discord.Net.Commands": "2.1.1",
+          "Discord.Net.Core": "2.1.1",
+          "Discord.Net.WebSocket": "2.1.1",
+          "Newtonsoft.Json": "12.0.2",
+          "Selenium.Support": "3.141.0",
+          "Selenium.WebDriver": "3.141.0",
+          "Selenium.WebDriverBackedSelenium": "3.141.0",
+          "System.Runtime.Extensions": "4.3.1"
         },
         "runtime": {
           "MTGBot.dll": {}
         }
       },
-      "Discord.Net.Commands/2.1.0": {
+      "Discord.Net.Commands/2.1.1": {
         "dependencies": {
-          "Discord.Net.Core": "2.1.0",
+          "Discord.Net.Core": "2.1.1",
           "Microsoft.Extensions.DependencyInjection": "2.0.0"
         },
         "runtime": {
           "lib/netstandard2.0/Discord.Net.Commands.dll": {
-            "assemblyVersion": "2.1.0.0",
-            "fileVersion": "2.1.0.0"
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.0"
           }
         }
       },
-      "Discord.Net.Core/2.1.0": {
+      "Discord.Net.Core/2.1.1": {
         "dependencies": {
           "Newtonsoft.Json": "12.0.2",
           "System.Collections.Immutable": "1.3.1",
-          "System.Interactive.Async": "3.1.1"
+          "System.Interactive.Async": "3.2.0"
         },
         "runtime": {
           "lib/netstandard2.0/Discord.Net.Core.dll": {
-            "assemblyVersion": "2.1.0.0",
-            "fileVersion": "2.1.0.0"
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.0"
           }
         }
       },
-      "Discord.Net.Rest/2.1.0": {
+      "Discord.Net.Rest/2.1.1": {
         "dependencies": {
-          "Discord.Net.Core": "2.1.0"
+          "Discord.Net.Core": "2.1.1"
         },
         "runtime": {
           "lib/netstandard2.0/Discord.Net.Rest.dll": {
-            "assemblyVersion": "2.1.0.0",
-            "fileVersion": "2.1.0.0"
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.0"
           }
         }
       },
-      "Discord.Net.WebSocket/2.1.0": {
+      "Discord.Net.WebSocket/2.1.1": {
         "dependencies": {
-          "Discord.Net.Core": "2.1.0",
-          "Discord.Net.Rest": "2.1.0"
+          "Discord.Net.Core": "2.1.1",
+          "Discord.Net.Rest": "2.1.1"
         },
         "runtime": {
           "lib/netstandard2.0/Discord.Net.WebSocket.dll": {
-            "assemblyVersion": "2.1.0.0",
-            "fileVersion": "2.1.0.0"
+            "assemblyVersion": "2.1.1.0",
+            "fileVersion": "2.1.1.0"
           }
         }
       },
@@ -92,9 +96,42 @@
           }
         }
       },
+      "Selenium.Support/3.141.0": {
+        "dependencies": {
+          "Selenium.WebDriver": "3.141.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/WebDriver.Support.dll": {
+            "assemblyVersion": "3.141.0.0",
+            "fileVersion": "3.141.0.0"
+          }
+        }
+      },
+      "Selenium.WebDriver/3.141.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/WebDriver.dll": {
+            "assemblyVersion": "3.141.0.0",
+            "fileVersion": "3.141.0.0"
+          }
+        }
+      },
+      "Selenium.WebDriverBackedSelenium/3.141.0": {
+        "dependencies": {
+          "Selenium.WebDriver": "3.141.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Selenium.WebDriverBackedSelenium.dll": {
+            "assemblyVersion": "3.141.0.0",
+            "fileVersion": "3.141.0.0"
+          }
+        }
+      },
       "System.Collections/4.3.0": {
         "dependencies": {
-          "System.Runtime": "4.3.0"
+          "System.Runtime": "4.3.1"
         }
       },
       "System.Collections.Immutable/1.3.1": {
@@ -104,32 +141,32 @@
           "System.Globalization": "4.3.0",
           "System.Linq": "4.3.0",
           "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
+          "System.Runtime": "4.3.1",
+          "System.Runtime.Extensions": "4.3.1",
           "System.Threading": "4.3.0"
         }
       },
       "System.Diagnostics.Debug/4.3.0": {
         "dependencies": {
-          "System.Runtime": "4.3.0"
+          "System.Runtime": "4.3.1"
         }
       },
       "System.Globalization/4.3.0": {
         "dependencies": {
-          "System.Runtime": "4.3.0"
+          "System.Runtime": "4.3.1"
         }
       },
-      "System.Interactive.Async/3.1.1": {
+      "System.Interactive.Async/3.2.0": {
         "runtime": {
-          "lib/netstandard1.3/System.Interactive.Async.dll": {
-            "assemblyVersion": "3.0.3000.0",
-            "fileVersion": "3.1.1.0"
+          "lib/netstandard2.0/System.Interactive.Async.dll": {
+            "assemblyVersion": "3.2.0.0",
+            "fileVersion": "3.2.0.702"
           }
         }
       },
       "System.IO/4.3.0": {
         "dependencies": {
-          "System.Runtime": "4.3.0",
+          "System.Runtime": "4.3.1",
           "System.Text.Encoding": "4.3.0",
           "System.Threading.Tasks": "4.3.0"
         }
@@ -139,49 +176,49 @@
           "System.Collections": "4.3.0",
           "System.Diagnostics.Debug": "4.3.0",
           "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0"
+          "System.Runtime": "4.3.1",
+          "System.Runtime.Extensions": "4.3.1"
         }
       },
       "System.Reflection/4.3.0": {
         "dependencies": {
           "System.IO": "4.3.0",
           "System.Reflection.Primitives": "4.3.0",
-          "System.Runtime": "4.3.0"
+          "System.Runtime": "4.3.1"
         }
       },
       "System.Reflection.Primitives/4.3.0": {
         "dependencies": {
-          "System.Runtime": "4.3.0"
+          "System.Runtime": "4.3.1"
         }
       },
       "System.Resources.ResourceManager/4.3.0": {
         "dependencies": {
           "System.Globalization": "4.3.0",
           "System.Reflection": "4.3.0",
-          "System.Runtime": "4.3.0"
+          "System.Runtime": "4.3.1"
         }
       },
-      "System.Runtime/4.3.0": {},
-      "System.Runtime.Extensions/4.3.0": {
+      "System.Runtime/4.3.1": {},
+      "System.Runtime.Extensions/4.3.1": {
         "dependencies": {
-          "System.Runtime": "4.3.0"
+          "System.Runtime": "4.3.1"
         }
       },
       "System.Text.Encoding/4.3.0": {
         "dependencies": {
-          "System.Runtime": "4.3.0"
+          "System.Runtime": "4.3.1"
         }
       },
       "System.Threading/4.3.0": {
         "dependencies": {
-          "System.Runtime": "4.3.0",
+          "System.Runtime": "4.3.1",
           "System.Threading.Tasks": "4.3.0"
         }
       },
       "System.Threading.Tasks/4.3.0": {
         "dependencies": {
-          "System.Runtime": "4.3.0"
+          "System.Runtime": "4.3.1"
         }
       }
     }
@@ -192,33 +229,33 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Discord.Net.Commands/2.1.0": {
+    "Discord.Net.Commands/2.1.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Q8aDKo7PE7QziqOj2GdQDkhpdlouEC/2uMEwDqhQOT9SMcmlpFCj/9C9ryHa2z5tL4dJbhqNoKAvb76RT8nGSA==",
-      "path": "discord.net.commands/2.1.0",
-      "hashPath": "discord.net.commands.2.1.0.nupkg.sha512"
+      "sha512": "sha512-mOscttcZMm1O5IlJ4HWtro9AwZ7JHurgEgXfbWSct3Gai7qGdMdbby+63q2olKvc8uj5PDiWeopSGM22AhoPBQ==",
+      "path": "discord.net.commands/2.1.1",
+      "hashPath": "discord.net.commands.2.1.1.nupkg.sha512"
     },
-    "Discord.Net.Core/2.1.0": {
+    "Discord.Net.Core/2.1.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-x7w4/KUYhXVsXQWI2baBgnp2Oqaf2J/g4JcUE5/pYINBhMG0f1JJ/b42uEvpantkeDf7g5WNLey/onPs49kcgw==",
-      "path": "discord.net.core/2.1.0",
-      "hashPath": "discord.net.core.2.1.0.nupkg.sha512"
+      "sha512": "sha512-EN5aQG6kuWZ3/42Qtlqs4+IVSGEiZyXXi78ICc+Piu9AErDdHeUuzDZVyfpBhlKkUdMse8tb8wV/lrgEgyGM5A==",
+      "path": "discord.net.core/2.1.1",
+      "hashPath": "discord.net.core.2.1.1.nupkg.sha512"
     },
-    "Discord.Net.Rest/2.1.0": {
+    "Discord.Net.Rest/2.1.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-znzwxHV98re6ny1UzKdlQsA+yzZnDmani4see+3U2YiPyQRBuvv3xg+64wTf+LBY5UmXvWb3NzL3qGKubP3EYw==",
-      "path": "discord.net.rest/2.1.0",
-      "hashPath": "discord.net.rest.2.1.0.nupkg.sha512"
+      "sha512": "sha512-t+rBW5VHIc5/8b4hmCa8Kt1p/8EmeS2IPvFIPFCH+cmOEgp5tbBtmbgAHapsZK6UPQazKLfOpZMBrcQOOAfJNQ==",
+      "path": "discord.net.rest/2.1.1",
+      "hashPath": "discord.net.rest.2.1.1.nupkg.sha512"
     },
-    "Discord.Net.WebSocket/2.1.0": {
+    "Discord.Net.WebSocket/2.1.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-fPZiwoXc/x8JrfADzs+SL0b/C/KNk/Jib+xJ5FwjHSAXP8EVhGRDU7RDA6lWv+p1S8WcNoFdgHdeor0wEFLVVg==",
-      "path": "discord.net.websocket/2.1.0",
-      "hashPath": "discord.net.websocket.2.1.0.nupkg.sha512"
+      "sha512": "sha512-48HWWddoxrZ6DvXoOM6LHdZUdH4mQq27TEVegtdYrw+3MhQ64g3q+sjjtalEg1Pnw6nsFby8m2jlFDQWzGJfvA==",
+      "path": "discord.net.websocket/2.1.1",
+      "hashPath": "discord.net.websocket.2.1.1.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection/2.0.0": {
       "type": "package",
@@ -240,6 +277,27 @@
       "sha512": "sha512-rTK0s2EKlfHsQsH6Yx2smvcTCeyoDNgCW7FEYyV01drPlh2T243PR2DiDXqtC5N4GDm4Ma/lkxfW5a/4793vbA==",
       "path": "newtonsoft.json/12.0.2",
       "hashPath": "newtonsoft.json.12.0.2.nupkg.sha512"
+    },
+    "Selenium.Support/3.141.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-F4sxMCXGyqWtbw5qsniJRgza2UsBnslHwFgNA2p7hPxvJhqg73lyXu/ZscJ7FSfRvq3eJrosysv92+4sZ3vWsg==",
+      "path": "selenium.support/3.141.0",
+      "hashPath": "selenium.support.3.141.0.nupkg.sha512"
+    },
+    "Selenium.WebDriver/3.141.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wPqzXO3f79DzqauTZSzLMKiaBCN0Z2Mv7KvWP+hnV6EL88zh/pJJnFtdIR1X5wa3hsTOpF/bBJs45rz7kArsiA==",
+      "path": "selenium.webdriver/3.141.0",
+      "hashPath": "selenium.webdriver.3.141.0.nupkg.sha512"
+    },
+    "Selenium.WebDriverBackedSelenium/3.141.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pCSxJq4IJ/CqbvtNarxudtVl3tULJU958ZX795nimJF+44djMIa2kj7c8MEaXLscQyRl43XEV2JWKW8iVj10Ag==",
+      "path": "selenium.webdriverbackedselenium/3.141.0",
+      "hashPath": "selenium.webdriverbackedselenium.3.141.0.nupkg.sha512"
     },
     "System.Collections/4.3.0": {
       "type": "package",
@@ -269,12 +327,12 @@
       "path": "system.globalization/4.3.0",
       "hashPath": "system.globalization.4.3.0.nupkg.sha512"
     },
-    "System.Interactive.Async/3.1.1": {
+    "System.Interactive.Async/3.2.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-hZccYiIE5RS1/J9Tb/BNtosAGVggdlsJm4Ojdu+gDV0p4AIi+LUfUogMKkRacljQEJd2AG6vYzvcjhQFkqoZmw==",
-      "path": "system.interactive.async/3.1.1",
-      "hashPath": "system.interactive.async.3.1.1.nupkg.sha512"
+      "sha512": "sha512-C07p0dAA5lGqYUPiPCK3paR709gqS4aMDDsje0v0pvffwzLaxmsn5YQTfZbyNG5qrudPx+BCxTqISnncQ3wIoQ==",
+      "path": "system.interactive.async/3.2.0",
+      "hashPath": "system.interactive.async.3.2.0.nupkg.sha512"
     },
     "System.IO/4.3.0": {
       "type": "package",
@@ -311,19 +369,19 @@
       "path": "system.resources.resourcemanager/4.3.0",
       "hashPath": "system.resources.resourcemanager.4.3.0.nupkg.sha512"
     },
-    "System.Runtime/4.3.0": {
+    "System.Runtime/4.3.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-JufQi0vPQ0xGnAczR13AUFglDyVYt4Kqnz1AZaiKZ5+GICq0/1MH/mO/eAJHt/mHW1zjKBJd7kV26SrxddAhiw==",
-      "path": "system.runtime/4.3.0",
-      "hashPath": "system.runtime.4.3.0.nupkg.sha512"
+      "sha512": "sha512-abhfv1dTK6NXOmu4bgHIONxHyEqFjW8HwXPmpY9gmll+ix9UNo4XDcmzJn6oLooftxNssVHdJC1pGT9jkSynQg==",
+      "path": "system.runtime/4.3.1",
+      "hashPath": "system.runtime.4.3.1.nupkg.sha512"
     },
-    "System.Runtime.Extensions/4.3.0": {
+    "System.Runtime.Extensions/4.3.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-guW0uK0fn5fcJJ1tJVXYd7/1h5F+pea1r7FLSOz/f8vPEqbR2ZAknuRDvTQ8PzAilDveOxNjSfr0CHfIQfFk8g==",
-      "path": "system.runtime.extensions/4.3.0",
-      "hashPath": "system.runtime.extensions.4.3.0.nupkg.sha512"
+      "sha512": "sha512-qAtKMcHOAq9/zKkl0dwvF0T0pmgCQxX1rC49rJXoU8jq+lw6MC3uXy7nLFmjEI20T3Aq069eWz4LcYR64vEmJw==",
+      "path": "system.runtime.extensions/4.3.1",
+      "hashPath": "system.runtime.extensions.4.3.1.nupkg.sha512"
     },
     "System.Text.Encoding/4.3.0": {
       "type": "package",

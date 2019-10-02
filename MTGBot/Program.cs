@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using MTGBot.Data.ReadWriteJSON;
 using MTGBot.DataLookup;
 using MTGBot.Embed_Output;
 using System;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace MTGBot
 {
@@ -15,6 +17,8 @@ namespace MTGBot
     {
         private DiscordSocketClient Client;
         private CommandService Commands;
+        private DateTime Time = DateTime.UtcNow;
+        private bool DeliveredMovers = false;
         static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
 
 
@@ -22,6 +26,9 @@ namespace MTGBot
         {
             Console.WriteLine("Loading Filters.");
             LegalityDictionary.LoadLegalityDict();
+            var aTimer = new Timer(60 * 60 * 1000); //one hour in milliseconds
+            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            
 
             Client = new DiscordSocketClient(new DiscordSocketConfig
             {
@@ -106,6 +113,17 @@ namespace MTGBot
         {
             //If a bot sends the reaction, disregard. 
             if (((SocketUser)Reaction.User).IsBot) return;
+        }
+
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            if (Time.AddHours(-24) > DateTime.UtcNow || DeliveredMovers == false)
+            {
+                Time = DateTime.UtcNow;
+                DeliveredMovers = true;
+                MoversShakersJSONController Read = new MoversShakersJSONController();
+
+            }
         }
     }
 }
