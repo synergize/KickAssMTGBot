@@ -11,10 +11,12 @@ namespace MTGBot.DataLookup
     {
         private static ScryfallDataModel.BaseCodeObject PullCard = null;
         private static Dictionary<string, ScryfallDataModel.BaseCodeObject> CardDictionary = new Dictionary<string, ScryfallDataModel.BaseCodeObject>();
+
         GetScryFallData()
         {
            PullCard = new ScryfallDataModel.BaseCodeObject();
         }
+
         public static ScryfallDataModel.BaseCodeObject PullScryfallData(string cardname)
         {
             cardname = FormatEntry(cardname);
@@ -27,11 +29,34 @@ namespace MTGBot.DataLookup
             if (CallAPI != null)
             {
                 PullCard = JsonConvert.DeserializeObject<ScryfallDataModel.BaseCodeObject>(CallAPI);
-                var x = PullCard.ImageUris.Small;
                 CardDictionary.Add(cardname, PullCard);
             }                        
                 return PullCard;            
         }
+
+        public List<ScryfallSymbologyModel> PullScryfallSymbology()
+        {
+            string _downloadNews = null;
+            using (var web = new WebClient())
+            {
+                try
+                {
+                    var _url = string.Format($"https://api.scryfall.com/symbology");
+                    _downloadNews = web.DownloadString(_url);
+                }
+                catch (WebException msg)
+                {
+                    Console.WriteLine($"Unable to access symbology API Call \n {msg}");
+                    _downloadNews = null;
+                }
+            }
+
+            if (_downloadNews == null)
+                return null;
+            var Symbology = new ScryfallSymbologyModel();
+            //return JsonConvert.DeserializeObject<RootObject>(_downloadNews);
+        }
+
         private static string FuzzyScryFall(string cardname)
         {
             string _downloadNews = null;
@@ -52,6 +77,7 @@ namespace MTGBot.DataLookup
             
             return _downloadNews;
         }
+
         private static string ExactScryFall(string cardname)
         {
             string _downloadNews = null;
@@ -71,6 +97,7 @@ namespace MTGBot.DataLookup
             }
             return _downloadNews;
         }
+
         private static string FormatEntry(string entry)
         {
             int count = 0;

@@ -4,6 +4,7 @@ using MTGBot.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace MTGBot.Embed_Output
 {
@@ -16,14 +17,15 @@ namespace MTGBot.Embed_Output
             {
                 Card.ThumbnailUrl = PulledCard.ImageUris.Png;
             }
-            Card.WithDescription(PulledCard.OracleText);
+            Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText} \n {PulledCard.Power}/{PulledCard.Toughness}");
             Card.WithColor(4124426);
             Card.Url = PulledCard.ScryfallUri;
-            Card.Title = $"{PulledCard.Name}";            
-            Card.AddField("Standard: ", LegalityDictionary.Legality[PulledCard.Legalities.Standard], true);
-            Card.AddField("Modern: ", LegalityDictionary.Legality[PulledCard.Legalities.Modern], true);
-            Card.AddField("Legacy: ", LegalityDictionary.Legality[PulledCard.Legalities.Legacy], true);
-            Card.AddField("Vintage: ", LegalityDictionary.Legality[PulledCard.Legalities.Vintage], true);
+            Card.Title = $"{PulledCard.Name} {PulledCard.ManaCost}";
+            //Card.AddField("Standard: ", LegalityDictionary.Legality[PulledCard.Legalities.Standard], true);
+            //Card.AddField("Modern: ", LegalityDictionary.Legality[PulledCard.Legalities.Modern], true);
+            //Card.AddField("Legacy: ", LegalityDictionary.Legality[PulledCard.Legalities.Legacy], true);
+            //Card.AddField("Vintage: ", LegalityDictionary.Legality[PulledCard.Legalities.Vintage], true);
+            DetermineLegality(Card, PulledCard);
             if (PulledCard.Prices.Usd != null)
             {
                 Card.AddField("Non-Foil Price: ", $"${PulledCard.Prices.Usd}", true);
@@ -32,7 +34,7 @@ namespace MTGBot.Embed_Output
             {
                 Card.AddField("Foil Price: ", $"${PulledCard.Prices.UsdFoil}", true);
             }
-            Card.WithFooter("Powered By scryfall API.");
+            Card.WithFooter("Powered By scryfall API. Contact Coaction#5994 for suggestions or issues");
 
             return Card;
         }
@@ -88,6 +90,12 @@ namespace MTGBot.Embed_Output
             Helping.WithColor(4124426);
 
             return Helping;
+        }
+
+        private EmbedBuilder DetermineLegality(EmbedBuilder embedOutput, ScryfallDataModel.BaseCodeObject cardInfo)
+        {
+            
+            return null; 
         }
     }
 }

@@ -63,6 +63,12 @@ namespace MTGBot.Models
             [JsonProperty("type_line")]
             public string TypeLine { get; set; }
 
+            [JsonProperty("power")]
+            public string Power { get; set; }
+
+            [JsonProperty("toughness")]
+            public string Toughness { get; set; }
+
             [JsonProperty("oracle_text")]
             public string OracleText { get; set; }
 
