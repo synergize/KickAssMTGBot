@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\err0r\\source\\repos\\MTGBot\\MTGBot\\MTGBot.csproj": {}
+    "C:\\Users\\err0r\\Source\\Repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\err0r\\source\\repos\\MTGBot\\MTGBot\\MTGBot.csproj": {
+    "C:\\Users\\err0r\\Source\\Repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\err0r\\source\\repos\\MTGBot\\MTGBot\\MTGBot.csproj",
+        "projectUniqueName": "C:\\Users\\err0r\\Source\\Repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
         "projectName": "MTGBot",
-        "projectPath": "C:\\Users\\err0r\\source\\repos\\MTGBot\\MTGBot\\MTGBot.csproj",
+        "projectPath": "C:\\Users\\err0r\\Source\\Repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
         "packagesPath": "C:\\Users\\err0r\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\err0r\\source\\repos\\MTGBot\\MTGBot\\obj\\",
+        "outputPath": "C:\\Users\\err0r\\Source\\Repos\\KickAssMTGBot\\MTGBot\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -25,6 +25,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\err0r\\Downloads\\selenium-dotnet-3.14.0\\dist": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,23 +44,15 @@
           "dependencies": {
             "Discord.Net.Commands": {
               "target": "Package",
-              "version": "[2.1.0, )"
+              "version": "[2.1.1, )"
             },
             "Discord.Net.Core": {
               "target": "Package",
-              "version": "[2.1.0, )"
+              "version": "[2.1.1, )"
             },
             "Discord.Net.WebSocket": {
               "target": "Package",
-              "version": "[2.1.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
-              "target": "Package",
-              "version": "[2.2.4, )"
-            },
-            "Microsoft.EntityFrameworkCore.Sqlite.Core": {
-              "target": "Package",
-              "version": "[2.2.4, )"
+              "version": "[2.1.1, )"
             },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
@@ -71,9 +64,21 @@
               "target": "Package",
               "version": "[12.0.2, )"
             },
-            "RestSharp": {
+            "Selenium.Support": {
               "target": "Package",
-              "version": "[106.6.9, )"
+              "version": "[3.141.0, )"
+            },
+            "Selenium.WebDriver": {
+              "target": "Package",
+              "version": "[3.141.0, )"
+            },
+            "Selenium.WebDriverBackedSelenium": {
+              "target": "Package",
+              "version": "[3.141.0, )"
+            },
+            "System.Runtime.Extensions": {
+              "target": "Package",
+              "version": "[4.3.1, )"
             }
           },
           "imports": [

@@ -27,6 +27,7 @@ namespace MTGBot.DataLookup
             if (CallAPI != null)
             {
                 PullCard = JsonConvert.DeserializeObject<ScryfallDataModel.BaseCodeObject>(CallAPI);
+                var x = PullCard.ImageUris.Small;
                 CardDictionary.Add(cardname, PullCard);
             }                        
                 return PullCard;            

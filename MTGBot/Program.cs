@@ -1,12 +1,15 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using MTGBot.Data.ReadWriteJSON;
 using MTGBot.DataLookup;
 using MTGBot.Embed_Output;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace MTGBot
 {
@@ -14,16 +17,19 @@ namespace MTGBot
     {
         private DiscordSocketClient Client;
         private CommandService Commands;
+        private DateTime Time = DateTime.UtcNow;
+        private bool DeliveredMovers = false;
         static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
 
 
         private async Task MainAsync()
         {
-            //CheckDirectory.GetCheckDirectory();
-            //MTGCardsList.GetCardList();
-            //Console.WriteLine("Discord Bot Starting.");
             Console.WriteLine("Loading Filters.");
             LegalityDictionary.LoadLegalityDict();
+            var aTimer = new Timer(60 * 60 * 1000); //one hour in milliseconds
+            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            
+
             Client = new DiscordSocketClient(new DiscordSocketConfig
             {
                 LogLevel = LogSeverity.Debug
@@ -68,24 +74,24 @@ namespace MTGBot
                 {
                     Regex rx = new Regex(@"\[\[(.*?)\]\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
                     MatchCollection matches = rx.Matches(Message.Content);
-                    if (matches.Count > 1)
+
+                    foreach (var item in matches)
                     {
-                        await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(1).Build());
-                        return;
-                    }
-                    var CardData = GetScryFallData.PullScryfallData(matches[0].Value);
-                    if (CardData != null)
-                    {
-                        await Context.Channel.SendMessageAsync("", false, GetCard.CardOutput(CardData).Build());
-                    }
-                    else
-                    {
-                        await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(0).Build());
+                        var CardData = GetScryFallData.PullScryfallData(item.ToString());
+                        if (CardData != null)
+                        {
+                            await Context.Channel.SendMessageAsync("", false, GetCard.CardOutput(CardData).Build());
+                        }
+                        else
+                        {
+                            await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(0).Build());
+                        }
                     }
                 }
                 catch(Exception msg)
                 {
                     Console.WriteLine(msg);
+                    await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(3).Build());
                     throw;
                 }
             }
@@ -107,6 +113,17 @@ namespace MTGBot
         {
             //If a bot sends the reaction, disregard. 
             if (((SocketUser)Reaction.User).IsBot) return;
+        }
+
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            if (Time.AddHours(-24) > DateTime.UtcNow || DeliveredMovers == false)
+            {
+                Time = DateTime.UtcNow;
+                DeliveredMovers = true;
+                MoversShakersJSONController Read = new MoversShakersJSONController();
+
+            }
         }
     }
 }

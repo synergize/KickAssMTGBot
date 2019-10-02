@@ -7,7 +7,7 @@ namespace MTGBot.Models
 {
     class ScryfallDataModel
     {
-        public partial class BaseCodeObject
+        public class BaseCodeObject
         {
             [JsonProperty("object")]
             public string Object { get; set; }
@@ -157,7 +157,7 @@ namespace MTGBot.Models
             public PurchaseUris PurchaseUris { get; set; }
         }
 
-        public partial class ImageUris
+        public class ImageUris
         {
             [JsonProperty("small")]
             public string Small { get; set; }
@@ -178,7 +178,7 @@ namespace MTGBot.Models
             public string BorderCrop { get; set; }
         }
 
-        public partial class Legalities
+        public class Legalities
         {
             [JsonProperty("standard")]
             public string Standard { get; set; }
@@ -214,7 +214,7 @@ namespace MTGBot.Models
             public string Oldschool { get; set; }
         }
 
-        public partial class Prices
+        public class Prices
         {
             [JsonProperty("usd")]
             public string Usd { get; set; }
@@ -229,7 +229,7 @@ namespace MTGBot.Models
             public string Tix { get; set; }
         }
 
-        public partial class PurchaseUris
+        public class PurchaseUris
         {
             [JsonProperty("tcgplayer")]
             public string Tcgplayer { get; set; }
@@ -241,7 +241,7 @@ namespace MTGBot.Models
             public string Cardhoarder { get; set; }
         }
 
-        public partial class RelatedUris
+        public class RelatedUris
         {
             [JsonProperty("gatherer")]
             public string Gatherer { get; set; }

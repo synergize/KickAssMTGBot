@@ -12,16 +12,27 @@ namespace MTGBot.Embed_Output
         public EmbedBuilder CardOutput(ScryfallDataModel.BaseCodeObject PulledCard)
         {
             EmbedBuilder Card = new EmbedBuilder();
-            Card.ImageUrl = PulledCard.ImageUris.Normal;
+            if (PulledCard.ImageUris.Png != null)
+            {
+                Card.ThumbnailUrl = PulledCard.ImageUris.Png;
+            }
+            Card.WithDescription(PulledCard.OracleText);
             Card.WithColor(4124426);
             Card.Url = PulledCard.ScryfallUri;
-            Card.Title = $"{PulledCard.Name}";
-            Card.AddField("Oracle Text: ", PulledCard.OracleText, true);
+            Card.Title = $"{PulledCard.Name}";            
             Card.AddField("Standard: ", LegalityDictionary.Legality[PulledCard.Legalities.Standard], true);
             Card.AddField("Modern: ", LegalityDictionary.Legality[PulledCard.Legalities.Modern], true);
             Card.AddField("Legacy: ", LegalityDictionary.Legality[PulledCard.Legalities.Legacy], true);
             Card.AddField("Vintage: ", LegalityDictionary.Legality[PulledCard.Legalities.Vintage], true);
-            Card.WithFooter("Powered By https://scryfall.com API.");
+            if (PulledCard.Prices.Usd != null)
+            {
+                Card.AddField("Non-Foil Price: ", $"${PulledCard.Prices.Usd}", true);
+            }
+            if (PulledCard.Prices.UsdFoil != null)
+            {
+                Card.AddField("Foil Price: ", $"${PulledCard.Prices.UsdFoil}", true);
+            }
+            Card.WithFooter("Powered By scryfall API.");
 
             return Card;
         }
