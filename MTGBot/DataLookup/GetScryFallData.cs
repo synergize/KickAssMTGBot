@@ -14,7 +14,7 @@ namespace MTGBot.DataLookup
 
         GetScryFallData()
         {
-           PullCard = new ScryfallDataModel.BaseCodeObject();
+            PullCard = new ScryfallDataModel.BaseCodeObject();
         }
 
         public static ScryfallDataModel.BaseCodeObject PullScryfallData(string cardname)
@@ -29,12 +29,13 @@ namespace MTGBot.DataLookup
             if (CallAPI != null)
             {
                 PullCard = JsonConvert.DeserializeObject<ScryfallDataModel.BaseCodeObject>(CallAPI);
+                PullCard.AllLegalities = SetLegalList(PullCard.Legalities);
                 CardDictionary.Add(cardname, PullCard);
-            }                        
-                return PullCard;            
+            }
+            return PullCard;
         }
 
-        public List<ScryfallSymbologyModel> PullScryfallSymbology()
+        public static Symbology PullScryfallSymbology()
         {
             string _downloadNews = null;
             using (var web = new WebClient())
@@ -53,8 +54,7 @@ namespace MTGBot.DataLookup
 
             if (_downloadNews == null)
                 return null;
-            var Symbology = new ScryfallSymbologyModel();
-            //return JsonConvert.DeserializeObject<RootObject>(_downloadNews);
+            return JsonConvert.DeserializeObject<Symbology>(_downloadNews);
         }
 
         private static string FuzzyScryFall(string cardname)
@@ -74,7 +74,7 @@ namespace MTGBot.DataLookup
                     return null;
                 }
             }
-            
+
             return _downloadNews;
         }
 
@@ -103,7 +103,7 @@ namespace MTGBot.DataLookup
             int count = 0;
             entry = entry.TrimStart().TrimEnd().ToUpper();
             entry = entry.Remove(0, 2);
-            count = entry.Length - 2; 
+            count = entry.Length - 2;
             entry = entry.Remove(count, 2);
             if (entry.Contains(" "))
             {
@@ -111,6 +111,18 @@ namespace MTGBot.DataLookup
             }
 
             return entry;
+        }
+        private static Dictionary<string, string> SetLegalList(ScryfallDataModel.Legalities legalities)
+        {
+            Dictionary<string, string> LegalitiesDictonary = new Dictionary<string, string>();
+            LegalitiesDictonary.Add("Standard", LegalityDictionary.Legality[legalities.Standard]);
+            LegalitiesDictonary.Add("Modern", LegalityDictionary.Legality[legalities.Modern]);
+            LegalitiesDictonary.Add("Legacy", LegalityDictionary.Legality[legalities.Legacy]);
+            LegalitiesDictonary.Add("Vintage", LegalityDictionary.Legality[legalities.Vintage]);
+            LegalitiesDictonary.Add("Commander", LegalityDictionary.Legality[legalities.Commander]);
+            LegalitiesDictonary.Add("Pauper", LegalityDictionary.Legality[legalities.Pauper]);
+
+            return LegalitiesDictonary;
         }
     }
 }

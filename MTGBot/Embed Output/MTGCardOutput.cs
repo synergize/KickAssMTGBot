@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Net;
+using System.IO;
 
 namespace MTGBot.Embed_Output
 {
@@ -17,27 +19,27 @@ namespace MTGBot.Embed_Output
             {
                 Card.ThumbnailUrl = PulledCard.ImageUris.Png;
             }
-            Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText} \n {PulledCard.Power}/{PulledCard.Toughness}");
+            if (PulledCard.Power == null || PulledCard.Toughness == null)
+            {
+                Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText}");
+            }
+            else
+            {
+               Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText} \n \\{PulledCard.Power}/{PulledCard.Toughness}");
+            }
             Card.WithColor(4124426);
             Card.Url = PulledCard.ScryfallUri;
             Card.Title = $"{PulledCard.Name} {PulledCard.ManaCost}";
-            //Card.AddField("Standard: ", LegalityDictionary.Legality[PulledCard.Legalities.Standard], true);
-            //Card.AddField("Modern: ", LegalityDictionary.Legality[PulledCard.Legalities.Modern], true);
-            //Card.AddField("Legacy: ", LegalityDictionary.Legality[PulledCard.Legalities.Legacy], true);
-            //Card.AddField("Vintage: ", LegalityDictionary.Legality[PulledCard.Legalities.Vintage], true);
-            DetermineLegality(Card, PulledCard);
-            if (PulledCard.Prices.Usd != null)
-            {
-                Card.AddField("Non-Foil Price: ", $"${PulledCard.Prices.Usd}", true);
-            }
-            if (PulledCard.Prices.UsdFoil != null)
-            {
-                Card.AddField("Foil Price: ", $"${PulledCard.Prices.UsdFoil}", true);
-            }
+            Card.Fields = DetermineLegality(PulledCard);
+
+            Card.AddField("Non-Foil Price: ", $"{PulledCard.Prices.Usd ?? "No Pricing Data".TrimStart('$')}", false);        
+            Card.AddField("Foil Price: ", $"{PulledCard.Prices.UsdFoil ?? "No Pricing Data".TrimStart('$')}", false);
+            
             Card.WithFooter("Powered By scryfall API. Contact Coaction#5994 for suggestions or issues");
 
             return Card;
         }
+
         private EmbedBuilder APISpellFailure()
         {
             EmbedBuilder MTGFailure = new EmbedBuilder();
@@ -48,6 +50,7 @@ namespace MTGBot.Embed_Output
 
             return MTGFailure;
         }
+
         private EmbedBuilder APIMultipleEntryFailure()
         {
             EmbedBuilder MTGFailure = new EmbedBuilder();
@@ -58,6 +61,7 @@ namespace MTGBot.Embed_Output
 
             return MTGFailure;
         }
+
         private EmbedBuilder GenericError()
         {
             EmbedBuilder MTGFailure = new EmbedBuilder();
@@ -68,18 +72,20 @@ namespace MTGBot.Embed_Output
 
             return MTGFailure;
         }
+
         public EmbedBuilder DetermineFailure(int num)
         {
             switch (num)
             {
                 default:
-                   return GenericError();
+                    return GenericError();
                 case 0:
                     return APISpellFailure();
                 case 1:
                     return APIMultipleEntryFailure();
             }
         }
+
         public EmbedBuilder GettingHelp()
         {
             EmbedBuilder Helping = new EmbedBuilder();
@@ -92,10 +98,71 @@ namespace MTGBot.Embed_Output
             return Helping;
         }
 
-        private EmbedBuilder DetermineLegality(EmbedBuilder embedOutput, ScryfallDataModel.BaseCodeObject cardInfo)
+        private List<EmbedFieldBuilder> DetermineLegality(ScryfallDataModel.BaseCodeObject cardInfo)
         {
-            
-            return null; 
+            List<EmbedFieldBuilder> EmbededList = new List<EmbedFieldBuilder>();
+            var dictionary = cardInfo.AllLegalities;
+            var NotLegal = FillLegalitiesLists(dictionary, "Not Legal");
+            var Legal = FillLegalitiesLists(dictionary, "Legal");
+            var Banned = FillLegalitiesLists(dictionary, "Banned");
+            var Restricted = FillLegalitiesLists(dictionary, "Restricted");
+
+            if (Legal.Count > 0)
+            {
+                EmbededList.Add(BuildLegalityFields("Legal", EmbedLegalityStringBuilder(Legal)));
+            }
+            if (NotLegal.Count > 0)
+            {
+                EmbededList.Add(BuildLegalityFields("Not Legal", EmbedLegalityStringBuilder(NotLegal)));
+            }
+            if (Banned.Count > 0)
+            {
+                EmbededList.Add(BuildLegalityFields("Banned", EmbedLegalityStringBuilder(Banned)));
+            }
+            if (Restricted.Count > 0)
+            {
+                EmbededList.Add(BuildLegalityFields("Restricted", EmbedLegalityStringBuilder(Restricted)));
+            }
+
+            return EmbededList;
+        }
+
+        private List<string> FillLegalitiesLists(Dictionary<string, string> legals, string expectedLegality)
+        {
+            List<string> legalities = new List<string>();
+            foreach (var x in legals)
+            {
+                if (x.Value == expectedLegality)
+                {
+                    legalities.Add(x.Key);
+                }
+            }
+            return legalities;
+        }
+
+        private EmbedFieldBuilder BuildLegalityFields(string name, string formats)
+        {
+            EmbedFieldBuilder buildField = new EmbedFieldBuilder();
+            buildField.Name = name;
+            if (formats != "")
+            {
+                buildField.Value = formats;
+            }
+            buildField.IsInline = true;
+
+            return buildField;
+        }
+
+        private string EmbedLegalityStringBuilder(List<string> listOfStrings)
+        {
+            string output = "";
+            foreach (var x in listOfStrings)
+            {
+                output += $" {x},";
+            }
+            output.Trim();
+            return output.TrimEnd(',');
         }
     }
+
 }

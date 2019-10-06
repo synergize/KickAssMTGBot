@@ -80,6 +80,7 @@ namespace MTGBot.Models
 
             [JsonProperty("legalities")]
             public Legalities Legalities { get; set; }
+            public Dictionary<string, string> AllLegalities { get; set; }
 
             [JsonProperty("games")]
             public string[] Games { get; set; }

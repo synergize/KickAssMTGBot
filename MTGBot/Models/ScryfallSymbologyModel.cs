@@ -13,7 +13,7 @@ namespace MTGBot.Models
         public string Svg_uri { get; set; }
     }
 
-    public class RootObject
+    public class Symbology
     {
         public List<ScryfallSymbologyModel> Data { get; set; }
     }
