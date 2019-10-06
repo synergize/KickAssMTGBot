@@ -63,6 +63,12 @@ namespace MTGBot.Models
             [JsonProperty("type_line")]
             public string TypeLine { get; set; }
 
+            [JsonProperty("power")]
+            public string Power { get; set; }
+
+            [JsonProperty("toughness")]
+            public string Toughness { get; set; }
+
             [JsonProperty("oracle_text")]
             public string OracleText { get; set; }
 
@@ -74,6 +80,7 @@ namespace MTGBot.Models
 
             [JsonProperty("legalities")]
             public Legalities Legalities { get; set; }
+            public Dictionary<string, string> AllLegalities { get; set; }
 
             [JsonProperty("games")]
             public string[] Games { get; set; }

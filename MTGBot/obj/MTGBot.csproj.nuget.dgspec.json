@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\err0r\\Source\\Repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {}
+    "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\err0r\\Source\\Repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {
+    "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\err0r\\Source\\Repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
+        "projectUniqueName": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
         "projectName": "MTGBot",
-        "projectPath": "C:\\Users\\err0r\\Source\\Repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
+        "projectPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
         "packagesPath": "C:\\Users\\err0r\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\err0r\\Source\\Repos\\KickAssMTGBot\\MTGBot\\obj\\",
+        "outputPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
