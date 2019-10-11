@@ -3,3 +3,9 @@
 ################################################################################
 
 *.lock
+/.vs/KickAssMTGBot/v16/.suo
+/.vs/MTGBot/v16/Server/sqlite3/storage.ide
+/.vs/MTGBot/v16/Server/sqlite3/storage.ide-shm
+/.vs/MTGBot/v16/Server/sqlite3/storage.ide-wal
+/.vs/MTGBot/v16/.suo
+/.vs/slnx.sqlite
