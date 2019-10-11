@@ -125,7 +125,7 @@ namespace MTGBot.Models
             public string PrintsSearchUri { get; set; }
 
             [JsonProperty("collector_number")]
-            public long CollectorNumber { get; set; }
+            public string CollectorNumber { get; set; }
 
             [JsonProperty("digital")]
             public bool Digital { get; set; }
