@@ -67,7 +67,11 @@ namespace MTGBot
             MTGCardOutput GetCard = new MTGCardOutput();
 
             if (Context.Message == null || Context.Message.Content == "") return;
-            if (Context.User.IsBot) return;            
+            if (Context.User.IsBot) return;     
+            if (Context.User.Id == 129804455964049408 && Context.Guild.Id == 596104949503361050)
+            {
+               await ReactWithEmoteAsync(Context.Message, "<:WeebsOut:627783662708064256>");
+            }
             if (Message.Content.Contains("[") && Message.Content.Contains("]"))
             {
                 try
@@ -113,6 +117,14 @@ namespace MTGBot
         {
             //If a bot sends the reaction, disregard. 
             if (((SocketUser)Reaction.User).IsBot) return;
+        }
+        private async Task ReactWithEmoteAsync(SocketUserMessage userMsg, string escapedEmote)
+        {
+            
+            if (Emote.TryParse(escapedEmote, out var emote))
+            {
+                await userMsg.AddReactionAsync(emote);
+            }
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
