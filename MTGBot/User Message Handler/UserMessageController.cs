@@ -2,6 +2,7 @@
 using Discord.Commands;
 using MTGBot.DataLookup;
 using MTGBot.Embed_Output;
+using MTGBot.Helpers;
 using MTGBot.Models;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,17 @@ namespace MTGBot.User_Message_Handler
             var cardData = GetScryFallData.PullScryfallData(matchName);
             if (cardData == null)
             {
-                return MessageOutput.DetermineFailure(0);
+                var autoComplete = GetScryFallData.PullScryFallAutoComplete(FormatUserInput.FormatEntry(matchName));
+
+                if (autoComplete.data.Count == 0)
+                {
+                    return MessageOutput.DetermineFailure(0);
+                }
+                else
+                {
+                    return MessageOutput.DetermineFailure(0, autoComplete);
+                }
+
             }
 
             if (matchName.Contains('?'))

@@ -79,14 +79,22 @@ namespace MTGBot.Embed_Output
             return rulingEmbed;
         }
 
-        private EmbedBuilder APISpellFailure()
+        private EmbedBuilder APISpellFailure(ScryFallAutoCompleteModel entry)
         {
             EmbedBuilder MTGFailure = new EmbedBuilder();
             MTGFailure.Title = "Card Lookup Failed.";
             MTGFailure.WithColor(failedColor);
             MTGFailure.WithFooter(failedFooter);
             MTGFailure.AddField("Incorrect Spelling: ", "Make sure to correctly type the name of the card you'd like to look up.", true);
-
+            if (entry != null)
+            {
+                string names = "";
+                foreach (var name in entry.data)
+                {
+                    names += $"{name}\n";
+                }
+                MTGFailure.AddField("Did You Mean?", names);
+            }
             return MTGFailure;
         }
 
@@ -112,16 +120,14 @@ namespace MTGBot.Embed_Output
             return MTGFailure;
         }
 
-        public EmbedBuilder DetermineFailure(int num)
+        public EmbedBuilder DetermineFailure(int num, ScryFallAutoCompleteModel entry = null)
         {
             switch (num)
             {
                 default:
                     return GenericError();
                 case 0:
-                    return APISpellFailure();
-                case 1:
-                    return APIMultipleEntryFailure();
+                    return APISpellFailure(entry);
             }
         }
 

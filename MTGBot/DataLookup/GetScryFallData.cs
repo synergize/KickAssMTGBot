@@ -1,4 +1,5 @@
-﻿using MTGBot.Models;
+﻿using MTGBot.Helpers;
+using MTGBot.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace MTGBot.DataLookup
         public static ScryfallDataModel.BaseCodeObject PullScryfallData(string cardname)
         {
             var PullCard = new ScryfallDataModel.BaseCodeObject(); 
-            cardname = FormatEntry(cardname);
+            cardname = FormatUserInput.FormatEntry(cardname);
             if (CardDictionary.ContainsKey(cardname))
             {
                 return CardDictionary[cardname];
@@ -51,6 +52,27 @@ namespace MTGBot.DataLookup
             }
         }
 
+        public static ScryFallAutoCompleteModel PullScryFallAutoComplete(string entry)
+        {
+            using (var web = new WebClient())
+            {
+                try
+                {
+                    var _url = string.Format($"https://api.scryfall.com/cards/autocomplete?q={entry}");
+                    string _downloadRules = web.DownloadString(_url);
+                    if (_downloadRules != null)
+                    {
+                        return JsonConvert.DeserializeObject<ScryFallAutoCompleteModel>(_downloadRules);
+                    }
+                    return null;
+                }
+                catch (WebException msg)
+                {
+                    Console.WriteLine(msg.Message);
+                    return null;
+                }
+            }
+        }
         public static Symbology PullScryfallSymbology()
         {
             string _downloadNews = null;
@@ -112,23 +134,6 @@ namespace MTGBot.DataLookup
                 }
             }
             return _downloadNews;
-        }
-
-        private static string FormatEntry(string entry)
-        {
-            if (entry.Contains('[') || entry.Contains(']'))
-            {
-                int count = 0;
-                entry = entry.TrimStart().TrimEnd().ToUpper();
-                entry = entry.Remove(0, 3);
-                count = entry.Length - 2;
-                entry = entry.Remove(count, 2);
-                if (entry.Contains(" "))
-                {
-                    entry = entry.Replace(" ", "+");
-                }
-            }
-            return entry;
         }
         private static Dictionary<string, string> SetLegalList(ScryfallDataModel.Legalities legalities)
         {
