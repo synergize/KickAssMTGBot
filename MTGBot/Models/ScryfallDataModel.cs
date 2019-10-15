@@ -8,6 +8,9 @@ namespace MTGBot.Models
     {
         public class BaseCodeObject
         {
+            [JsonProperty("card_faces", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
+            public List<CardFace> card_faces { get; set; }
+
             [JsonProperty("object")]
             public string Object { get; set; }
 
@@ -50,7 +53,7 @@ namespace MTGBot.Models
             [JsonProperty("highres_image")]
             public bool HighresImage { get; set; }
 
-            [JsonProperty("image_uris")]
+            [JsonProperty("image_uris", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
             public ImageUris ImageUris { get; set; }
 
             [JsonProperty("mana_cost")]
@@ -165,22 +168,22 @@ namespace MTGBot.Models
 
         public class ImageUris
         {
-            [JsonProperty("small")]
+            [JsonProperty("small", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
             public string Small { get; set; }
 
-            [JsonProperty("normal")]
+            [JsonProperty("normal", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
             public string Normal { get; set; }
 
-            [JsonProperty("large")]
+            [JsonProperty("large", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
             public string Large { get; set; }
 
-            [JsonProperty("png")]
+            [JsonProperty("png", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
             public string Png { get; set; }
 
-            [JsonProperty("art_crop")]
+            [JsonProperty("art_crop", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
             public string ArtCrop { get; set; }
 
-            [JsonProperty("border_crop")]
+            [JsonProperty("border_crop", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
             public string BorderCrop { get; set; }
         }
 
@@ -260,6 +263,24 @@ namespace MTGBot.Models
 
             [JsonProperty("mtgtop8")]
             public string Mtgtop8 { get; set; }
+        }
+
+        public class CardFace
+        {
+            public string @object { get; set; }
+            public string name { get; set; }
+            public string mana_cost { get; set; }
+            public string type_line { get; set; }
+            public string oracle_text { get; set; }
+            public List<string> colors { get; set; }
+            public string power { get; set; }
+            public string toughness { get; set; }
+            public string artist { get; set; }
+            public string artist_id { get; set; }
+            public string illustration_id { get; set; }
+            public ImageUris image_uris { get; set; }
+            public List<string> color_indicator { get; set; }
+            public string flavor_text { get; set; }
         }
     }
 }

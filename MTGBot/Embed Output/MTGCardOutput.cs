@@ -23,10 +23,9 @@ namespace MTGBot.Embed_Output
         public EmbedBuilder CardOutput(ScryfallDataModel.BaseCodeObject PulledCard)
         {
             EmbedBuilder Card = new EmbedBuilder();
-            if (PulledCard.ImageUris.Png != null)
-            {
-                Card.ThumbnailUrl = PulledCard.ImageUris.Png;
-            }
+
+            Card.ThumbnailUrl = PulledCard.ImageUris.Png ?? "none";            
+            
             if (PulledCard.Power == null || PulledCard.Toughness == null)
             {
                 Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText}");

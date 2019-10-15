@@ -88,7 +88,6 @@ namespace MTGBot
                 {
                     Console.WriteLine(msg.Message);
                     await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(3).Build());
-                    throw;
                 }
             }
 
