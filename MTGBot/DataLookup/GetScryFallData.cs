@@ -52,6 +52,30 @@ namespace MTGBot.DataLookup
             }
         }
 
+        public static ScryfallDataModel.BaseCodeObject PullScryFallRandomCard(bool isCommander)
+        {
+            using (var web = new WebClient())
+            {
+                try
+                {
+                    var _url = string.Format($"https://api.scryfall.com/cards/random{(isCommander ? "?q=is%3Acommander" : "")}" );
+                    string _downloadRules = web.DownloadString(_url);
+                    if (_downloadRules != null)
+                    {
+                        var PulledCard = JsonConvert.DeserializeObject<ScryfallDataModel.BaseCodeObject>(_downloadRules);
+                        PulledCard.AllLegalities = SetLegalList(PulledCard.Legalities);
+                        return PulledCard;
+                    }
+                    return null;
+                }
+                catch (WebException msg)
+                {
+                    Console.WriteLine(msg.Message);
+                    return null;
+                }
+            }
+        }
+
         public static ScryFallAutoCompleteModel PullScryFallAutoComplete(string entry)
         {
             using (var web = new WebClient())

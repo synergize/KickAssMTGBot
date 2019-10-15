@@ -13,7 +13,7 @@ namespace MTGBot.Embed_Output
         private const string failedFooter = "Contact Coaction#5994 for any bugs. This is a work in progress.";
         public MTGCardOutput()
         {
-            
+
         }
 
         public MTGCardOutput(int embedColor)
@@ -33,7 +33,7 @@ namespace MTGBot.Embed_Output
             }
             else if (!PulledCard.Power.Contains("*"))
             {
-               Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText} \n {PulledCard.Power}/{PulledCard.Toughness}");
+                Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText} \n {PulledCard.Power}/{PulledCard.Toughness}");
             }
             else
             {
@@ -44,9 +44,9 @@ namespace MTGBot.Embed_Output
             Card.Title = $"{PulledCard.Name} {PulledCard.ManaCost}";
             Card.Fields = DetermineLegality(PulledCard);
 
-            Card.AddField("Non-Foil Price: ", $"{PulledCard.Prices.Usd ?? "No Pricing Data".TrimStart('$')}", false);        
+            Card.AddField("Non-Foil Price: ", $"{PulledCard.Prices.Usd ?? "No Pricing Data".TrimStart('$')}", false);
             Card.AddField("Foil Price: ", $"{PulledCard.Prices.UsdFoil ?? "No Pricing Data".TrimStart('$')}", false);
-            
+
             Card.WithFooter(successfulFooter);
 
             return Card;
@@ -152,19 +152,19 @@ namespace MTGBot.Embed_Output
             var Banned = FillLegalitiesLists(dictionary, "Banned");
             var Restricted = FillLegalitiesLists(dictionary, "Restricted");
 
-            if (Legal.Count > 0)
+            if (Legal.Count > 0 && Legal != null)
             {
                 EmbededList.Add(BuildLegalityFields("Legal", EmbedLegalityStringBuilder(Legal)));
             }
-            if (NotLegal.Count > 0)
+            if (NotLegal.Count > 0 && NotLegal != null)
             {
                 EmbededList.Add(BuildLegalityFields("Not Legal", EmbedLegalityStringBuilder(NotLegal)));
             }
-            if (Banned.Count > 0)
+            if (Banned.Count > 0 && Banned != null)
             {
                 EmbededList.Add(BuildLegalityFields("Banned", EmbedLegalityStringBuilder(Banned)));
             }
-            if (Restricted.Count > 0)
+            if (Restricted.Count > 0 && Restricted != null)
             {
                 EmbededList.Add(BuildLegalityFields("Restricted", EmbedLegalityStringBuilder(Restricted)));
             }
@@ -174,6 +174,9 @@ namespace MTGBot.Embed_Output
 
         private List<string> FillLegalitiesLists(Dictionary<string, string> legals, string expectedLegality)
         {
+            if (legals == null)
+                return null;
+
             List<string> legalities = new List<string>();
             foreach (var x in legals)
             {
@@ -183,6 +186,7 @@ namespace MTGBot.Embed_Output
                 }
             }
             return legalities;
+
         }
 
         private EmbedFieldBuilder BuildLegalityFields(string name, string formats)
