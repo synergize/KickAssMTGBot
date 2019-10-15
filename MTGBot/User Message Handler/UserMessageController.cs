@@ -14,32 +14,28 @@ namespace MTGBot.User_Message_Handler
     public class UserMessageController
     {
         public EmbedBuilder MessageOutput { get; set; }
-        public UserMessageController(MatchCollection matches)
+        public UserMessageController(string matchName)
         {
-            MessageOutput = DetermineTypeOfMessage(matches);
+            MessageOutput = DetermineTypeOfMessage(matchName);
         }
-        public EmbedBuilder DetermineTypeOfMessage(MatchCollection matches)
+        public EmbedBuilder DetermineTypeOfMessage(string matchName)
         {
             MTGCardOutput MessageOutput = new MTGCardOutput();
 
-            foreach (var item in matches)
+            var cardData = GetScryFallData.PullScryfallData(matchName);
+            if (cardData == null)
             {
-                var cardData = GetScryFallData.PullScryfallData(item.ToString());
-                if (cardData == null)
-                {
-                    return MessageOutput.DetermineFailure(0);
-                }
-                
-                if (item.ToString().Contains('?'))
-                {
-                    return MessageOutput.RulingOutput(GetScryFallData.PullScryFallRuleData(cardData.Id), cardData);
-                }
-                else
-                {
-                    return MessageOutput.CardOutput(cardData);
-                }
+                return MessageOutput.DetermineFailure(0);
             }
-            return MessageOutput.DetermineFailure(3);
+
+            if (matchName.Contains('?'))
+            {
+                return MessageOutput.RulingOutput(GetScryFallData.PullScryFallRuleData(cardData.Id), cardData);
+            }
+            else
+            {
+                return MessageOutput.CardOutput(cardData);
+            }
         }
     }
 

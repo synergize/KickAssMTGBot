@@ -78,9 +78,11 @@ namespace MTGBot
                 {
                     Regex rx = new Regex(@"\[\[(.*?)\]\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
                     MatchCollection matches = rx.Matches(Message.Content);
-
-                    var dataOutput = new UserMessageController(matches);
-                    await Context.Channel.SendMessageAsync("", false, dataOutput.MessageOutput.Build());
+                    foreach (var item in matches)
+                    {
+                        var dataOutput = new UserMessageController(item.ToString());
+                        await Context.Channel.SendMessageAsync("", false, dataOutput.MessageOutput.Build());
+                    }
                 }
                 catch(Exception msg)
                 {

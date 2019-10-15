@@ -55,12 +55,25 @@ namespace MTGBot.Embed_Output
         public EmbedBuilder RulingOutput(ScryFallCardRulingsModel rulings, ScryfallDataModel.BaseCodeObject cardData)
         {
             EmbedBuilder rulingEmbed = new EmbedBuilder();
+            const int dataCount = 9; // This limit is added due to Discord's hard limitation on message character sizes. 
             rulingEmbed.WithColor(successfulColor);
             rulingEmbed.Title = $"Rulings for {cardData.Name}";
             rulingEmbed.Url = cardData.ScryfallUri;
-            foreach (var rule in rulings.data)
+
+            if (rulings.data.Count > dataCount)
             {
-                rulingEmbed.AddField($"{rule.published_at}", rule.comment, false);
+                for (int i = 0; i < dataCount; i++)
+                {
+                    rulingEmbed.AddField($"{rulings.data[i].published_at}", rulings.data[i].comment, false);
+                }
+                rulingEmbed.AddField($"Additional Rulings", $"This card had too many rules to fit. Plesae check out the rest of them on ScryFall \n {cardData.ScryfallUri}", false);
+            }
+            else
+            {
+                foreach (var rule in rulings.data)
+                {
+                    rulingEmbed.AddField($"{rule.published_at}", rule.comment, false);
+                }
             }
 
             return rulingEmbed;
