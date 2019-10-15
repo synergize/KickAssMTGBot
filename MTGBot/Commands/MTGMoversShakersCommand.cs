@@ -3,8 +3,6 @@ using MTGBot.Data;
 using MTGBot.DataLookup.MTGGoldFish;
 using MTGBot.Embed_Output;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MTGBot.Commands

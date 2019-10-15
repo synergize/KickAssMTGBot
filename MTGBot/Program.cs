@@ -4,8 +4,8 @@ using Discord.WebSocket;
 using MTGBot.Data.ReadWriteJSON;
 using MTGBot.DataLookup;
 using MTGBot.Embed_Output;
+using MTGBot.User_Message_Handler;
 using System;
-using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -79,18 +79,8 @@ namespace MTGBot
                     Regex rx = new Regex(@"\[\[(.*?)\]\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
                     MatchCollection matches = rx.Matches(Message.Content);
 
-                    foreach (var item in matches)
-                    {
-                        var CardData = GetScryFallData.PullScryfallData(item.ToString());
-                        if (CardData != null)
-                        {
-                            await Context.Channel.SendMessageAsync("", false, GetCard.CardOutput(CardData).Build());
-                        }
-                        else
-                        {
-                            await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(0).Build());
-                        }
-                    }
+                    var dataOutput = new UserMessageController(matches);
+                    await Context.Channel.SendMessageAsync("", false, dataOutput.MessageOutput.Build());
                 }
                 catch(Exception msg)
                 {

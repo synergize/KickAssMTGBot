@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MTGBot.Models
+﻿namespace MTGBot.Models
 {
     class ScryFallIndividualSetModel
     {
