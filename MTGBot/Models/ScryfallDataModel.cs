@@ -1,11 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MTGBot.Models
 {
-    class ScryfallDataModel
+    public class ScryfallDataModel
     {
         public class BaseCodeObject
         {

@@ -1,17 +1,25 @@
 ﻿using Discord;
-using MTGBot.DataLookup;
 using MTGBot.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using System.Net;
-using System.IO;
 
 namespace MTGBot.Embed_Output
 {
     class MTGCardOutput
     {
+        private Color successfulColor = Color.DarkGreen;
+        private const int failedColor = 16580608;
+        private int customColor = 0;
+        private const string successfulFooter = "Powered By Scryfall API. Contact Coaction#5994 for suggestions or bugs";
+        private const string failedFooter = "Contact Coaction#5994 for any bugs. This is a work in progress.";
+        public MTGCardOutput()
+        {
+            
+        }
+
+        public MTGCardOutput(int embedColor)
+        {
+            customColor = embedColor;
+        }
         public EmbedBuilder CardOutput(ScryfallDataModel.BaseCodeObject PulledCard)
         {
             EmbedBuilder Card = new EmbedBuilder();
@@ -31,7 +39,7 @@ namespace MTGBot.Embed_Output
             {
                 Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText} \n \\{PulledCard.Power}/{PulledCard.Toughness}");
             }
-            Card.WithColor(4124426);
+            Card.WithColor(successfulColor);
             Card.Url = PulledCard.ScryfallUri;
             Card.Title = $"{PulledCard.Name} {PulledCard.ManaCost}";
             Card.Fields = DetermineLegality(PulledCard);
@@ -39,17 +47,44 @@ namespace MTGBot.Embed_Output
             Card.AddField("Non-Foil Price: ", $"{PulledCard.Prices.Usd ?? "No Pricing Data".TrimStart('$')}", false);        
             Card.AddField("Foil Price: ", $"{PulledCard.Prices.UsdFoil ?? "No Pricing Data".TrimStart('$')}", false);
             
-            Card.WithFooter("Powered By scryfall API. Contact Coaction#5994 for suggestions or issues");
+            Card.WithFooter(successfulFooter);
 
             return Card;
+        }
+
+        public EmbedBuilder RulingOutput(ScryFallCardRulingsModel rulings, ScryfallDataModel.BaseCodeObject cardData)
+        {
+            EmbedBuilder rulingEmbed = new EmbedBuilder();
+            const int dataCount = 9; // This limit is added due to Discord's hard limitation on message character sizes. 
+            rulingEmbed.WithColor(successfulColor);
+            rulingEmbed.Title = $"Rulings for {cardData.Name}";
+            rulingEmbed.Url = cardData.ScryfallUri;
+
+            if (rulings.data.Count > dataCount)
+            {
+                for (int i = 0; i < dataCount; i++)
+                {
+                    rulingEmbed.AddField($"{rulings.data[i].published_at}", rulings.data[i].comment, false);
+                }
+                rulingEmbed.AddField($"Additional Rulings", $"This card had too many rules to fit. Plesae check out the rest of them on ScryFall \n {cardData.ScryfallUri}", false);
+            }
+            else
+            {
+                foreach (var rule in rulings.data)
+                {
+                    rulingEmbed.AddField($"{rule.published_at}", rule.comment, false);
+                }
+            }
+
+            return rulingEmbed;
         }
 
         private EmbedBuilder APISpellFailure()
         {
             EmbedBuilder MTGFailure = new EmbedBuilder();
             MTGFailure.Title = "Card Lookup Failed.";
-            MTGFailure.WithColor(16580608);
-            MTGFailure.WithFooter("Contact Coaction#5994 for any issues. This is a work in progress.");
+            MTGFailure.WithColor(failedColor);
+            MTGFailure.WithFooter(failedFooter);
             MTGFailure.AddField("Incorrect Spelling: ", "Make sure to correctly type the name of the card you'd like to look up.", true);
 
             return MTGFailure;
@@ -59,8 +94,8 @@ namespace MTGBot.Embed_Output
         {
             EmbedBuilder MTGFailure = new EmbedBuilder();
             MTGFailure.Title = "Card Lookup Failed.";
-            MTGFailure.WithColor(16580608);
-            MTGFailure.WithFooter("Contact Coaction#5994 for any issues. This is a work in progress.");
+            MTGFailure.WithColor(failedColor);
+            MTGFailure.WithFooter(failedFooter);
             MTGFailure.AddField("Too many card look ups: ", "Please make sure to only link to one card per message.", true);
 
             return MTGFailure;
@@ -70,8 +105,8 @@ namespace MTGBot.Embed_Output
         {
             EmbedBuilder MTGFailure = new EmbedBuilder();
             MTGFailure.Title = "Card Lookup Failed.";
-            MTGFailure.WithColor(16580608);
-            MTGFailure.WithFooter("Contact Coaction#5994 for any issues. This is a work in progress.");
+            MTGFailure.WithColor(failedColor);
+            MTGFailure.WithFooter(failedFooter);
             MTGFailure.AddField("Whoopsies! ", "I'm not sure what exploded, but something did. Please contact my owner.", true);
 
             return MTGFailure;
@@ -96,8 +131,8 @@ namespace MTGBot.Embed_Output
             Helping.Title = "Help Center";
             Helping.Description = "Below is a list of commands and features of this bot! It's a work in progress.";
             Helping.AddField("Card Lookup: ", "Cards can be located with double open and closing brackets [[like this]]. They can be anywhere in your sentence!");
-            Helping.WithFooter("Contact Coaction#5994 for any issues or ideas. This is a work in progress.");
-            Helping.WithColor(4124426);
+            Helping.WithFooter(successfulFooter);
+            Helping.WithColor(successfulColor);
 
             return Helping;
         }
