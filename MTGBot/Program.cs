@@ -67,10 +67,10 @@ namespace MTGBot
             MTGCardOutput GetCard = new MTGCardOutput();
 
             if (Context.Message == null || Context.Message.Content == "") return;
-            if (Context.User.IsBot) return;     
-            if (Context.User.Id == 129804455964049408)
+            if (Context.User.IsBot) return;
+            if (Context.User.Id == 129804455964049408 && Context.Guild.Id == 596104949503361050)
             {
-               //await ReactWithEmoteAsync(Context.Message, "<:eggplant:633049400327012363>");
+                await ReactWithEmoteAsync(Context.Message, "<:WeebsOut:627783662708064256>");
             }
             if (Message.Content.Contains("[") && Message.Content.Contains("]"))
             {
