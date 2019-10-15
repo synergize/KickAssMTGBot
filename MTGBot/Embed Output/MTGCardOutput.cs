@@ -23,9 +23,13 @@ namespace MTGBot.Embed_Output
             {
                 Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText}");
             }
+            else if (!PulledCard.Power.Contains("*"))
+            {
+               Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText} \n {PulledCard.Power}/{PulledCard.Toughness}");
+            }
             else
             {
-               Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText} \n \\{PulledCard.Power}/{PulledCard.Toughness}");
+                Card.WithDescription($"{PulledCard.TypeLine} \n {PulledCard.OracleText} \n \\{PulledCard.Power}/{PulledCard.Toughness}");
             }
             Card.WithColor(4124426);
             Card.Url = PulledCard.ScryfallUri;
