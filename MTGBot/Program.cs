@@ -68,9 +68,9 @@ namespace MTGBot
 
             if (Context.Message == null || Context.Message.Content == "") return;
             if (Context.User.IsBot) return;     
-            if (Context.User.Id == 129804455964049408 && Context.Guild.Id == 596104949503361050)
+            if (Context.User.Id == 129804455964049408)
             {
-               await ReactWithEmoteAsync(Context.Message, "<:WeebsOut:627783662708064256>");
+               //await ReactWithEmoteAsync(Context.Message, "<:eggplant:633049400327012363>");
             }
             if (Message.Content.Contains("[") && Message.Content.Contains("]"))
             {
@@ -94,7 +94,7 @@ namespace MTGBot
                 }
                 catch(Exception msg)
                 {
-                    Console.WriteLine(msg);
+                    Console.WriteLine(msg.Message);
                     await Context.Channel.SendMessageAsync("", false, GetCard.DetermineFailure(3).Build());
                     throw;
                 }

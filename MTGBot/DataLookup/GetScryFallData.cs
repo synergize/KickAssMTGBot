@@ -9,16 +9,10 @@ namespace MTGBot.DataLookup
 {
     class GetScryFallData
     {
-        private static ScryfallDataModel.BaseCodeObject PullCard = null;
         private static Dictionary<string, ScryfallDataModel.BaseCodeObject> CardDictionary = new Dictionary<string, ScryfallDataModel.BaseCodeObject>();
-
-        GetScryFallData()
-        {
-            PullCard = new ScryfallDataModel.BaseCodeObject();
-        }
-
         public static ScryfallDataModel.BaseCodeObject PullScryfallData(string cardname)
         {
+            var PullCard = new ScryfallDataModel.BaseCodeObject();
             cardname = FormatEntry(cardname);
             if (CardDictionary.ContainsKey(cardname))
             {
@@ -31,8 +25,9 @@ namespace MTGBot.DataLookup
                 PullCard = JsonConvert.DeserializeObject<ScryfallDataModel.BaseCodeObject>(CallAPI);
                 PullCard.AllLegalities = SetLegalList(PullCard.Legalities);
                 CardDictionary.Add(cardname, PullCard);
+                return PullCard;
             }
-            return PullCard;
+            return null;
         }
 
         public static Symbology PullScryfallSymbology()
@@ -70,7 +65,7 @@ namespace MTGBot.DataLookup
                 }
                 catch (WebException msg)
                 {
-                    Console.WriteLine(msg);
+                    Console.WriteLine(msg.Message);
                     return null;
                 }
             }
