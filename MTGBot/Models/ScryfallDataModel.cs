@@ -8,6 +8,9 @@ namespace MTGBot.Models
     {
         public class BaseCodeObject
         {
+            [JsonProperty("card_faces")]
+            public List<CardFace> card_faces { get; set; }
+
             [JsonProperty("object")]
             public string Object { get; set; }
 
@@ -260,6 +263,24 @@ namespace MTGBot.Models
 
             [JsonProperty("mtgtop8")]
             public string Mtgtop8 { get; set; }
+        }
+
+        public class CardFace
+        {
+            public string @object { get; set; }
+            public string name { get; set; }
+            public string mana_cost { get; set; }
+            public string type_line { get; set; }
+            public string oracle_text { get; set; }
+            public List<string> colors { get; set; }
+            public string power { get; set; }
+            public string toughness { get; set; }
+            public string artist { get; set; }
+            public string artist_id { get; set; }
+            public string illustration_id { get; set; }
+            public ImageUris image_uris { get; set; }
+            public List<string> color_indicator { get; set; }
+            public string flavor_text { get; set; }
         }
     }
 }

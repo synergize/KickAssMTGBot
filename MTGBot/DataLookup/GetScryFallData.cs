@@ -14,6 +14,7 @@ namespace MTGBot.DataLookup
         {
             var PullCard = new ScryfallDataModel.BaseCodeObject(); 
             cardname = FormatUserInput.FormatEntry(cardname);
+
             if (CardDictionary.ContainsKey(cardname))
             {
                 return CardDictionary[cardname];
@@ -22,7 +23,7 @@ namespace MTGBot.DataLookup
             string CallAPI = ExactScryFall(cardname);
             if (CallAPI != null)
             {
-                PullCard = JsonConvert.DeserializeObject<ScryfallDataModel.BaseCodeObject>(CallAPI);
+                PullCard = JsonConvert.DeserializeObject<ScryfallDataModel.BaseCodeObject>(CallAPI, JsonDeserializeHelper.settings);
                 PullCard.AllLegalities = SetLegalList(PullCard.Legalities);
                 CardDictionary.Add(cardname, PullCard);
                 return PullCard;
@@ -40,7 +41,7 @@ namespace MTGBot.DataLookup
                     string _downloadRules = web.DownloadString(_url);
                     if (_downloadRules != null)
                     {
-                        return JsonConvert.DeserializeObject<ScryFallCardRulingsModel>(_downloadRules);
+                        return JsonConvert.DeserializeObject<ScryFallCardRulingsModel>(_downloadRules, JsonDeserializeHelper.settings);
                     }
                     return null;
                 }
@@ -62,7 +63,7 @@ namespace MTGBot.DataLookup
                     string _downloadRules = web.DownloadString(_url);
                     if (_downloadRules != null)
                     {
-                        var PulledCard = JsonConvert.DeserializeObject<ScryfallDataModel.BaseCodeObject>(_downloadRules);
+                        var PulledCard = JsonConvert.DeserializeObject<ScryfallDataModel.BaseCodeObject>(_downloadRules, JsonDeserializeHelper.settings);
                         PulledCard.AllLegalities = SetLegalList(PulledCard.Legalities);
                         return PulledCard;
                     }
@@ -86,7 +87,7 @@ namespace MTGBot.DataLookup
                     string _downloadRules = web.DownloadString(_url);
                     if (_downloadRules != null)
                     {
-                        return JsonConvert.DeserializeObject<ScryFallAutoCompleteModel>(_downloadRules);
+                        return JsonConvert.DeserializeObject<ScryFallAutoCompleteModel>(_downloadRules, JsonDeserializeHelper.settings);
                     }
                     return null;
                 }
