@@ -8,7 +8,7 @@ namespace MTGBot.Models
     {
         public class BaseCodeObject
         {
-            [JsonProperty("card_faces", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
+            [JsonProperty("card_faces")]
             public List<CardFace> card_faces { get; set; }
 
             [JsonProperty("object")]
@@ -53,7 +53,7 @@ namespace MTGBot.Models
             [JsonProperty("highres_image")]
             public bool HighresImage { get; set; }
 
-            [JsonProperty("image_uris", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
+            [JsonProperty("image_uris")]
             public ImageUris ImageUris { get; set; }
 
             [JsonProperty("mana_cost")]
@@ -168,22 +168,22 @@ namespace MTGBot.Models
 
         public class ImageUris
         {
-            [JsonProperty("small", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
+            [JsonProperty("small")]
             public string Small { get; set; }
 
-            [JsonProperty("normal", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
+            [JsonProperty("normal")]
             public string Normal { get; set; }
 
-            [JsonProperty("large", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
+            [JsonProperty("large")]
             public string Large { get; set; }
 
-            [JsonProperty("png", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
+            [JsonProperty("png")]
             public string Png { get; set; }
 
-            [JsonProperty("art_crop", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
+            [JsonProperty("art_crop")]
             public string ArtCrop { get; set; }
 
-            [JsonProperty("border_crop", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Populate)]
+            [JsonProperty("border_crop")]
             public string BorderCrop { get; set; }
         }
 

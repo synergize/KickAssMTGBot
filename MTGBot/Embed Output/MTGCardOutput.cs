@@ -24,7 +24,14 @@ namespace MTGBot.Embed_Output
         {
             EmbedBuilder Card = new EmbedBuilder();
 
-            Card.ThumbnailUrl = PulledCard.ImageUris.Png ?? "none";            
+            if (PulledCard.Name.Contains("//"))
+            {
+                Card.ThumbnailUrl = PulledCard.card_faces[0].image_uris.Png;
+            }
+            else
+            {
+                Card.ThumbnailUrl = PulledCard.ImageUris.Png ?? "none";
+            }                  
             
             if (PulledCard.Power == null || PulledCard.Toughness == null)
             {
@@ -203,13 +210,14 @@ namespace MTGBot.Embed_Output
 
         private string EmbedLegalityStringBuilder(List<string> listOfStrings)
         {
-            string output = "";
+            string output = "| ";
             foreach (var x in listOfStrings)
             {
                 output += $" {x},";
-            }
-            output.Trim();
-            return output.TrimEnd(',');
+            }            
+            output = output.TrimEnd();
+            output = output.TrimEnd(',');
+            return output += " |";
         }
     }
 
