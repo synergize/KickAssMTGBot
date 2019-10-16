@@ -85,10 +85,9 @@ namespace MTGBot.Embed_Output
             return rulingEmbed;
         }
 
-        private EmbedBuilder APISpellFailure(ScryFallAutoCompleteModel entry)
+        private EmbedBuilder APISpellFailure(ScryFallAutoCompleteModel entry, string nameGiven)
         {
             EmbedBuilder MTGFailure = new EmbedBuilder();
-            MTGFailure.Title = "Card Lookup Failed.";
             MTGFailure.WithColor(failedColor);
             MTGFailure.WithFooter(failedFooter);
             MTGFailure.AddField("Incorrect Spelling: ", "Make sure to correctly type the name of the card you'd like to look up.", true);
@@ -99,7 +98,16 @@ namespace MTGBot.Embed_Output
                 {
                     names += $"{name}\n";
                 }
-                MTGFailure.AddField("Did You Mean?", names);
+                MTGFailure.AddField($"Did You Mean?", names);
+                if (nameGiven != null)
+                {
+                    MTGFailure.Title = $"Card Lookup Failed. Name Provided: {nameGiven}";
+                }
+                else
+                {
+                    MTGFailure.Title = "Card Lookup Failed.";
+                }
+                
             }
             return MTGFailure;
         }
@@ -126,14 +134,14 @@ namespace MTGBot.Embed_Output
             return MTGFailure;
         }
 
-        public EmbedBuilder DetermineFailure(int num, ScryFallAutoCompleteModel entry = null)
+        public EmbedBuilder DetermineFailure(int num, ScryFallAutoCompleteModel entry = null, string entryValue = null)
         {
             switch (num)
             {
                 default:
                     return GenericError();
                 case 0:
-                    return APISpellFailure(entry);
+                    return APISpellFailure(entry, entryValue);
             }
         }
 

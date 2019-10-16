@@ -6,6 +6,7 @@ using MTGBot.Helpers;
 using MTGBot.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -26,7 +27,9 @@ namespace MTGBot.User_Message_Handler
             var cardData = GetScryFallData.PullScryfallData(matchName);
             if (cardData == null)
             {
-                var autoComplete = GetScryFallData.PullScryFallAutoComplete(FormatUserInput.FormatEntry(matchName));
+                var formattedName = FormatUserInput.FormatEntry(matchName).ToLower();
+
+                var autoComplete = GetScryFallData.PullScryFallAutoComplete(formattedName);
 
                 if (autoComplete.data.Count == 0)
                 {
@@ -34,7 +37,7 @@ namespace MTGBot.User_Message_Handler
                 }
                 else
                 {
-                    return MessageOutput.DetermineFailure(0, autoComplete);
+                    return MessageOutput.DetermineFailure(0, autoComplete, formattedName);
                 }
 
             }
