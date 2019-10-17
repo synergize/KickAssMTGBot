@@ -145,7 +145,7 @@ namespace MTGBot.Models
             public string BorderColor { get; set; }
 
             [JsonProperty("frame")]
-            public long Frame { get; set; }
+            public string Frame { get; set; }
 
             [JsonProperty("full_art")]
             public bool FullArt { get; set; }
