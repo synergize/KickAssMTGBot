@@ -221,6 +221,9 @@ namespace MTGBot.Models
 
             [JsonProperty("oldschool")]
             public string Oldschool { get; set; }
+
+            [JsonProperty("pioneer")]
+            public string Pioneer { get; set; }
         }
 
         public class Prices
