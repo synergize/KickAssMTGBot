@@ -1,4 +1,5 @@
 ﻿using Discord;
+using MTGBot.Helpers;
 using MTGBot.Models;
 using System.Collections.Generic;
 
@@ -24,7 +25,7 @@ namespace MTGBot.Embed_Output
         {
             EmbedBuilder Card = new EmbedBuilder();
 
-            if (PulledCard.Name.Contains("//") && !PulledCard.ManaCost.Contains("//"))
+            if (PulledCard.Layout == ScryfallEnums.transform.ToString())
             {
                 Card.ThumbnailUrl = PulledCard.card_faces[0].image_uris.Png;
             }
