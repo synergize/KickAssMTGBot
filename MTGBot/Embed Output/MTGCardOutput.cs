@@ -24,7 +24,7 @@ namespace MTGBot.Embed_Output
         {
             EmbedBuilder Card = new EmbedBuilder();
 
-            if (PulledCard.Name.Contains("//"))
+            if (PulledCard.Name.Contains("//") && !PulledCard.ManaCost.Contains("//"))
             {
                 Card.ThumbnailUrl = PulledCard.card_faces[0].image_uris.Png;
             }
