@@ -169,6 +169,7 @@ namespace MTGBot.DataLookup
             LegalitiesDictonary.Add("Vintage", LegalityDictionary.Legality[legalities.Vintage]);
             LegalitiesDictonary.Add("Commander", LegalityDictionary.Legality[legalities.Commander]);
             LegalitiesDictonary.Add("Pauper", LegalityDictionary.Legality[legalities.Pauper]);
+            LegalitiesDictonary.Add("Pioneer", LegalityDictionary.Legality[legalities.Pioneer]);
 
             return LegalitiesDictonary;
         }
