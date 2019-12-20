@@ -1,0 +1,65 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\Couchbase\\Couchbase.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\Couchbase\\Couchbase.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\Couchbase\\Couchbase.csproj",
+        "projectName": "Couchbase",
+        "projectPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\Couchbase\\Couchbase.csproj",
+        "packagesPath": "C:\\Users\\err0r\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\Couchbase\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\err0r\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\err0r\\Downloads\\selenium-dotnet-3.14.0\\dist": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "CouchbaseNetClient": {
+              "target": "Package",
+              "version": "[2.7.15, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

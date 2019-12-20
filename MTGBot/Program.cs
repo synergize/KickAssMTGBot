@@ -19,6 +19,8 @@ namespace MTGBot
         private CommandService Commands;
         private DateTime Time = DateTime.UtcNow;
         private bool DeliveredMovers = false;
+        
+
         static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
 
 
@@ -26,9 +28,10 @@ namespace MTGBot
         {
             Console.WriteLine("Loading Filters.");
             LegalityDictionary.LoadLegalityDict();
-            var aTimer = new Timer(60 * 60 * 1000); //one hour in milliseconds
+            var aTimer = new Timer(900000); //fifteen minutes in milliseconds
             aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            
+            aTimer.Start();
+
 
             Client = new DiscordSocketClient(new DiscordSocketConfig
             {
@@ -120,13 +123,18 @@ namespace MTGBot
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
+            Client.GetGuild(489193860698734596).GetTextChannel(489193860702928900).SendMessageAsync("testing timer");
             if (Time.AddHours(-24) > DateTime.UtcNow || DeliveredMovers == false)
             {
                 Time = DateTime.UtcNow;
                 DeliveredMovers = true;
                 MoversShakersJSONController Read = new MoversShakersJSONController();
-
             }
+
+
         }
+
+            
+           
     }
 }

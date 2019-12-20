@@ -1,0 +1,11 @@
+C:\Users\err0r\source\repos\KickAssMTGBot\Couchbase\bin\Debug\netcoreapp2.2\Couchbase.deps.json
+C:\Users\err0r\source\repos\KickAssMTGBot\Couchbase\bin\Debug\netcoreapp2.2\Couchbase.runtimeconfig.json
+C:\Users\err0r\source\repos\KickAssMTGBot\Couchbase\bin\Debug\netcoreapp2.2\Couchbase.runtimeconfig.dev.json
+C:\Users\err0r\source\repos\KickAssMTGBot\Couchbase\bin\Debug\netcoreapp2.2\Couchbase.dll
+C:\Users\err0r\source\repos\KickAssMTGBot\Couchbase\obj\Debug\netcoreapp2.2\Couchbase.csproj.CoreCompileInputs.cache
+C:\Users\err0r\source\repos\KickAssMTGBot\Couchbase\obj\Debug\netcoreapp2.2\Couchbase.AssemblyInfoInputs.cache
+C:\Users\err0r\source\repos\KickAssMTGBot\Couchbase\obj\Debug\netcoreapp2.2\Couchbase.AssemblyInfo.cs
+C:\Users\err0r\source\repos\KickAssMTGBot\Couchbase\bin\Debug\netcoreapp2.2\Couchbase.pdb
+C:\Users\err0r\source\repos\KickAssMTGBot\Couchbase\obj\Debug\netcoreapp2.2\Couchbase.csprojAssemblyReference.cache
+C:\Users\err0r\source\repos\KickAssMTGBot\Couchbase\obj\Debug\netcoreapp2.2\Couchbase.dll
+C:\Users\err0r\source\repos\KickAssMTGBot\Couchbase\obj\Debug\netcoreapp2.2\Couchbase.pdb

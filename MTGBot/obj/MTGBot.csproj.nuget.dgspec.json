@@ -4,14 +4,14 @@
     "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {
+    "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\Couchbase\\Couchbase.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
-        "projectName": "MTGBot",
-        "projectPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
+        "projectUniqueName": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\Couchbase\\Couchbase.csproj",
+        "projectName": "Couchbase",
+        "projectPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\Couchbase\\Couchbase.csproj",
         "packagesPath": "C:\\Users\\err0r\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\obj\\",
+        "outputPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\Couchbase\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -42,6 +42,71 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "CouchbaseNetClient": {
+              "target": "Package",
+              "version": "[2.7.15, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    },
+    "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
+        "projectName": "MTGBot",
+        "projectPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
+        "packagesPath": "C:\\Users\\err0r\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\err0r\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\err0r\\Downloads\\selenium-dotnet-3.14.0\\dist": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\Couchbase\\Couchbase.csproj": {
+                "projectPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\Couchbase\\Couchbase.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "CouchbaseNetClient": {
+              "target": "Package",
+              "version": "[2.7.15, )"
+            },
             "Discord.Net.Commands": {
               "target": "Package",
               "version": "[2.1.1, )"
@@ -62,7 +127,7 @@
             },
             "Newtonsoft.Json": {
               "target": "Package",
-              "version": "[12.0.2, )"
+              "version": "[12.0.3, )"
             },
             "Selenium.Support": {
               "target": "Package",

@@ -9,3 +9,6 @@ C:\Users\err0r\source\repos\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.
 C:\Users\err0r\source\repos\KickAssMTGBot\MTGBot\bin\Debug\netcoreapp2.2\MTGBot.pdb
 C:\Users\err0r\source\repos\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.dll
 C:\Users\err0r\source\repos\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.pdb
+C:\Users\err0r\source\repos\KickAssMTGBot\MTGBot\bin\Debug\netcoreapp2.2\Couchbase.dll
+C:\Users\err0r\source\repos\KickAssMTGBot\MTGBot\bin\Debug\netcoreapp2.2\Couchbase.pdb
+C:\Users\err0r\source\repos\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.csproj.CopyComplete
