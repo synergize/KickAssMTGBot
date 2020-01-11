@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using VTFileSystemManagement;
+using WebScraping.Data_Models;
 
 namespace MTGBot.Data.ReadWriteJSON
 {
-    class MoversShakersJSONController
+    public static class MoversShakersJSONController
     {
-        public void SaveMoversChannelToJson(ulong channelID, ulong serverID)
+        public static void SaveMoversChannelToJson(ulong channelID, ulong serverID)
         {
             string FilePath = FilePathingStaticData.BuildFilePath($"{serverID}.json");
             var ReadFile = ReadStatsJson(serverID);
@@ -41,7 +43,7 @@ namespace MTGBot.Data.ReadWriteJSON
 
 
         }
-        public DiscordServerChannelModel ReadStatsJson(ulong serverID)
+        public static DiscordServerChannelModel ReadStatsJson(ulong serverID)
         {
             DiscordServerChannelModel obj = new DiscordServerChannelModel();
             string FilePath = FilePathingStaticData.BuildFilePath($"{serverID}.json");
@@ -56,7 +58,7 @@ namespace MTGBot.Data.ReadWriteJSON
                 return null;
             }
         }
-        private bool CheckFileExists(string FilePath)
+        private static bool CheckFileExists(string FilePath)
         {
             string newDir = FilePathingStaticData.BuildFilePathDirectory(FilePathingStaticData._DataDirectory);
             if (!Directory.Exists(newDir))
@@ -74,10 +76,31 @@ namespace MTGBot.Data.ReadWriteJSON
                 return true;
             }
         }
-        private DiscordServerChannelModel UpdateServerInfo(DiscordServerChannelModel obj, ulong channelID)
+        private static DiscordServerChannelModel UpdateServerInfo(DiscordServerChannelModel obj, ulong channelID)
         {
             obj.channelID = channelID;
             return obj;
         }
+
+        public static MoverCardDataModel ReadMoversShakersJsonByName(string fileName)
+        {
+            FileSystemManager fileSystem = new FileSystemManager();
+            
+            if (fileSystem.IsFileExists(fileName))
+            {
+                return JsonConvert.DeserializeObject<MoverCardDataModel>(fileSystem.ReadJsonFile(fileName));
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static void WriteMoverShakersJsonByFileName(object obj, string fileName)
+        {
+            FileSystemManager fileSystem = new FileSystemManager();
+            fileSystem.SaveJsonFile(obj, fileName);
+        }
+        
     }
 }

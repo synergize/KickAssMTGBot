@@ -15,6 +15,7 @@
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
     <PackageReference Include="Selenium.WebDriverBackedSelenium" Version="3.141.0" />
     <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
+    <PackageReference Include="VTFileSystemManagement" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>

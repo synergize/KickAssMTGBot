@@ -1365,11 +1365,24 @@
           "lib/netstandard1.3/System.Threading.ThreadPool.dll": {}
         }
       },
+      "VTFileSystemManagement/1.0.7": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "compile": {
+          "lib/netcoreapp2.2/VTFileSystemManagement.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.2/VTFileSystemManagement.dll": {}
+        }
+      },
       "Couchbase/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
-          "CouchbaseNetClient": "2.7.15"
+          "CouchbaseNetClient": "2.7.15",
+          "VTFileSystemManagement": "1.0.7"
         },
         "compile": {
           "bin/placeholder/Couchbase.dll": {}
@@ -4747,6 +4760,17 @@
         "system.threading.threadpool.nuspec"
       ]
     },
+    "VTFileSystemManagement/1.0.7": {
+      "sha512": "DNgA8uxntohbkI/d7wQeWFrjA4+jSqktE8VNtKYxwd2eYVbI89tOovMapp+gWer67/f3K+Bn40mfJ+X+/tPlig==",
+      "type": "package",
+      "path": "vtfilesystemmanagement/1.0.7",
+      "files": [
+        ".nupkg.metadata",
+        "lib/netcoreapp2.2/VTFileSystemManagement.dll",
+        "vtfilesystemmanagement.1.0.7.nupkg.sha512",
+        "vtfilesystemmanagement.nuspec"
+      ]
+    },
     "Couchbase/1.0.0": {
       "type": "project",
       "path": "../Couchbase/Couchbase.csproj",
@@ -4765,7 +4789,8 @@
       "Selenium.Support >= 3.141.0",
       "Selenium.WebDriver >= 3.141.0",
       "Selenium.WebDriverBackedSelenium >= 3.141.0",
-      "System.Runtime.Extensions >= 4.3.1"
+      "System.Runtime.Extensions >= 4.3.1",
+      "VTFileSystemManagement >= 1.0.7"
     ]
   },
   "packageFolders": {
@@ -4794,6 +4819,7 @@
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Users\\err0r\\Downloads\\selenium-dotnet-3.14.0\\dist": {},
+        "\\\\DESKTOP-JF26JGH\\PersonalNugetLibraries": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4855,6 +4881,10 @@
           "System.Runtime.Extensions": {
             "target": "Package",
             "version": "[4.3.1, )"
+          },
+          "VTFileSystemManagement": {
+            "target": "Package",
+            "version": "[1.0.7, )"
           }
         },
         "imports": [

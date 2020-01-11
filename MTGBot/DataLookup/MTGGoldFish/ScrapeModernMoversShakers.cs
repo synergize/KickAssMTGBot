@@ -1,4 +1,5 @@
 ﻿using MTGBot.Data;
+using MTGBot.Data.ReadWriteJSON;
 using MTGBot.DataLookup.Selenium;
 using OpenQA.Selenium;
 using System;
@@ -82,6 +83,7 @@ namespace MTGBot.DataLookup.MTGGoldFish
 
                 }
 
+                MoversShakersJSONController.WriteMoverShakersJsonByFileName(DailyList, $"{movertype.ToString()}.json");
                 return DailyList;
             }
             catch (Exception E)

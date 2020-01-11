@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MTGBot.Models
 {
-    class DiscordServerChannelModel
+    public class DiscordServerChannelModel
     {
         public ulong serverID { get; set; }
         public ulong channelID { get; set; }

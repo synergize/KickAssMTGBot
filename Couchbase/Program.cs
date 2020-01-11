@@ -1,5 +1,6 @@
 ﻿using Couchbase.Helpers;
 using System;
+using VTFileSystemManagement;
 
 namespace Couchbase
 {
@@ -7,8 +8,18 @@ namespace Couchbase
     {
         static void Main(string[] args)
         {
-            SetupCouchbaseConnections Testing = new SetupCouchbaseConnections();
-            Testing.ReadDocument(Testing.CreateDocument());
+            try
+            {
+                SetupCouchbaseConnections Testing = new SetupCouchbaseConnections();
+                Testing.ReadDocument(Testing.CreateDocument());
+            }
+            catch (Exception e)
+            {
+                FileSystemManager fileSystem = new FileSystemManager("Logs");
+                fileSystem.LogException(e);
+                throw;
+            }
+
             
         }
     }

@@ -15,7 +15,7 @@ namespace Couchbase.Helpers
         {
             var cluster = new Cluster(new ClientConfiguration
             {
-                Servers = new List<Uri> { new Uri("http://192.168.1.172") }
+                Servers = new List<Uri> { new Uri("http://192.168.1.172:8091") }
             });
 
             var authenticator = new PasswordAuthenticator(username, password);

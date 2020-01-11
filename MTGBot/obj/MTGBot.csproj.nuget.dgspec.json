@@ -26,6 +26,7 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Users\\err0r\\Downloads\\selenium-dotnet-3.14.0\\dist": {},
+          "\\\\DESKTOP-JF26JGH\\PersonalNugetLibraries": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -51,6 +52,10 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "VTFileSystemManagement": {
+              "target": "Package",
+              "version": "[1.0.7, )"
             }
           },
           "imports": [
@@ -83,6 +88,7 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Users\\err0r\\Downloads\\selenium-dotnet-3.14.0\\dist": {},
+          "\\\\DESKTOP-JF26JGH\\PersonalNugetLibraries": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -144,6 +150,10 @@
             "System.Runtime.Extensions": {
               "target": "Package",
               "version": "[4.3.1, )"
+            },
+            "VTFileSystemManagement": {
+              "target": "Package",
+              "version": "[1.0.7, )"
             }
           },
           "imports": [
