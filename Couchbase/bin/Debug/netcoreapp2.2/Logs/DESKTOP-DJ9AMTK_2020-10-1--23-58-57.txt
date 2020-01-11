@@ -1,0 +1,7 @@
+Couchbase.Configuration.Server.Serialization.BootstrapException
+Message : Could not bootstrap - check inner exceptions for details. (Authentication failed for bucket 'MoversShakersServerStorage') (Could not bootstrap with CCCP. (Authentication failed for bucket 'MoversShakersServerStorage')) (MoversShakersServerStorage)
+StackTrace :    at Couchbase.Core.ClusterController.CreateBucketImpl(String bucketName, String password, IAuthenticator authenticator) in C:\Jenkins\workspace\dotnet-sdk\couchbase-net-client-scripted-build-pipeline\couchbase-net-client\Src\Couchbase\Core\ClusterController.cs:line 383
+   at Couchbase.Core.ClusterController.CreateBucket(String bucketName, String password, IAuthenticator authenticator) in C:\Jenkins\workspace\dotnet-sdk\couchbase-net-client-scripted-build-pipeline\couchbase-net-client\Src\Couchbase\Core\ClusterController.cs:line 266
+   at Couchbase.Helpers.SetupCouchbaseConnections.ReadDocument(Document`1 document) in C:\Users\err0r\Source\Repos\synergize\KickAssMTGBot\Couchbase\Helpers\SetupCouchbaseConnections.cs:line 73
+   at Couchbase.Program.Main(String[] args) in C:\Users\err0r\Source\Repos\synergize\KickAssMTGBot\Couchbase\Program.cs:line 14
+Inner Exception : Authentication failed for bucket 'MoversShakersServerStorage'

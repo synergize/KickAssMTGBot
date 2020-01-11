@@ -11,13 +11,13 @@ namespace Couchbase
             try
             {
                 SetupCouchbaseConnections Testing = new SetupCouchbaseConnections();
-                Testing.ReadDocument(Testing.CreateDocument());
+                var test = Testing.ReadDocument("Hello", "MoversShakersServerStorage");
+                int i = 0;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 FileSystemManager fileSystem = new FileSystemManager("Logs");
-                fileSystem.LogException(e);
-                throw;
+                fileSystem.LogException(ex);
             }
 
             

@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="CouchbaseNetClient" Version="2.7.15" />
-    <PackageReference Include="VTFileSystemManagement" Version="1.0.7" />
+    <PackageReference Include="VTFileSystemManagement" Version="1.0.9" />
   </ItemGroup>
 
 </Project>
