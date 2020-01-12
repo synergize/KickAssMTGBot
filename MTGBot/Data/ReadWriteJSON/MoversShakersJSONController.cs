@@ -100,7 +100,6 @@ namespace MTGBot.Data.ReadWriteJSON
         {
             FileSystemManager fileSystem = new FileSystemManager();
             fileSystem.SaveJsonFile(obj, fileName);
-        }
-        
+        }        
     }
 }

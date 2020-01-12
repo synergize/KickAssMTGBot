@@ -28,7 +28,7 @@ namespace MTGBot.DataLookup.MTGGoldFish
             }
         }
 
-        public async Task<List<MoverCardDataModel>> GetListMoversShakesTable(MoversShakersEnum movertype, string elementXPath)
+        public List<MoverCardDataModel> GetListMoversShakesTable(MoversShakersEnum movertype, string elementXPath)
         {
             try
             {
@@ -73,9 +73,9 @@ namespace MTGBot.DataLookup.MTGGoldFish
             catch (Exception E)
             {
                 Console.WriteLine(E);
-                throw;
+                driver.Close();
+                throw new Exception("Undefined exception occured. Selenium driver closed.");
             }
-
         }
 
         private string[] DetermineCardNames(MoversShakersEnum moverType)
@@ -100,7 +100,8 @@ namespace MTGBot.DataLookup.MTGGoldFish
 
             for (int i = 0; i < NameArry.Length; i++)
             {
-                var DailyName = driver.FindElement(By.XPath($"/html/body/div[2]/div[6]/div[1]/div/div/div[1]/table/tbody/tr[{i + 1}]/td[4]/a"));
+
+                var DailyName = driver.FindElement(By.XPath($"/html/body/main/div[6]/div[1]/div/div/div[1]/table/tbody/tr[{i + 1}]/td[4]/a"));
                 NameArry[i] = DailyName.Text;
             }
             return NameArry;
@@ -112,7 +113,7 @@ namespace MTGBot.DataLookup.MTGGoldFish
 
             for (int i = 0; i < NameArry.Length; i++)
             {
-                var Name = driver.FindElement(By.XPath($"/html/body/div[2]/div[6]/div[1]/div/div/div[2]/table/tbody/tr[{i + 1}]/td[4]/a"));
+                var Name = driver.FindElement(By.XPath($"/html/body/main/div[6]/div[1]/div/div/div[1]/table/tbody/tr[{i + 1}]/td[4]/a"));
                 NameArry[i] = Name.Text;
             }
             return NameArry;
@@ -123,7 +124,7 @@ namespace MTGBot.DataLookup.MTGGoldFish
 
             for (int i = 0; i < NameArry.Length; i++)
             {
-                var Name = driver.FindElement(By.XPath($"/html/body/div[2]/div[7]/div[1]/div/div/div[1]/table/tbody/tr[{i + 1}]/td[4]/a"));
+                var Name = driver.FindElement(By.XPath($"/html/body/main/div[6]/div[1]/div/div/div[1]/table/tbody/tr[{i + 1}]/td[4]/a"));
                 NameArry[i] = Name.Text;
             }
             return NameArry;
@@ -134,7 +135,7 @@ namespace MTGBot.DataLookup.MTGGoldFish
 
             for (int i = 0; i < NameArry.Length; i++)
             {
-                var Name = driver.FindElement(By.XPath($"/html/body/div[2]/div[7]/div[1]/div/div/div[2]/table/tbody/tr[{i + 1}]/td[4]/a"));
+                var Name = driver.FindElement(By.XPath($"/html/body/main/div[6]/div[1]/div/div/div[1]/table/tbody/tr[{i + 1}]/td[4]/a"));
                 NameArry[i] = Name.Text;
             }
             return NameArry;
