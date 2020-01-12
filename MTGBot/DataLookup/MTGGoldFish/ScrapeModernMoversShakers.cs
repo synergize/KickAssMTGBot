@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using WebScraping.Data_Models;
 
 namespace MTGBot.DataLookup.MTGGoldFish
@@ -26,8 +27,8 @@ namespace MTGBot.DataLookup.MTGGoldFish
                 throw;
             }
         }
-        
-        public List<MoverCardDataModel> GetListMoversShakesTable(MoversShakersEnum movertype, string elementXPath)
+
+        public async Task<List<MoverCardDataModel>> GetListMoversShakesTable(MoversShakersEnum movertype, string elementXPath)
         {
             try
             {
@@ -36,25 +37,8 @@ namespace MTGBot.DataLookup.MTGGoldFish
                 var DailyChangeIncrease = driver.FindElements(By.XPath(elementXPath));
                 int elementCounter = 0;
                 int nameCounter = 0;
-                string[] CardNames = null;
+                string[] CardNames = DetermineCardNames(movertype);
 
-                switch (movertype)
-                {
-                    default:
-                        break;
-                    case MoversShakersEnum.DailyIncrease:
-                        CardNames = GetDailyIncreaseNames();
-                        break;
-                    case MoversShakersEnum.DailyDecrease:
-                        CardNames = GetDailyDecreaseNames();
-                        break;
-                    case MoversShakersEnum.WeeklyIncrease:
-                        CardNames = GetWeeklyIncreaseNames();
-                        break;
-                    case MoversShakersEnum.WeeklyDecrease:
-                        CardNames = GetWeeklyDecreaseNames();
-                        break;
-                }
 
                 foreach (var item in DailyChangeIncrease)
                 {
@@ -88,10 +72,27 @@ namespace MTGBot.DataLookup.MTGGoldFish
             }
             catch (Exception E)
             {
-                Console.WriteLine(E);    
+                Console.WriteLine(E);
                 throw;
             }
 
+        }
+
+        private string[] DetermineCardNames(MoversShakersEnum moverType)
+        {
+            switch (moverType)
+            {
+                default:
+                    return null;
+                case MoversShakersEnum.DailyIncrease:
+                    return GetDailyIncreaseNames();
+                case MoversShakersEnum.DailyDecrease:
+                    return GetDailyDecreaseNames();
+                case MoversShakersEnum.WeeklyIncrease:
+                    return GetWeeklyIncreaseNames();
+                case MoversShakersEnum.WeeklyDecrease:
+                    return GetWeeklyDecreaseNames();
+            }
         }
         private string[] GetDailyIncreaseNames()
         {
