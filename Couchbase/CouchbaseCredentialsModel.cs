@@ -11,7 +11,8 @@ namespace Couchbase
 
         public CouchbaseCredentialsModel(string username, string password)
         {
-
+            Username = username;
+            Password = password;
         }
     }
 }

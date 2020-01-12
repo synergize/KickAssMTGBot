@@ -11,8 +11,7 @@ namespace Couchbase
             try
             {
                 SetupCouchbaseConnections Testing = new SetupCouchbaseConnections();
-                var test = Testing.ReadDocument("Hello", "MoversShakersServerStorage");
-                int i = 0;
+                Testing.WriteDocument(Testing.CreateDocument(), "MoversShakersServerStorage");
             }
             catch (Exception ex)
             {
