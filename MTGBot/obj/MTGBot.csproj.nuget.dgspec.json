@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {}
+    "C:\\Users\\err0r\\source\\repos\\synergize\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {
+    "C:\\Users\\err0r\\source\\repos\\synergize\\KickAssMTGBot\\MTGBot\\MTGBot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
+        "projectUniqueName": "C:\\Users\\err0r\\source\\repos\\synergize\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
         "projectName": "MTGBot",
-        "projectPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
+        "projectPath": "C:\\Users\\err0r\\source\\repos\\synergize\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
         "packagesPath": "C:\\Users\\err0r\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\err0r\\source\\repos\\KickAssMTGBot\\MTGBot\\obj\\",
+        "outputPath": "C:\\Users\\err0r\\source\\repos\\synergize\\KickAssMTGBot\\MTGBot\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -25,7 +25,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Users\\err0r\\Downloads\\selenium-dotnet-3.14.0\\dist": {},
+          "\\\\DESKTOP-JF26JGH\\PersonalNugetLibraries": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -62,7 +62,7 @@
             },
             "Newtonsoft.Json": {
               "target": "Package",
-              "version": "[12.0.2, )"
+              "version": "[12.0.3, )"
             },
             "Selenium.Support": {
               "target": "Package",
@@ -79,13 +79,23 @@
             "System.Runtime.Extensions": {
               "target": "Package",
               "version": "[4.3.1, )"
+            },
+            "VTFileSystemManagement": {
+              "target": "Package",
+              "version": "[1.0.9, )"
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

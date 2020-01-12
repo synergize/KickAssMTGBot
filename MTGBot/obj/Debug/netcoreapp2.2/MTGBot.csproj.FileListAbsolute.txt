@@ -9,3 +9,13 @@ C:\Users\err0r\source\repos\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.
 C:\Users\err0r\source\repos\KickAssMTGBot\MTGBot\bin\Debug\netcoreapp2.2\MTGBot.pdb
 C:\Users\err0r\source\repos\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.dll
 C:\Users\err0r\source\repos\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.pdb
+C:\Users\err0r\source\repos\synergize\KickAssMTGBot\MTGBot\bin\Debug\netcoreapp2.2\MTGBot.deps.json
+C:\Users\err0r\source\repos\synergize\KickAssMTGBot\MTGBot\bin\Debug\netcoreapp2.2\MTGBot.runtimeconfig.json
+C:\Users\err0r\source\repos\synergize\KickAssMTGBot\MTGBot\bin\Debug\netcoreapp2.2\MTGBot.runtimeconfig.dev.json
+C:\Users\err0r\source\repos\synergize\KickAssMTGBot\MTGBot\bin\Debug\netcoreapp2.2\MTGBot.dll
+C:\Users\err0r\source\repos\synergize\KickAssMTGBot\MTGBot\bin\Debug\netcoreapp2.2\MTGBot.pdb
+C:\Users\err0r\source\repos\synergize\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.csprojAssemblyReference.cache
+C:\Users\err0r\source\repos\synergize\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.AssemblyInfoInputs.cache
+C:\Users\err0r\source\repos\synergize\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.AssemblyInfo.cs
+C:\Users\err0r\source\repos\synergize\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.dll
+C:\Users\err0r\source\repos\synergize\KickAssMTGBot\MTGBot\obj\Debug\netcoreapp2.2\MTGBot.pdb
