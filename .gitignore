@@ -11,3 +11,6 @@
 /.vs/slnx.sqlite
 /.vs/MTGBot/DesignTimeBuild/.dtbcache
 /.vs/VSWorkspaceState.json
+/Couchbase/obj
+/MTGBot/obj/Debug/netcoreapp2.2
+/MTGBot/obj
