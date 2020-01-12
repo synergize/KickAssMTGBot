@@ -51,7 +51,7 @@ namespace MTGBot
             Client.Ready += Client_Ready;
             Client.Log += Log;
 
-            string Token = "NTY4OTY0NzU4NTU3MDMyNDQ4.XLpvvg.F7RriGrRGW4sI2IrfeNWtWNlAGU";
+            string Token = BotToken.GetTokenString();
             await Client.LoginAsync(TokenType.Bot, Token);
             await Client.StartAsync();
             await Task.Delay(-1);
