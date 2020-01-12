@@ -11,3 +11,6 @@
 /.vs/slnx.sqlite
 /.vs/MTGBot/DesignTimeBuild/.dtbcache
 /.vs/VSWorkspaceState.json
+/MTGBot/bin
+/MTGBot/obj
+/MTGBot/MTGBot.csproj.user

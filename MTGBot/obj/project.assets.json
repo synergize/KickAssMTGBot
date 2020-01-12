@@ -4798,11 +4798,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\err0r\\Source\\Repos\\synergize\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
+      "projectUniqueName": "C:\\Users\\err0r\\source\\repos\\synergize\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
       "projectName": "MTGBot",
-      "projectPath": "C:\\Users\\err0r\\Source\\Repos\\synergize\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
+      "projectPath": "C:\\Users\\err0r\\source\\repos\\synergize\\KickAssMTGBot\\MTGBot\\MTGBot.csproj",
       "packagesPath": "C:\\Users\\err0r\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\err0r\\Source\\Repos\\synergize\\KickAssMTGBot\\MTGBot\\obj\\",
+      "outputPath": "C:\\Users\\err0r\\source\\repos\\synergize\\KickAssMTGBot\\MTGBot\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -4822,8 +4822,8 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\Users\\err0r\\Source\\Repos\\synergize\\KickAssMTGBot\\Couchbase\\Couchbase.csproj": {
-              "projectPath": "C:\\Users\\err0r\\Source\\Repos\\synergize\\KickAssMTGBot\\Couchbase\\Couchbase.csproj"
+            "C:\\Users\\err0r\\source\\repos\\synergize\\KickAssMTGBot\\Couchbase\\Couchbase.csproj": {
+              "projectPath": "C:\\Users\\err0r\\source\\repos\\synergize\\KickAssMTGBot\\Couchbase\\Couchbase.csproj"
             }
           }
         }

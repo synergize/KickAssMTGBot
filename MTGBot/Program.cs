@@ -128,7 +128,7 @@ namespace MTGBot
             {
                 Time = DateTime.UtcNow;
                 DeliveredMovers = true;
-                MoversShakersJSONController Read = new MoversShakersJSONController();
+                //MoversShakersJSONController Read = new MoversShakersJSONController();
             }
 
 
