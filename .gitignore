@@ -13,4 +13,6 @@
 /.vs/VSWorkspaceState.json
 /MTGBot/bin
 /MTGBot/obj
+/Couchbase/obj
+/Couchbase/bin
 /MTGBot/MTGBot.csproj.user
