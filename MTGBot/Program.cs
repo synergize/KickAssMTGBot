@@ -107,7 +107,7 @@ namespace MTGBot
         }
 
         //If someone adds a reaction, run x code. 
-        private async Task OnReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel Channel, SocketReaction Reaction)
+        private void OnReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel Channel, SocketReaction Reaction)
         {
             //If a bot sends the reaction, disregard. 
             if (((SocketUser)Reaction.User).IsBot) return;

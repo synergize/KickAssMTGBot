@@ -12,7 +12,8 @@
 /.vs/MTGBot/DesignTimeBuild/.dtbcache
 /.vs/VSWorkspaceState.json
 /MTGBot/bin
-/MTGBot/obj
 /Couchbase/obj
 /Couchbase/bin
 /MTGBot/MTGBot.csproj.user
+/MTGBot/obj/Debug/netcoreapp2.2
+/MTGBot/obj
