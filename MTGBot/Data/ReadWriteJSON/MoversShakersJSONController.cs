@@ -4,80 +4,70 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using VTFileSystemManagement;
 
 namespace MTGBot.Data.ReadWriteJSON
 {
-    class MoversShakersJSONController
+    public static class MoversShakersJSONController
     {
-        public void SaveMoversChannelToJson(ulong channelID, ulong serverID)
+        private const string serverInfoLocation = @"\\DESKTOP-JF26JGH\MoversAndShakersJsonData";
+
+        public static void AddChannelFormat(DiscordServerChannelModel serverInformation, string formatName)
         {
-            string FilePath = FilePathingStaticData.BuildFilePath($"{serverID}.json");
-            var ReadFile = ReadStatsJson(serverID);
-            if (ReadFile == null)
+            var listFormats = serverInformation.ListOfFormats ?? new List<string>();
+
+            if (!listFormats.Contains(formatName))
             {
-                DiscordServerChannelModel newEntry = new DiscordServerChannelModel();
-                newEntry.channelID = channelID;
-                newEntry.serverID = serverID;
-                using (StreamWriter file = File.CreateText(FilePath))
-                {
-                    var serializer = new JsonSerializer
-                    {
-                        Formatting = Formatting.Indented
-                    };
-                    serializer.Serialize(file, newEntry);
-                }
-            }
-            else
-            {
-                using (StreamWriter file = File.CreateText(FilePath))
-                {
-                    var serializer = new JsonSerializer
-                    {
-                        Formatting = Formatting.Indented
-                    };
-                    serializer.Serialize(file, UpdateServerInfo(ReadFile, channelID));
-                }
+                listFormats.Add(formatName);
             }
 
-
+            serverInformation.ListOfFormats = listFormats;
+            UpdateServerInfo(serverInformation);
         }
-        public DiscordServerChannelModel ReadStatsJson(ulong serverID)
-        {
-            DiscordServerChannelModel obj = new DiscordServerChannelModel();
-            string FilePath = FilePathingStaticData.BuildFilePath($"{serverID}.json");
-            if (CheckFileExists(FilePath))
-            {
-                obj = JsonConvert.DeserializeObject<DiscordServerChannelModel>(File.ReadAllText(FilePath));
 
-                return obj;
+        public static void RemoveChannelFormat(DiscordServerChannelModel serverInformation, string formatName)
+        {
+            var listFormats = serverInformation.ListOfFormats ?? new List<string>();
+
+            if (listFormats.Contains(formatName))
+            {
+                listFormats.Remove(formatName);
+            }
+
+            serverInformation.ListOfFormats = listFormats;
+            UpdateServerInfo(serverInformation);
+        }
+
+        public static DiscordServerChannelModel ReadMoversShakersConfig(ulong serverID)
+        {
+            FileSystemManager fileSystem = new FileSystemManager();
+            var fileName = $"{serverID}.json";
+
+            if (fileSystem.IsFileExists(fileName, serverInfoLocation))
+            {
+                return JsonConvert.DeserializeObject<DiscordServerChannelModel>(fileSystem.ReadJsonFileFromSpecificLocation(fileName, serverInfoLocation));
             }
             else
             {
                 return null;
             }
         }
-        private bool CheckFileExists(string FilePath)
+
+        public static DiscordServerChannelModel UpdateServerInfo(DiscordServerChannelModel serverInformation)
         {
-            string newDir = FilePathingStaticData.BuildFilePathDirectory(FilePathingStaticData._DataDirectory);
-            if (!Directory.Exists(newDir))
+            string FilePath = Path.Combine(serverInfoLocation, $"{serverInformation.serverID}.json");
+
+            using (StreamWriter file = File.CreateText(FilePath))
             {
-                DirectoryInfo dir = Directory.CreateDirectory(newDir);
+                var serializer = new JsonSerializer
+                {
+                    Formatting = Formatting.Indented
+                };
+                serializer.Serialize(file, serverInformation);
+                Console.WriteLine($"{serverInformation.serverID}.json updated successfully.");
             }
-            if (!File.Exists(FilePath))
-            {
-                var SteamIDJson = File.Create(FilePath);
-                SteamIDJson.Close();
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        private DiscordServerChannelModel UpdateServerInfo(DiscordServerChannelModel obj, ulong channelID)
-        {
-            obj.channelID = channelID;
-            return obj;
+
+            return serverInformation;
         }
     }
 }

@@ -1,12 +1,24 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MTGBot.Models
 {
-    class DiscordServerChannelModel
+    public class DiscordServerChannelModel
     {
         public ulong serverID { get; set; }
         public ulong channelID { get; set; }
+        [JsonProperty("ConfiguredFormats", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> ListOfFormats { get; set; }
+
+        public DiscordServerChannelModel(ulong serverid, ulong channelid)
+        {
+            serverID = serverid;
+            channelID = channelid;
+        }
+
+        public DiscordServerChannelModel()
+        {
+
+        }
     }
 }

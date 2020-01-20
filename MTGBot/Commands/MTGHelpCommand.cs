@@ -1,5 +1,4 @@
 ﻿using Discord.Commands;
-using MTGBot.DataLookup.MTGGoldFish;
 using MTGBot.Embed_Output;
 using System;
 using System.Collections.Generic;
