@@ -48,7 +48,7 @@ namespace MTGBot
             Client.Ready += Client_Ready;
             Client.Log += Log;
 
-            string Token = "NTY4OTY0NzU4NTU3MDMyNDQ4.XLpvvg.F7RriGrRGW4sI2IrfeNWtWNlAGU";
+            string Token = BotToken.GetTokenString();
             await Client.LoginAsync(TokenType.Bot, Token);
             await Client.StartAsync();
             await Task.Delay(-1);
@@ -104,7 +104,7 @@ namespace MTGBot
         }
 
         //If someone adds a reaction, run x code. 
-        private async Task OnReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel Channel, SocketReaction Reaction)
+        private void OnReactionAdded(Cacheable<IUserMessage, ulong> cache, ISocketMessageChannel Channel, SocketReaction Reaction)
         {
             //If a bot sends the reaction, disregard. 
             if (((SocketUser)Reaction.User).IsBot) return;
