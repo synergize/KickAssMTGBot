@@ -1,15 +1,19 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using MTGBot.Data;
 using MTGBot.Data.ReadWriteJSON;
 using MTGBot.DataLookup;
+using MTGBot.DataLookup.MTGGoldFish;
 using MTGBot.Embed_Output;
+using MTGBot.Helpers.Enums;
 using MTGBot.User_Message_Handler;
 using System;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
+using VTFileSystemManagement;
 
 namespace MTGBot
 {
@@ -19,6 +23,7 @@ namespace MTGBot
         private CommandService Commands;
         private DateTime Time = DateTime.UtcNow;
         private bool DeliveredMovers = false;
+        private DateTime MoversShakersTimeStamp = DateTime.MinValue;
         static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
 
 
@@ -26,9 +31,13 @@ namespace MTGBot
         {
             Console.WriteLine("Loading Filters.");
             LegalityDictionary.LoadLegalityDict();
-            var aTimer = new Timer(60 * 60 * 1000); //one hour in milliseconds
+            //var aTimer = new Timer(60 * 60 * 1000); //one hour in milliseconds
+            var aTimer = new Timer(10000);
             aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            aTimer.Start();
+
             
+
 
             Client = new DiscordSocketClient(new DiscordSocketConfig
             {
@@ -51,6 +60,7 @@ namespace MTGBot
             string Token = BotToken.GetTokenString();
             await Client.LoginAsync(TokenType.Bot, Token);
             await Client.StartAsync();
+            //TestingImplementation();
             await Task.Delay(-1);
         }
 
@@ -120,11 +130,25 @@ namespace MTGBot
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            if (Time.AddHours(-24) > DateTime.UtcNow || DeliveredMovers == false)
+            Console.WriteLine($"######## TIMED EVENT STARTED ########");
+            var serverInformation = MoversShakersJSONController.ReadRegisteredDiscordGuilds();
+            var lastScrapeTime = MoversShakersJSONController.AcquireLastScrapeTime();
+
+            foreach (var guild in serverInformation.ListOfRegisteredDiscordGuilds)
             {
-                Time = DateTime.UtcNow;
-                DeliveredMovers = true;
-                //MoversShakersJSONController Read = new MoversShakersJSONController();
+                if (MoversShakersTimeStamp != lastScrapeTime)
+                {
+                    MoversShakersTimeStamp = lastScrapeTime;
+                    try
+                    {
+                        var test = new MTGMoversShakersOutput().DeliverMoversOutputAsync(Client);
+                    }
+                    catch (Exception E)
+                    {
+                        Console.WriteLine(E);
+                    }
+
+                }
             }
         }
     }
