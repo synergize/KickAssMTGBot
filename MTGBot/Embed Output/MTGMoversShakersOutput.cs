@@ -170,7 +170,7 @@ namespace MTGBot.Embed_Output
 
         public async void DetermineDelivery(DiscordSocketClient Client)
         {
-            Console.WriteLine(ConsoleWriteOverride.AddTimeStamp($"######## TIMED EVENT STARTED ########"));
+            Console.WriteLine(ConsoleWriteOverride.AddTimeStamp("### Delivery Check Successfully Started. ###"));
             var serverInformation = MoversShakersJSONController.ReadRegisteredDiscordGuilds();
             var lastScrapeTime = MoversShakersJSONController.AcquireLastScrapeTime();
 
@@ -197,6 +197,7 @@ namespace MTGBot.Embed_Output
                     await new MTGMoversShakersOutput().DeliverMoversOutputAsync(Client);
                 }
             }
+            Console.WriteLine(ConsoleWriteOverride.AddTimeStamp("### Delivery Check Successfully Completed. ###"));
         }
     }
 }

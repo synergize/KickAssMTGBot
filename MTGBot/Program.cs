@@ -61,7 +61,6 @@ namespace MTGBot
 
             Thread.Sleep(3000);
             new MTGMoversShakersOutput().DetermineDelivery(Client);
-            Console.WriteLine($"TimeStamped: {MTGMoversShakersOutput.MoversShakersTimeStamp}");
 
             await Task.Delay(-1);
         }
