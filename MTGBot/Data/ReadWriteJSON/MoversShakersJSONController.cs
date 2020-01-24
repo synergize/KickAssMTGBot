@@ -1,83 +1,160 @@
-﻿using MTGBot.Models;
+﻿using MoversAndShakersScrapingService.Data_Models;
+using MTGBot.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using VTFileSystemManagement;
 
 namespace MTGBot.Data.ReadWriteJSON
 {
-    class MoversShakersJSONController
+    public static class MoversShakersJSONController
     {
-        public void SaveMoversChannelToJson(ulong channelID, ulong serverID)
+        private const string serverInfoLocation = @"\\DESKTOP-JF26JGH\MoversAndShakersJsonData";
+        private const string registeredServerNames = "AllRegisteredServers.json";
+
+        public static DiscordServerChannelModel AddChannelFormat(DiscordServerChannelModel serverInformation, string formatName)
         {
-            string FilePath = FilePathingStaticData.BuildFilePath($"{serverID}.json");
-            var ReadFile = ReadStatsJson(serverID);
-            if (ReadFile == null)
+            var listFormats = serverInformation.ListOfFormats ?? new List<string>();
+
+            if (!listFormats.Contains(formatName))
             {
-                DiscordServerChannelModel newEntry = new DiscordServerChannelModel();
-                newEntry.channelID = channelID;
-                newEntry.serverID = serverID;
-                using (StreamWriter file = File.CreateText(FilePath))
-                {
-                    var serializer = new JsonSerializer
-                    {
-                        Formatting = Formatting.Indented
-                    };
-                    serializer.Serialize(file, newEntry);
-                }
-            }
-            else
-            {
-                using (StreamWriter file = File.CreateText(FilePath))
-                {
-                    var serializer = new JsonSerializer
-                    {
-                        Formatting = Formatting.Indented
-                    };
-                    serializer.Serialize(file, UpdateServerInfo(ReadFile, channelID));
-                }
+                listFormats.Add(formatName);
             }
 
-
+            serverInformation.ListOfFormats = listFormats;
+            serverInformation.LastDeliveredTime = DateTime.MinValue;
+            return UpdateServerInfo(serverInformation);
         }
-        public DiscordServerChannelModel ReadStatsJson(ulong serverID)
-        {
-            DiscordServerChannelModel obj = new DiscordServerChannelModel();
-            string FilePath = FilePathingStaticData.BuildFilePath($"{serverID}.json");
-            if (CheckFileExists(FilePath))
-            {
-                obj = JsonConvert.DeserializeObject<DiscordServerChannelModel>(File.ReadAllText(FilePath));
 
-                return obj;
+        public static DiscordServerChannelModel RemoveChannelFormat(DiscordServerChannelModel serverInformation, string formatName)
+        {
+            var listFormats = serverInformation.ListOfFormats ?? new List<string>();
+
+            if (listFormats.Contains(formatName))
+            {
+                listFormats.Remove(formatName);
+            }
+
+            serverInformation.ListOfFormats = listFormats;
+            return UpdateServerInfo(serverInformation);
+        }
+
+        public static DiscordServerChannelModel ReadMoversShakersConfig(ulong serverID)
+        {
+            FileSystemManager fileSystem = new FileSystemManager();
+            var fileName = $"{serverID}.json";
+
+            if (fileSystem.IsFileExists(fileName, serverInfoLocation))
+            {
+                return JsonConvert.DeserializeObject<DiscordServerChannelModel>(fileSystem.ReadJsonFileFromSpecificLocation(fileName, serverInfoLocation));
             }
             else
             {
                 return null;
             }
         }
-        private bool CheckFileExists(string FilePath)
+
+        public static DiscordServerChannelModel UpdateServerInfo(DiscordServerChannelModel serverInformation)
         {
-            string newDir = FilePathingStaticData.BuildFilePathDirectory(FilePathingStaticData._DataDirectory);
-            if (!Directory.Exists(newDir))
+            string FilePath = Path.Combine(serverInfoLocation, $"{serverInformation.serverID}.json");
+
+            using (StreamWriter file = File.CreateText(FilePath))
             {
-                DirectoryInfo dir = Directory.CreateDirectory(newDir);
+                var serializer = new JsonSerializer
+                {
+                    Formatting = Formatting.Indented
+                };
+                serializer.Serialize(file, serverInformation);
+                Console.WriteLine($"{serverInformation.serverID}.json updated successfully.");
             }
-            if (!File.Exists(FilePath))
+            UpdateListOfRegisteredGuilds(serverInformation);
+            return serverInformation;
+        }
+
+        private static void UpdateListOfRegisteredGuilds(DiscordServerChannelModel serverInformation)
+        {
+            try
             {
-                var SteamIDJson = File.Create(FilePath);
-                SteamIDJson.Close();
-                return false;
+                string FilePath = Path.Combine(serverInfoLocation, registeredServerNames);
+                var currentServerInfo = ReadRegisteredDiscordGuilds();
+
+                if (currentServerInfo.ListOfRegisteredDiscordGuilds == null)
+                {
+                    currentServerInfo.ListOfRegisteredDiscordGuilds = new List<ulong>();
+                }
+
+                if (!currentServerInfo.ListOfRegisteredDiscordGuilds.Contains(serverInformation.serverID))
+                {
+                    currentServerInfo.ListOfRegisteredDiscordGuilds.Add(serverInformation.serverID);
+                }
+
+                using (StreamWriter file = File.CreateText(FilePath))
+                {
+                    var serializer = new JsonSerializer
+                    {
+                        Formatting = Formatting.Indented
+                    };
+                    serializer.Serialize(file, currentServerInfo);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public static MoversAndShakersServerInfoDataModel ReadRegisteredDiscordGuilds()
+        {
+            FileSystemManager fileSystem = new FileSystemManager();
+            string FilePath = Path.Combine(serverInfoLocation, registeredServerNames);
+
+            if (fileSystem.IsFileExists(registeredServerNames, serverInfoLocation))
+            {                
+                return JsonConvert.DeserializeObject<MoversAndShakersServerInfoDataModel>(fileSystem.ReadJsonFileFromSpecificLocation(registeredServerNames, serverInfoLocation));
             }
             else
             {
-                return true;
+                return new MoversAndShakersServerInfoDataModel
+                {
+                    ListOfRegisteredDiscordGuilds = new List<ulong>()
+                };
             }
         }
-        private DiscordServerChannelModel UpdateServerInfo(DiscordServerChannelModel obj, ulong channelID)
+
+        public static DateTime AcquireLastScrapeTime()
         {
-            obj.channelID = channelID;
-            return obj;
+            const string serverLocation = @"\\DESKTOP-JF26JGH\MoversShakersScraped";
+            const string fileName = @"SuccessfulScrapedTime.json";
+            FileSystemManager fileSystem = new FileSystemManager();
+
+            if (fileSystem.IsFileExists(fileName, serverLocation))
+            {
+                return JsonConvert.DeserializeObject<MoversAndShakersServerInfoDataModel>(fileSystem.ReadJsonFileFromSpecificLocation(fileName, serverLocation)).LastSuccessfulScrape;
+            }
+            else
+            {
+                return new MoversAndShakersServerInfoDataModel
+                {
+                    LastSuccessfulScrape = DateTime.Now
+
+                }.LastSuccessfulScrape;
+            }
+        }
+
+        public static MoverCardDataModel GetMoverCardScrapedData(string fileName)
+        {
+            const string serverLocation = @"\\DESKTOP-JF26JGH\MoversShakersScraped";
+            FileSystemManager fileSystem = new FileSystemManager();
+
+            if (fileSystem.IsFileExists(fileName, serverLocation))
+            {
+                return JsonConvert.DeserializeObject<MoverCardDataModel>(fileSystem.ReadJsonFileFromSpecificLocation(fileName, serverLocation));
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

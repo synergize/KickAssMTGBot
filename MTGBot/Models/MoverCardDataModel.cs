@@ -1,36 +1,22 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace WebScraping.Data_Models
+namespace MoversAndShakersScrapingService.Data_Models
 {
-   public class MoverCardDataModel
+    public class MoverCardDataModel
     {
-        private string _priceChange;
-        private string _name;
-        private string _totalPrice;
-        private string _changePercentage;
+        public class CardInfo
+        {
+            public string PriceChange { get; set; }
+            public string Name { get; set; }
+            public string TotalPrice { get; set; }
+            public string ChangePercentage { get; set; }
+        }
 
-        public string PriceChange
-        {
-            get { return _priceChange; }
-            set { _priceChange = value; }
-        }
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-        public string TotalPrice
-        {
-            get { return _totalPrice; }
-            set { _totalPrice = value; }
-        }
-        public string ChangePercentage
-        {
-            get { return _changePercentage; }
-            set { _changePercentage = value; }
-        }
+        [JsonProperty("MoversAndShakersData")]
+        public List<CardInfo> ListOfCards { get; set; }
+        [JsonProperty("FormatName")]
+        public string Format { get; set; }
     }
-
 }

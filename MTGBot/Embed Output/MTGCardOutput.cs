@@ -9,17 +9,11 @@ namespace MTGBot.Embed_Output
     {
         private Color successfulColor = Color.DarkGreen;
         private const int failedColor = 16580608;
-        private int customColor = 0;
         private const string successfulFooter = "Powered By Scryfall API. Contact Coaction#5994 for suggestions or bugs";
         private const string failedFooter = "Contact Coaction#5994 for any bugs. This is a work in progress.";
         public MTGCardOutput()
         {
 
-        }
-
-        public MTGCardOutput(int embedColor)
-        {
-            customColor = embedColor;
         }
         public EmbedBuilder CardOutput(ScryfallDataModel.BaseCodeObject PulledCard)
         {
@@ -152,6 +146,7 @@ namespace MTGBot.Embed_Output
             Helping.Title = "Help Center";
             Helping.Description = "Below is a list of commands and features of this bot! It's a work in progress.";
             Helping.AddField("Card Lookup: ", "Cards can be located with double open and closing brackets [[like this]]. They can be anywhere in your sentence!");
+            Helping.AddField("Movers and Shakers:", "This bot has the ability to scrape the Mover and Shaker data from MTGGoldFish. Type !mtgsetchannel #<channel name> to get started!");
             Helping.WithFooter(successfulFooter);
             Helping.WithColor(successfulColor);
 
