@@ -2,6 +2,7 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using MTGBot.Data.ReadWriteJSON;
+using MTGBot.Embed_Output;
 using MTGBot.Helpers.Enums;
 using System;
 using System.Threading.Tasks;
@@ -10,19 +11,6 @@ namespace MTGBot.Commands
 {
     public class MTGMoversShakersCommand : ModuleBase<SocketCommandContext>
     {        
-        [Command("mtgmovers")]
-        public async Task MTGMovers()
-        {
-            Console.WriteLine("Before New Instance.");           
-            Console.WriteLine("After Instance");
-            //await Context.Channel.SendMessageAsync(null, false, MTGMoversShakersOutput.GetDailyIncreaseMoversOutput(Daily.GetListMoversShakesTable(MoversShakersEnum.DailyIncrease, MoversShakersClassXPathingStatic.DailyIncreaseXpath)).Build());
-            //await Context.Channel.SendMessageAsync(null, false, MTGMoversShakersOutput.GetDailyDecreaseMoversOutput(Daily.GetListMoversShakesTable(MoversShakersEnum.DailyDecrease, MoversShakersClassXPathingStatic.DailyDecreaseXpath)).Build());
-            //await Context.Channel.SendMessageAsync(null, false, MTGMoversShakersOutput.GetWeeklyIncreaseMoversOutput(Daily.GetListMoversShakesTable(MoversShakersEnum.WeeklyIncrease, MoversShakersClassXPathingStatic.WeeklyIncreaseXpath)).Build());
-            //await Context.Channel.SendMessageAsync(null, false, MTGMoversShakersOutput.GetWeeklyDecreaseMoversOutput(Daily.GetListMoversShakesTable(MoversShakersEnum.WeeklyDecrease, MoversShakersClassXPathingStatic.WeeklyDecreaseXpath)).Build());
-            var test = Context.Channel;
-            Console.WriteLine("After Message");
-        }
-
         [Command("mtgsetchannel")]
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task SetChannelConfiguration(ISocketMessageChannel channel)
@@ -34,16 +22,19 @@ namespace MTGBot.Commands
             {
                 MoversShakersJSONController.UpdateServerInfo(new Models.DiscordServerChannelModel
                 {
-                  serverID = discordServerId,
-                  channelID = channel.Id
+                    serverID = discordServerId,
+                    channelID = channel.Id,
+                    LastDeliveredTime = DateTime.MinValue
                 });
                 // Send message - New document created. 
+                await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().SetChannelSuccess(channel).Build());
             }
             else
             {
                 discordServerInformation.channelID = channel.Id;
                 MoversShakersJSONController.UpdateServerInfo(discordServerInformation);
                 // Send message - Doucment Updated.
+                await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().SetChannelSuccess(channel).Build());
             }
         }
 
@@ -59,17 +50,20 @@ namespace MTGBot.Commands
                 var serverInformation = MoversShakersJSONController.ReadMoversShakersConfig(discordServerId);
 
                 if (serverInformation == null)
-                {                    
+                {
                     // Send message to user to have them set a channel.
+                    await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().NoConfiguredServerErrorOutput().Build());
                 }
                 else
                 {
                     MoversShakersJSONController.AddChannelFormat(serverInformation, userInput);
+                    await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().AddFormatSuccess(formatName).Build());
                 }                
             }
             else
             {
                 // Let user know to check their input, not a valid format. 
+                await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().IncorrectOrUnspportedFormatError().Build());
             }
         }
 
@@ -87,15 +81,18 @@ namespace MTGBot.Commands
                 if (serverInformation == null)
                 {
                     // Send message to user to have them set a channel.
+                    await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().NoConfiguredServerErrorOutput().Build());
                 }
                 else
                 {
                     MoversShakersJSONController.RemoveChannelFormat(serverInformation, userInput);
+                    await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().RemoveFormatSuccess(formatName).Build());
                 }
             }
             else
             {
                 // Let user know to check their input, not a valid format. 
+                await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().IncorrectOrUnspportedFormatError().Build());
             }
         }
 

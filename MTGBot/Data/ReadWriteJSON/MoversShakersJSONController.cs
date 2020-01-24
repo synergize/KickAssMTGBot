@@ -23,6 +23,7 @@ namespace MTGBot.Data.ReadWriteJSON
             }
 
             serverInformation.ListOfFormats = listFormats;
+            serverInformation.LastDeliveredTime = DateTime.MinValue;
             return UpdateServerInfo(serverInformation);
         }
 
