@@ -58,10 +58,8 @@ namespace MTGBot
             await Client.LoginAsync(TokenType.Bot, Token);
             await Client.StartAsync();
 
-
-            Thread.Sleep(3000);
+            Thread.Sleep(10000); //10 seconds, sleeps a differrent thread from the bot so that it can finish loading before we begin.
             new MTGMoversShakersOutput().DetermineDelivery(Client);
-
             await Task.Delay(-1);
         }
 
