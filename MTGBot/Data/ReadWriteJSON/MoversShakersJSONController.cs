@@ -3,6 +3,7 @@ using MTGBot.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using VTFileSystemManagement;
 
@@ -10,8 +11,8 @@ namespace MTGBot.Data.ReadWriteJSON
 {
     public static class MoversShakersJSONController
     {
-        private const string serverInfoLocation = @"\\DESKTOP-JF26JGH\MoversAndShakersJsonData";
-        private const string registeredServerNames = "AllRegisteredServers.json";
+        private static string serverInfoLocation = ConfigurationManager.AppSettings.Get("MoversAndShakersConfigurationDataLocation");
+        private static string registeredServerNames = ConfigurationManager.AppSettings.Get("AllServersFileName");
 
         public static DiscordServerChannelModel AddChannelFormat(DiscordServerChannelModel serverInformation, string formatName)
         {
@@ -124,8 +125,8 @@ namespace MTGBot.Data.ReadWriteJSON
 
         public static DateTime AcquireLastScrapeTime()
         {
-            const string serverLocation = @"\\DESKTOP-JF26JGH\MoversShakersScraped";
-            const string fileName = @"SuccessfulScrapedTime.json";
+            string serverLocation = ConfigurationManager.AppSettings.Get("MoversAndShakersScrapedDataLocation");
+            string fileName = ConfigurationManager.AppSettings.Get("SavedScrapedTimeFileName");
             FileSystemManager fileSystem = new FileSystemManager();
 
             if (fileSystem.IsFileExists(fileName, serverLocation))
@@ -144,7 +145,7 @@ namespace MTGBot.Data.ReadWriteJSON
 
         public static MoverCardDataModel GetMoverCardScrapedData(string fileName)
         {
-            const string serverLocation = @"\\DESKTOP-JF26JGH\MoversShakersScraped";
+            string serverLocation = ConfigurationManager.AppSettings.Get("MoversAndShakersScrapedDataLocation");
             FileSystemManager fileSystem = new FileSystemManager();
 
             if (fileSystem.IsFileExists(fileName, serverLocation))
