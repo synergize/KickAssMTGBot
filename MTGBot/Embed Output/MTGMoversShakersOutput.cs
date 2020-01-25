@@ -148,7 +148,6 @@ namespace MTGBot.Embed_Output
                     {
                         if (item == formatName.ToString())
                         {
-
                             try
                             {
                                 var channel = Client.GetGuild(guildConfig.serverID).GetChannel(guildConfig.channelID) as IMessageChannel;
@@ -181,6 +180,7 @@ namespace MTGBot.Embed_Output
                     LastDeliveredTime = DateTime.MinValue
                 };
 
+                Console.WriteLine(ConsoleWriteOverride.AddTimeStamp($"MoversShakersTimeStamp: {MoversShakersTimeStamp.ToString("HH:mm:ss")}"));
                 if (MoversShakersTimeStamp != lastScrapeTime && lastScrapeTime != lastRecordedScrapeTime.LastDeliveredTime)
                 {
                     MoversShakersTimeStamp = lastScrapeTime;
