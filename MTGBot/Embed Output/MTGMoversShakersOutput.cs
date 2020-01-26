@@ -180,8 +180,7 @@ namespace MTGBot.Embed_Output
                     LastDeliveredTime = DateTime.MinValue
                 };
 
-                Console.WriteLine(ConsoleWriteOverride.AddTimeStamp($"MoversShakersTimeStamp: {MoversShakersTimeStamp.ToString("HH:mm:ss")}"));
-                lastRecordedScrapeTime.LastDeliveredTime = DateTime.Now;
+                Console.WriteLine(ConsoleWriteOverride.AddTimeStamp($"MoversShakersTimeStamp: {MoversShakersTimeStamp.ToString("hh:mm:ss")}"));
                 if (MoversShakersTimeStamp != lastScrapeTime && lastScrapeTime != lastRecordedScrapeTime.LastDeliveredTime)
                 {
                     MoversShakersTimeStamp = lastScrapeTime;
