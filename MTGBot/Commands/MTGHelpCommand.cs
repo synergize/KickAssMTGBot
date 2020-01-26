@@ -1,8 +1,5 @@
 ﻿using Discord.Commands;
 using MTGBot.Embed_Output;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MTGBot.Commands
@@ -14,7 +11,6 @@ namespace MTGBot.Commands
         {
             MTGCardOutput Help = new MTGCardOutput();
             await Context.Channel.SendMessageAsync("", false, Help.GettingHelp().Build());
-
         }
     }
 }

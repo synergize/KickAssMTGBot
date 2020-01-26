@@ -1,15 +1,7 @@
 ﻿using Discord;
-using Discord.Commands;
 using MTGBot.DataLookup;
 using MTGBot.Embed_Output;
 using MTGBot.Helpers;
-using MTGBot.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace MTGBot.User_Message_Handler
 {

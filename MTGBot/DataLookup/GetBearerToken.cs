@@ -1,8 +1,4 @@
 ﻿using MTGBot.APICredentials;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Text;
-
 namespace MTGBot.DataLookup
 {
     public static class GetBearerToken

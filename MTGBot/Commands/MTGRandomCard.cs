@@ -1,9 +1,6 @@
 ﻿using Discord.Commands;
 using MTGBot.DataLookup;
 using MTGBot.Embed_Output;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MTGBot.Commands

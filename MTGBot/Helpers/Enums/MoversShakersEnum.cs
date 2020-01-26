@@ -1,5 +1,4 @@
-﻿
-namespace MTGBot.Data
+﻿namespace MTGBot.Data
 {
     public enum MoversShakersEnum
     {

@@ -1,5 +1,4 @@
-﻿
-using MTGBot.Models;
+﻿using MTGBot.Models;
 using Newtonsoft.Json;
 using VTFileSystemManagement;
 

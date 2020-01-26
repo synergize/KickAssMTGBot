@@ -1,5 +1,4 @@
 ﻿using Discord;
-using Discord.Commands;
 using Discord.WebSocket;
 using MoversAndShakersScrapingService.Data_Models;
 using MTGBot.Data.ReadWriteJSON;
@@ -22,7 +21,7 @@ namespace MTGBot.Embed_Output
             EmbedBuilder BuildEmbed = new EmbedBuilder();
             BuildEmbed.Title = $"Daily Price Winners for {cardsList.Format}!";
             BuildEmbed.WithColor(000000);
-            foreach (var item in cardsList.ListOfCards)
+            foreach (var item in cardsList.DailyIncreaseList)
             {
                 BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
             }
@@ -35,7 +34,7 @@ namespace MTGBot.Embed_Output
             EmbedBuilder BuildEmbed = new EmbedBuilder();
             BuildEmbed.Title = $"Daily Price Losers for {cardsList.Format}!";
             BuildEmbed.WithColor(000000);
-            foreach (var item in cardsList.ListOfCards)
+            foreach (var item in cardsList.DailyDecreaseList)
             {
                 BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
             }
@@ -48,7 +47,7 @@ namespace MTGBot.Embed_Output
             EmbedBuilder BuildEmbed = new EmbedBuilder();
             BuildEmbed.Title = $"Weekly Price Losers for {cardsList.Format}!";
             BuildEmbed.WithColor(000000);
-            foreach (var item in cardsList.ListOfCards)
+            foreach (var item in cardsList.WeeklyDecreaseList)
             {
                 BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
             }
@@ -61,7 +60,7 @@ namespace MTGBot.Embed_Output
             EmbedBuilder BuildEmbed = new EmbedBuilder();
             BuildEmbed.Title = $"Weekly Price Winners for {cardsList.Format}!";
             BuildEmbed.WithColor(000000);
-            foreach (var item in cardsList.ListOfCards)
+            foreach (var item in cardsList.WeeklyIncreaseList)
             {
                 BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
             }
@@ -77,7 +76,7 @@ namespace MTGBot.Embed_Output
                 Timestamp = DateTime.Now,
                 Footer = new EmbedFooterBuilder() { Text = footerMessage },
                 Color = new Color(failedColor)
-            };          
+            };
         }
 
         public EmbedBuilder IncorrectOrUnspportedFormatError()
@@ -138,28 +137,29 @@ namespace MTGBot.Embed_Output
 
                 foreach (MTGFormatsEnum formatName in (MTGFormatsEnum[])Enum.GetValues(typeof(MTGFormatsEnum)))
                 {
-                    var scrapedDailyIncrease = MoversShakersJSONController.GetMoverCardScrapedData($"DailyIncrease_{formatName.ToString()}.json");
-                    var scrapedDailyDecrease = MoversShakersJSONController.GetMoverCardScrapedData($"DailyDecrease_{formatName.ToString()}.json");
-
-                    var scrapedWeeklyIncrease = MoversShakersJSONController.GetMoverCardScrapedData($"WeeklyIncrease_{formatName.ToString()}.json");
-                    var scrapedWeeklyDecrease = MoversShakersJSONController.GetMoverCardScrapedData($"WeeklyDecrease_{formatName.ToString()}.json");
+                    var scrapedData = MoversShakersJSONController.GetMoverCardScrapedData($"{formatName.ToString()}.json");
 
                     foreach (var item in guildConfig.ListOfFormats)
                     {
                         if (item == formatName.ToString())
                         {
-                            try
+
+                            var channel = Client.GetGuild(guildConfig.serverID).GetChannel(guildConfig.channelID) as IMessageChannel;
+                            if (scrapedData.DailyIncreaseList.Count > 0)
                             {
-                                var channel = Client.GetGuild(guildConfig.serverID).GetChannel(guildConfig.channelID) as IMessageChannel;
-                                await channel.SendMessageAsync("", false, GetDailyIncreaseMoversOutput(scrapedDailyIncrease).Build());
-                                await channel.SendMessageAsync("", false, GetDailyDecreaseMoversOutput(scrapedDailyDecrease).Build());
-                                await channel.SendMessageAsync("", false, GetWeeklyIncreaseMoversOutput(scrapedWeeklyIncrease).Build());
-                                await channel.SendMessageAsync("", false, GetWeeklyDecreaseMoversOutput(scrapedWeeklyDecrease).Build());
+                                await channel.SendMessageAsync("", false, GetDailyIncreaseMoversOutput(scrapedData).Build());
                             }
-                            catch (Exception e)
+                            if (scrapedData.DailyDecreaseList.Count > 0)
                             {
-                                Console.WriteLine(e);
-                                throw;
+                                await channel.SendMessageAsync("", false, GetDailyDecreaseMoversOutput(scrapedData).Build());
+                            }
+                            if (scrapedData.WeeklyIncreaseList.Count > 0)
+                            {
+                                await channel.SendMessageAsync("", false, GetWeeklyIncreaseMoversOutput(scrapedData).Build());
+                            }
+                            if (scrapedData.WeeklyDecreaseList.Count > 0)
+                            {
+                                await channel.SendMessageAsync("", false, GetWeeklyDecreaseMoversOutput(scrapedData).Build());
                             }
                         }
                     }
@@ -181,6 +181,7 @@ namespace MTGBot.Embed_Output
                 };
 
                 Console.WriteLine(ConsoleWriteOverride.AddTimeStamp($"MoversShakersTimeStamp: {MoversShakersTimeStamp.ToString("HH:mm:ss")}"));
+                lastRecordedScrapeTime.LastDeliveredTime = DateTime.Now;
                 if (MoversShakersTimeStamp != lastScrapeTime && lastScrapeTime != lastRecordedScrapeTime.LastDeliveredTime)
                 {
                     MoversShakersTimeStamp = lastScrapeTime;

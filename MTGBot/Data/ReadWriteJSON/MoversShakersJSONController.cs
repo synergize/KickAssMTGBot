@@ -75,33 +75,26 @@ namespace MTGBot.Data.ReadWriteJSON
 
         private static void UpdateListOfRegisteredGuilds(DiscordServerChannelModel serverInformation)
         {
-            try
+            string FilePath = Path.Combine(serverInfoLocation, registeredServerNames);
+            var currentServerInfo = ReadRegisteredDiscordGuilds();
+
+            if (currentServerInfo.ListOfRegisteredDiscordGuilds == null)
             {
-                string FilePath = Path.Combine(serverInfoLocation, registeredServerNames);
-                var currentServerInfo = ReadRegisteredDiscordGuilds();
-
-                if (currentServerInfo.ListOfRegisteredDiscordGuilds == null)
-                {
-                    currentServerInfo.ListOfRegisteredDiscordGuilds = new List<ulong>();
-                }
-
-                if (!currentServerInfo.ListOfRegisteredDiscordGuilds.Contains(serverInformation.serverID))
-                {
-                    currentServerInfo.ListOfRegisteredDiscordGuilds.Add(serverInformation.serverID);
-                }
-
-                using (StreamWriter file = File.CreateText(FilePath))
-                {
-                    var serializer = new JsonSerializer
-                    {
-                        Formatting = Formatting.Indented
-                    };
-                    serializer.Serialize(file, currentServerInfo);
-                }
+                currentServerInfo.ListOfRegisteredDiscordGuilds = new List<ulong>();
             }
-            catch (Exception e)
+
+            if (!currentServerInfo.ListOfRegisteredDiscordGuilds.Contains(serverInformation.serverID))
             {
-                Console.WriteLine(e);
+                currentServerInfo.ListOfRegisteredDiscordGuilds.Add(serverInformation.serverID);
+            }
+
+            using (StreamWriter file = File.CreateText(FilePath))
+            {
+                var serializer = new JsonSerializer
+                {
+                    Formatting = Formatting.Indented
+                };
+                serializer.Serialize(file, currentServerInfo);
             }
         }
 
@@ -111,7 +104,7 @@ namespace MTGBot.Data.ReadWriteJSON
             string FilePath = Path.Combine(serverInfoLocation, registeredServerNames);
 
             if (fileSystem.IsFileExists(registeredServerNames, serverInfoLocation))
-            {                
+            {
                 return JsonConvert.DeserializeObject<MoversAndShakersServerInfoDataModel>(fileSystem.ReadJsonFileFromSpecificLocation(registeredServerNames, serverInfoLocation));
             }
             else
