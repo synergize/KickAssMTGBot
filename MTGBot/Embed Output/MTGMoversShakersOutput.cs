@@ -5,6 +5,7 @@ using MTGBot.Data.ReadWriteJSON;
 using MTGBot.Helpers;
 using MTGBot.Helpers.Enums;
 using System;
+using System.Configuration;
 using System.Threading.Tasks;
 
 namespace MTGBot.Embed_Output
@@ -127,43 +128,79 @@ namespace MTGBot.Embed_Output
             };
         }
 
-        public async Task DeliverMoversOutputAsync(DiscordSocketClient Client)
+        public async Task DeliverMoversOutputAsync(DiscordSocketClient Client, MTGFormatsEnum format, ulong guild)
         {
-            var registeredGuilds = MoversShakersJSONController.ReadRegisteredDiscordGuilds();
+            var guildConfig = MoversShakersJSONController.ReadMoversShakersConfig(guild);
+            var scrapedData = MoversShakersJSONController.GetMoverCardScrapedData($"{format.ToString()}.json");
 
-            foreach (var guild in registeredGuilds.ListOfRegisteredDiscordGuilds)
+            var channel = Client.GetGuild(guildConfig.serverID).GetChannel(guildConfig.channelID) as IMessageChannel;
+            if (scrapedData.DailyIncreaseList.Count > 0)
             {
-                var guildConfig = MoversShakersJSONController.ReadMoversShakersConfig(guild);
+                await channel.SendMessageAsync("", false, GetDailyIncreaseMoversOutput(scrapedData).Build());
+            }
+            if (scrapedData.DailyDecreaseList.Count > 0)
+            {
+                await channel.SendMessageAsync("", false, GetDailyDecreaseMoversOutput(scrapedData).Build());
+            }
+            if (scrapedData.WeeklyIncreaseList.Count > 0)
+            {
+                await channel.SendMessageAsync("", false, GetWeeklyIncreaseMoversOutput(scrapedData).Build());
+            }
+            if (scrapedData.WeeklyDecreaseList.Count > 0)
+            {
+                await channel.SendMessageAsync("", false, GetWeeklyDecreaseMoversOutput(scrapedData).Build());
+            }
 
-                foreach (MTGFormatsEnum formatName in (MTGFormatsEnum[])Enum.GetValues(typeof(MTGFormatsEnum)))
-                {
-                    var scrapedData = MoversShakersJSONController.GetMoverCardScrapedData($"{formatName.ToString()}.json");
+        }
 
-                    foreach (var item in guildConfig.ListOfFormats)
-                    {
-                        if (item == formatName.ToString())
-                        {
+        private void UpdateScrapeTime(MTGFormatsEnum format)
+        {
+            var fileLocation = ConfigurationManager.AppSettings.Get("MoversAndShakersScrapedDataLocation");
+            VTFileSystemManagement.FileSystemManager fileSystem = new VTFileSystemManagement.FileSystemManager();
 
-                            var channel = Client.GetGuild(guildConfig.serverID).GetChannel(guildConfig.channelID) as IMessageChannel;
-                            if (scrapedData.DailyIncreaseList.Count > 0)
-                            {
-                                await channel.SendMessageAsync("", false, GetDailyIncreaseMoversOutput(scrapedData).Build());
-                            }
-                            if (scrapedData.DailyDecreaseList.Count > 0)
-                            {
-                                await channel.SendMessageAsync("", false, GetDailyDecreaseMoversOutput(scrapedData).Build());
-                            }
-                            if (scrapedData.WeeklyIncreaseList.Count > 0)
-                            {
-                                await channel.SendMessageAsync("", false, GetWeeklyIncreaseMoversOutput(scrapedData).Build());
-                            }
-                            if (scrapedData.WeeklyDecreaseList.Count > 0)
-                            {
-                                await channel.SendMessageAsync("", false, GetWeeklyDecreaseMoversOutput(scrapedData).Build());
-                            }
-                        }
-                    }
-                }
+            switch (format)
+            {
+                case MTGFormatsEnum.standard:
+                    ScrapeTimes.StandardScrapeTime = fileSystem.GetFilesLastModifiedTime(fileLocation, $"{format.ToString()}.json");
+                    break;
+                case MTGFormatsEnum.modern:
+                    ScrapeTimes.ModernScrapeTime = fileSystem.GetFilesLastModifiedTime(fileLocation, $"{format.ToString()}.json");
+                    break;
+                case MTGFormatsEnum.pioneer:
+                    ScrapeTimes.StandardScrapeTime = fileSystem.GetFilesLastModifiedTime(fileLocation, $"{format.ToString()}.json");
+                    break;
+                case MTGFormatsEnum.pauper:
+                    ScrapeTimes.StandardScrapeTime = fileSystem.GetFilesLastModifiedTime(fileLocation, $"{format.ToString()}.json");
+                    break;
+                case MTGFormatsEnum.legacy:
+                    ScrapeTimes.StandardScrapeTime = fileSystem.GetFilesLastModifiedTime(fileLocation, $"{format.ToString()}.json");
+                    break;
+                case MTGFormatsEnum.vintage:
+                    ScrapeTimes.StandardScrapeTime = fileSystem.GetFilesLastModifiedTime(fileLocation, $"{format.ToString()}.json");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private DateTime GetCurrentScrapeTime(MTGFormatsEnum format)
+        {
+            switch (format)
+            {
+                case MTGFormatsEnum.standard:
+                    return ScrapeTimes.StandardScrapeTime;
+                case MTGFormatsEnum.modern:
+                    return ScrapeTimes.ModernScrapeTime;
+                case MTGFormatsEnum.pioneer:
+                    return ScrapeTimes.PioneerScrapeTime;
+                case MTGFormatsEnum.pauper:
+                    return ScrapeTimes.PauperScrapeTime;
+                case MTGFormatsEnum.legacy:
+                    return ScrapeTimes.LegacyScrapeTime;
+                case MTGFormatsEnum.vintage:
+                    return ScrapeTimes.VintageScrapeTime;
+                default:
+                    return DateTime.MinValue;
             }
         }
 
@@ -171,34 +208,34 @@ namespace MTGBot.Embed_Output
         {
             Console.WriteLine(ConsoleWriteOverride.AddTimeStamp("### Delivery Check Successfully Started. ###"));
             var serverInformation = MoversShakersJSONController.ReadRegisteredDiscordGuilds();
-            var lastScrapeTime = MoversShakersJSONController.AcquireLastScrapeTime();
 
             foreach (var guild in serverInformation.ListOfRegisteredDiscordGuilds)
             {
-                var lastRecordedScrapeTime = MoversShakersJSONController.ReadMoversShakersConfig(guild) ?? new Models.DiscordServerChannelModel
+                foreach (MTGFormatsEnum formatName in (MTGFormatsEnum[])Enum.GetValues(typeof(MTGFormatsEnum)))
                 {
-                    LastDeliveredTime = DateTime.MinValue
-                };
-
-                Console.WriteLine(ConsoleWriteOverride.AddTimeStamp($"MoversShakersTimeStamp: {MoversShakersTimeStamp.ToString("HH:mm:ss")}"));
-                lastRecordedScrapeTime.LastDeliveredTime = DateTime.Now;
-                if (MoversShakersTimeStamp != lastScrapeTime && lastScrapeTime != lastRecordedScrapeTime.LastDeliveredTime)
-                {
-                    MoversShakersTimeStamp = lastScrapeTime;
-                    lastRecordedScrapeTime.LastDeliveredTime = lastScrapeTime;
-                    MoversShakersJSONController.UpdateServerInfo(lastRecordedScrapeTime);
-                    await new MTGMoversShakersOutput().DeliverMoversOutputAsync(Client);
-
+                    var lastScrapeTime = GetCurrentScrapeTime(formatName);
+                    var lastRecordedScrapeTime = MoversShakersJSONController.ReadMoversShakersConfig(guild) ?? new Models.DiscordServerChannelModel
+                    {
+                        LastDeliveredTime = DateTime.MinValue
+                    };
+                    Console.WriteLine(ConsoleWriteOverride.AddTimeStamp($"MoversShakersTimeStamp: {MoversShakersTimeStamp.ToString("HH:mm:ss")}"));
+                    lastRecordedScrapeTime.LastDeliveredTime = DateTime.Now;
+                    if (MoversShakersTimeStamp != lastScrapeTime && lastScrapeTime != lastRecordedScrapeTime.LastDeliveredTime)
+                    {
+                        MoversShakersTimeStamp = lastScrapeTime;
+                        lastRecordedScrapeTime.LastDeliveredTime = lastScrapeTime;
+                        MoversShakersJSONController.UpdateServerInfo(lastRecordedScrapeTime);
+                        await new MTGMoversShakersOutput().DeliverMoversOutputAsync(Client, formatName, guild);
+                    }
+                    else if (lastRecordedScrapeTime.LastDeliveredTime == DateTime.MinValue)
+                    {
+                        MoversShakersTimeStamp = lastScrapeTime;
+                        lastRecordedScrapeTime.LastDeliveredTime = lastScrapeTime;
+                        MoversShakersJSONController.UpdateServerInfo(lastRecordedScrapeTime);
+                        await new MTGMoversShakersOutput().DeliverMoversOutputAsync(Client, formatName, guild);
+                    }
                 }
-                else if (lastRecordedScrapeTime.LastDeliveredTime == DateTime.MinValue)
-                {
-                    MoversShakersTimeStamp = lastScrapeTime;
-                    lastRecordedScrapeTime.LastDeliveredTime = lastScrapeTime;
-                    MoversShakersJSONController.UpdateServerInfo(lastRecordedScrapeTime);
-                    await new MTGMoversShakersOutput().DeliverMoversOutputAsync(Client);
-                }
+                Console.WriteLine(ConsoleWriteOverride.AddTimeStamp("### Delivery Check Successfully Completed. ###"));
             }
-            Console.WriteLine(ConsoleWriteOverride.AddTimeStamp("### Delivery Check Successfully Completed. ###"));
         }
     }
-}
