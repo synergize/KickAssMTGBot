@@ -152,7 +152,7 @@ namespace MTGBot.DataLookup
                     string.Format($"https://api.scryfall.com/cards/named?exact={cardname}&format=json");
                     _downloadNews = web.DownloadString(_url);
                 }
-                catch (WebException msg)
+                catch (WebException)
                 {
                     Console.WriteLine("Failed to acquire card information via exact link. Attempting Fuzzy..");
                     return FuzzyScryFall(cardname);

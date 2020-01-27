@@ -24,7 +24,6 @@ namespace MTGBot.Commands
                 {
                     serverID = discordServerId,
                     channelID = channel.Id,
-                    LastDeliveredTime = DateTime.MinValue
                 });
                 // Send message - New document created. 
                 await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().SetChannelSuccess(channel).Build());

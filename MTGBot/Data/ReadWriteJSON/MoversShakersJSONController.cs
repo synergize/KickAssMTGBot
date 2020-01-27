@@ -24,7 +24,6 @@ namespace MTGBot.Data.ReadWriteJSON
             }
 
             serverInformation.ListOfFormats = listFormats;
-            serverInformation.LastDeliveredTime = DateTime.MinValue;
             return UpdateServerInfo(serverInformation);
         }
 
@@ -143,7 +142,26 @@ namespace MTGBot.Data.ReadWriteJSON
 
             if (fileSystem.IsFileExists(fileName, serverLocation))
             {
-                return JsonConvert.DeserializeObject<MoverCardDataModel>(fileSystem.ReadJsonFileFromSpecificLocation(fileName, serverLocation));
+                var newData = JsonConvert.DeserializeObject<MoverCardDataModel>(fileSystem.ReadJsonFileFromSpecificLocation(fileName, serverLocation));
+
+                if (newData.DailyIncreaseList == null)
+                {
+                    newData.DailyIncreaseList = new List<MoverCardDataModel.CardInfo>();
+                }
+                if (newData.DailyDecreaseList == null)
+                {
+                    newData.DailyDecreaseList = new List<MoverCardDataModel.CardInfo>();
+                }
+                if (newData.WeeklyDecreaseList == null)
+                {
+                    newData.WeeklyDecreaseList = new List<MoverCardDataModel.CardInfo>();
+                }
+                if (newData.WeeklyIncreaseList == null)
+                {
+                    newData.WeeklyIncreaseList = new List<MoverCardDataModel.CardInfo>();
+                }
+
+                return newData;
             }
             else
             {

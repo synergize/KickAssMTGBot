@@ -128,7 +128,6 @@ namespace MTGBot
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {            
             new MTGMoversShakersOutput().DetermineDelivery(Client);
-            Console.WriteLine($"TimeStamped: {MTGMoversShakersOutput.MoversShakersTimeStamp}");
         }        
     }
 }
