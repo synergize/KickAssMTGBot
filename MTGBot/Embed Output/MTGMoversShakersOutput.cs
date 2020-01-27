@@ -267,7 +267,6 @@ namespace MTGBot.Embed_Output
         {
             Console.WriteLine(ConsoleWriteOverride.AddTimeStamp("### Delivery Check Successfully Started. ###"));
             var serverInformation = MoversShakersJSONController.ReadRegisteredDiscordGuilds();
-            var lastScrapeTime = MoversShakersJSONController.AcquireLastScrapeTime();
 
             foreach (var guild in serverInformation.ListOfRegisteredDiscordGuilds)
             {
