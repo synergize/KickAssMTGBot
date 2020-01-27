@@ -130,7 +130,7 @@ namespace MTGBot.Embed_Output
 
         public async Task DeliverMoversOutputAsync(DiscordSocketClient Client, string format, ulong guild)
         {
-            Thread.Sleep(3000);
+            
             var guildConfig = MoversShakersJSONController.ReadMoversShakersConfig(guild);
             var scrapedData = MoversShakersJSONController.GetMoverCardScrapedData($"{format}.json");
 
@@ -138,14 +138,17 @@ namespace MTGBot.Embed_Output
             if (scrapedData.DailyIncreaseList.Count > 0)
             {
                 await channel.SendMessageAsync("", false, GetDailyIncreaseMoversOutput(scrapedData).Build());
+                Thread.Sleep(3000);
             }
             if (scrapedData.DailyDecreaseList.Count > 0)
             {
                 await channel.SendMessageAsync("", false, GetDailyDecreaseMoversOutput(scrapedData).Build());
+                Thread.Sleep(3000);
             }
             if (scrapedData.WeeklyIncreaseList.Count > 0)
             {
                 await channel.SendMessageAsync("", false, GetWeeklyIncreaseMoversOutput(scrapedData).Build());
+                Thread.Sleep(3000);
             }
             if (scrapedData.WeeklyDecreaseList.Count > 0)
             {
@@ -254,6 +257,11 @@ namespace MTGBot.Embed_Output
             return discordInformation;
         }
 
+        /// <summary>
+        /// Function that uses <paramref name="Client"/> to help aid in sending messages to a channel.
+        /// We use 
+        /// </summary>
+        /// <param name="Client"></param>
         public async void DetermineDelivery(DiscordSocketClient Client)
         {
             Console.WriteLine(ConsoleWriteOverride.AddTimeStamp("### Delivery Check Successfully Started. ###"));
@@ -276,17 +284,9 @@ namespace MTGBot.Embed_Output
                     UpdateScrapeTime(parsedEnumValue);
                     var lastScrapeTime = GetCurrentScrapeTime(parsedEnumValue);
                     var currentLastDeliveredTime = GetLastDeliveredTime(parsedEnumValue, guild);
-                    if (lastScrapeTime != currentLastDeliveredTime && lastScrapeTime != DateTime.MinValue)
+                    if (lastScrapeTime != currentLastDeliveredTime)
                     {                        
                         Console.WriteLine(ConsoleWriteOverride.AddTimeStamp($"{lastScrapeTime.ToString("hh:mm:ss")} not equal to {currentLastDeliveredTime.ToString("hh:mm:ss")}. Delivering {format.ToString()} to {guild}"));
-                        UpdateScrapeTime(parsedEnumValue);
-                        currentGuildInformation = UpdateLastDeliveredTime(currentGuildInformation, parsedEnumValue, lastScrapeTime);
-                        MoversShakersJSONController.UpdateServerInfo(currentGuildInformation);
-                        await new MTGMoversShakersOutput().DeliverMoversOutputAsync(Client, format, guild);
-                    }
-                    else if (lastScrapeTime == DateTime.MinValue) // This may be unnecessary as the edge case has been taken care of due to re-written logic. Keeping just in-case.
-                    {
-                        UpdateScrapeTime(parsedEnumValue);
                         currentGuildInformation = UpdateLastDeliveredTime(currentGuildInformation, parsedEnumValue, lastScrapeTime);
                         MoversShakersJSONController.UpdateServerInfo(currentGuildInformation);
                         await new MTGMoversShakersOutput().DeliverMoversOutputAsync(Client, format, guild);
