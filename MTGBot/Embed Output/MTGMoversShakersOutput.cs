@@ -13,6 +13,7 @@ namespace MTGBot.Embed_Output
 {
     public class MTGMoversShakersOutput
     {
+        public static DateTime MoversShakersTimeStamp = DateTime.MinValue;
         private Color successfulColor = Color.DarkGreen;
         private const int failedColor = 16580608;
         private const string footerMessage = "Contact Coaction#5994 for any bugs. This is a work in progress.";
@@ -266,6 +267,7 @@ namespace MTGBot.Embed_Output
         {
             Console.WriteLine(ConsoleWriteOverride.AddTimeStamp("### Delivery Check Successfully Started. ###"));
             var serverInformation = MoversShakersJSONController.ReadRegisteredDiscordGuilds();
+            var lastScrapeTime = MoversShakersJSONController.AcquireLastScrapeTime();
 
             foreach (var guild in serverInformation.ListOfRegisteredDiscordGuilds)
             {
