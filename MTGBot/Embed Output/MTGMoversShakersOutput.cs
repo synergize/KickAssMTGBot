@@ -16,13 +16,16 @@ namespace MTGBot.Embed_Output
         public static DateTime MoversShakersTimeStamp = DateTime.MinValue;
         private Color successfulColor = Color.DarkGreen;
         private const int failedColor = 16580608;
-        private const string footerMessage = "Contact Coaction#5994 for any bugs. This is a work in progress.";
+        private const string footerMessage = "Contact Coaction#5994 for any bugs.";
         private EmbedBuilder GetDailyIncreaseMoversOutput(MoverCardDataModel cardsList)
         {
-            cardsList.Format = char.ToUpper(cardsList.Format[0]) + cardsList.Format.Substring(1);
+            var titleUrl = $"https://www.mtggoldfish.com/movers/paper/{cardsList.Format}";
             EmbedBuilder BuildEmbed = new EmbedBuilder();
+            BuildEmbed.WithUrl(titleUrl.ToLower());
+            cardsList.Format = char.ToUpper(cardsList.Format[0]) + cardsList.Format.Substring(1);
             BuildEmbed.Title = $"Daily Price Winners for {cardsList.Format}!";
-            BuildEmbed.WithColor(000000);
+            BuildEmbed.Color = successfulColor;
+            BuildEmbed.WithFooter(footerMessage);
             foreach (var item in cardsList.DailyIncreaseList)
             {
                 BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
@@ -32,10 +35,13 @@ namespace MTGBot.Embed_Output
 
         private EmbedBuilder GetDailyDecreaseMoversOutput(MoverCardDataModel cardsList)
         {
-            cardsList.Format = char.ToUpper(cardsList.Format[0]) + cardsList.Format.Substring(1);
+            var titleUrl = $"https://www.mtggoldfish.com/movers/paper/{cardsList.Format}";
             EmbedBuilder BuildEmbed = new EmbedBuilder();
+            BuildEmbed.WithUrl(titleUrl.ToLower());
+            cardsList.Format = char.ToUpper(cardsList.Format[0]) + cardsList.Format.Substring(1);
             BuildEmbed.Title = $"Daily Price Losers for {cardsList.Format}!";
-            BuildEmbed.WithColor(000000);
+            BuildEmbed.Color = Color.LightOrange;
+            BuildEmbed.WithFooter(footerMessage);
             foreach (var item in cardsList.DailyDecreaseList)
             {
                 BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
@@ -290,7 +296,7 @@ namespace MTGBot.Embed_Output
                         Console.WriteLine(ConsoleWriteOverride.AddTimeStamp($"{lastScrapeTime.ToString("hh:mm:ss")} not equal to {currentLastDeliveredTime.ToString("hh:mm:ss")}. Delivering {format.ToString()} to {guild}"));
                         currentGuildInformation = UpdateLastDeliveredTime(currentGuildInformation, parsedEnumValue, lastScrapeTime);
                         MoversShakersJSONController.UpdateServerInfo(currentGuildInformation);
-                        await new MTGMoversShakersOutput().DeliverMoversOutputAsync(Client, format, guild);
+                        await DeliverMoversOutputAsync(Client, format, guild);
                     }
                 }                
             }
