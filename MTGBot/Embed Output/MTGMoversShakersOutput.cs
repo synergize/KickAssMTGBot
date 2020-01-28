@@ -43,31 +43,31 @@ namespace MTGBot.Embed_Output
             return BuildEmbed;
         }
 
-        private EmbedBuilder GetWeeklyDecreaseMoversOutput(MoverCardDataModel cardsList)
-        {
-            cardsList.Format = char.ToUpper(cardsList.Format[0]) + cardsList.Format.Substring(1);
-            EmbedBuilder BuildEmbed = new EmbedBuilder();
-            BuildEmbed.Title = $"Weekly Price Losers for {cardsList.Format}!";
-            BuildEmbed.WithColor(000000);
-            foreach (var item in cardsList.WeeklyDecreaseList)
-            {
-                BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
-            }
-            return BuildEmbed;
-        }
+        //private EmbedBuilder GetWeeklyDecreaseMoversOutput(MoverCardDataModel cardsList)
+        //{
+        //    cardsList.Format = char.ToUpper(cardsList.Format[0]) + cardsList.Format.Substring(1);
+        //    EmbedBuilder BuildEmbed = new EmbedBuilder();
+        //    BuildEmbed.Title = $"Weekly Price Losers for {cardsList.Format}!";
+        //    BuildEmbed.WithColor(000000);
+        //    foreach (var item in cardsList.WeeklyDecreaseList)
+        //    {
+        //        BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
+        //    }
+        //    return BuildEmbed;
+        //}
 
-        private EmbedBuilder GetWeeklyIncreaseMoversOutput(MoverCardDataModel cardsList)
-        {
-            cardsList.Format = char.ToUpper(cardsList.Format[0]) + cardsList.Format.Substring(1);
-            EmbedBuilder BuildEmbed = new EmbedBuilder();
-            BuildEmbed.Title = $"Weekly Price Winners for {cardsList.Format}!";
-            BuildEmbed.WithColor(000000);
-            foreach (var item in cardsList.WeeklyIncreaseList)
-            {
-                BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
-            }
-            return BuildEmbed;
-        }
+        //private EmbedBuilder GetWeeklyIncreaseMoversOutput(MoverCardDataModel cardsList)
+        //{
+        //    cardsList.Format = char.ToUpper(cardsList.Format[0]) + cardsList.Format.Substring(1);
+        //    EmbedBuilder BuildEmbed = new EmbedBuilder();
+        //    BuildEmbed.Title = $"Weekly Price Winners for {cardsList.Format}!";
+        //    BuildEmbed.WithColor(000000);
+        //    foreach (var item in cardsList.WeeklyIncreaseList)
+        //    {
+        //        BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
+        //    }
+        //    return BuildEmbed;
+        //}
 
         public EmbedBuilder NoConfiguredServerErrorOutput()
         {
@@ -146,15 +146,15 @@ namespace MTGBot.Embed_Output
                 await channel.SendMessageAsync("", false, GetDailyDecreaseMoversOutput(scrapedData).Build());
                 Thread.Sleep(3000);
             }
-            if (scrapedData.WeeklyIncreaseList.Count > 0)
-            {
-                await channel.SendMessageAsync("", false, GetWeeklyIncreaseMoversOutput(scrapedData).Build());
-                Thread.Sleep(3000);
-            }
-            if (scrapedData.WeeklyDecreaseList.Count > 0)
-            {
-                await channel.SendMessageAsync("", false, GetWeeklyDecreaseMoversOutput(scrapedData).Build());
-            }
+            //if (scrapedData.WeeklyIncreaseList.Count > 0)
+            //{
+            //    await channel.SendMessageAsync("", false, GetWeeklyIncreaseMoversOutput(scrapedData).Build());
+            //    Thread.Sleep(3000);
+            //}
+            //if (scrapedData.WeeklyDecreaseList.Count > 0)
+            //{
+            //    await channel.SendMessageAsync("", false, GetWeeklyDecreaseMoversOutput(scrapedData).Build());
+            //}
 
         }
 

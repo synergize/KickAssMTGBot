@@ -152,14 +152,14 @@ namespace MTGBot.Data.ReadWriteJSON
                 {
                     newData.DailyDecreaseList = new List<MoverCardDataModel.CardInfo>();
                 }
-                if (newData.WeeklyDecreaseList == null)
-                {
-                    newData.WeeklyDecreaseList = new List<MoverCardDataModel.CardInfo>();
-                }
-                if (newData.WeeklyIncreaseList == null)
-                {
-                    newData.WeeklyIncreaseList = new List<MoverCardDataModel.CardInfo>();
-                }
+                //if (newData.WeeklyDecreaseList == null)
+                //{
+                //    newData.WeeklyDecreaseList = new List<MoverCardDataModel.CardInfo>();
+                //}
+                //if (newData.WeeklyIncreaseList == null)
+                //{
+                //    newData.WeeklyIncreaseList = new List<MoverCardDataModel.CardInfo>();
+                //}
 
                 return newData;
             }
