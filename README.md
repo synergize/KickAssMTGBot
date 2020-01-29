@@ -25,9 +25,8 @@ Currently not being distributed.
 
 
 ## Usage
-![Acquire Card Data](https://i.imgur.com/P58Ee3S.png)
-![DataDisplay](https://i.imgur.com/BM8TiPX.png)
-![Acquire Card Rulings](https://i.imgur.com/muJ4x64.png)
+![Acquire Card Data](https://i.imgur.com/5x6ASwP.png)
+![Acquire Card Rulings](https://i.imgur.com/npeTFkC.png)
 
 ## Configure Movers and Shakers
 All configuration commands must be made through a channel that the bot can read messages and send messages in. 
