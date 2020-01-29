@@ -33,11 +33,8 @@ Currently not being distributed.
 All configuration commands must be made through a channel that the bot can read messages and send messages in. 
 Additionally, only users with the ability to manage channels can configure this feature.
 
-Command: 
-![!mtgsetchannel #channel-name](https://i.imgur.com/wNbRNpX.jpg)
-Command: 
+![!mtgsetchannel #channel-name](https://i.imgur.com/wNbRNpX.jpg) 
 ![!mtgaddformat format-name](https://i.imgur.com/4LByQws.jpg)
-Command: 
 ![!mtgremoveformat format-name](https://i.imgur.com/k38E5hg.jpg)
 
 Enjoy!
