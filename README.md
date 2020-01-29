@@ -27,23 +27,19 @@ Currently not being distributed.
 ## Usage
 
 Acquire Card Data
-
-![CardData](https://i.imgur.com/6QlgFZT.png)
+![](https://i.imgur.com/6QlgFZT.png)
 Acquire Card Rulings
-
-![CardRules](https://i.imgur.com/X1i1rYy.png)
+![](https://i.imgur.com/X1i1rYy.png)
 
 ## Configure Movers and Shakers
 All configuration commands must be made through a channel that the bot can read messages and send messages in. 
 Additionally, only users with the ability to manage channels can configure this feature.
-!mtgsetchannel #channel-name
 
-![SetChannel](https://i.imgur.com/fzwWReO.png)
-!mtgaddformat format-name
-
-![AddFormat](https://i.imgur.com/MDtyrSL.png)
-!mtgremoveformat format-name
-
-![RemoveFormat](https://i.imgur.com/EBckIPD.png)
+Command: !mtgsetchannel #channel-name
+![](https://i.imgur.com/f9Ui5QC.png)
+Command: `!mtgaddformat format-name`
+![](https://i.imgur.com/4ymNsQw.png)
+Command: `!mtgremoveformat format-name`
+![](https://i.imgur.com/gbvI8MJ.png)
 
 Enjoy!
