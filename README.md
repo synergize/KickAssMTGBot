@@ -12,9 +12,9 @@ Currently not being distributed.
 ## Third-Party Implementation
 - [Discord.net Library](https://discord.foxbot.me/docs/)
 - [Scryfall API](https://scryfall.com/)
-- [Scraping MTGGoldfish Movers and Shakers](https://www.mtggoldfish.com/movers/paper/modern)
 - [.NET Core 2.1](https://dotnet.microsoft.com/download/dotnet-core/2.1)
 - [Selenium](https://selenium.dev/)
+- [VTFileManagement Library](https://github.com/synergize/VTFileSystemManagement)
 
 ## Current To-Add List
 1. Implement caching system for API Calls. 
