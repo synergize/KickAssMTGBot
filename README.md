@@ -35,11 +35,11 @@ Acquire Card Rulings
 All configuration commands must be made through a channel that the bot can read messages and send messages in. 
 Additionally, only users with the ability to manage channels can configure this feature.
 
-Command: !mtgsetchannel #channel-name
-![](https://i.imgur.com/f9Ui5QC.png)
+Command: `!mtgsetchannel #channel-name`
+[](https://i.imgur.com/f9Ui5QC.png)
 Command: `!mtgaddformat format-name`
-![](https://i.imgur.com/4ymNsQw.png)
+[](https://i.imgur.com/4ymNsQw.png)
 Command: `!mtgremoveformat format-name`
-![](https://i.imgur.com/gbvI8MJ.png)
+[](https://i.imgur.com/gbvI8MJ.png)
 
 Enjoy!
