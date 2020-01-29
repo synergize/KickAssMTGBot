@@ -26,7 +26,7 @@ Currently not being distributed.
 
 ## Usage
 ![Acquire Card Data](https://i.imgur.com/P58Ee3S.png)
-
+![DataDisplay](https://i.imgur.com/BM8TiPX.png)
 ![Acquire Card Rulings](https://i.imgur.com/muJ4x64.png)
 
 ## Configure Movers and Shakers
