@@ -12,5 +12,12 @@ namespace MTGBot.Commands
             MTGCardOutput Help = new MTGCardOutput();
             await Context.Channel.SendMessageAsync("", false, Help.GettingHelp().Build());
         }
+
+        [Command("helpmtg")]
+        public async Task HelpMTG()
+        {
+            await MTGHelp();
+        }
+
     }
 }

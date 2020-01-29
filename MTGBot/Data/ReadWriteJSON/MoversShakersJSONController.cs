@@ -51,7 +51,18 @@ namespace MTGBot.Data.ReadWriteJSON
             }
             else
             {
-                return null;
+                return new DiscordServerChannelModel
+                {
+                    ListOfFormats = new List<string>(),
+                    LastDeliveredTime_Legacy = DateTime.MinValue,
+                    LastDeliveredTime_Modern = DateTime.MinValue,
+                    LastDeliveredTime_Pauper = DateTime.MinValue,
+                    LastDeliveredTime_Pioneer = DateTime.MinValue,
+                    LastDeliveredTime_Standard = DateTime.MinValue,
+                    LastDeliveredTime_Vintage = DateTime.MinValue,
+                    serverID = serverID,
+                    channelID = 0,
+                };
             }
         }
 
@@ -59,15 +70,17 @@ namespace MTGBot.Data.ReadWriteJSON
         {
             string FilePath = Path.Combine(serverInfoLocation, $"{serverInformation.serverID}.json");
 
-            using (StreamWriter file = File.CreateText(FilePath))
-            {
-                var serializer = new JsonSerializer
+
+                using (StreamWriter file = File.CreateText(FilePath))
                 {
-                    Formatting = Formatting.Indented
-                };
-                serializer.Serialize(file, serverInformation);
-                Console.WriteLine($"{serverInformation.serverID}.json updated successfully.");
-            }
+                    var serializer = new JsonSerializer
+                    {
+                        Formatting = Formatting.Indented
+                    };
+                    serializer.Serialize(file, serverInformation);
+                    Console.WriteLine($"{serverInformation.serverID}.json updated successfully.");
+                }
+
             UpdateListOfRegisteredGuilds(serverInformation);
             return serverInformation;
         }

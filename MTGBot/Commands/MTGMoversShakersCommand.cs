@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 namespace MTGBot.Commands
 {
     public class MTGMoversShakersCommand : ModuleBase<SocketCommandContext>
-    {        
-        [Command("mtgsetchannel")]
+    {
+        [Command("mtgsetchannel", RunMode = RunMode.Sync)]
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task SetChannelConfiguration(ISocketMessageChannel channel)
         {
             var discordServerId = Context.Guild.Id;
-            var discordServerInformation = MoversShakersJSONController.ReadMoversShakersConfig(discordServerId);            
+            var discordServerInformation = MoversShakersJSONController.ReadMoversShakersConfig(discordServerId);
 
             if (discordServerInformation == null)
             {
@@ -28,16 +28,21 @@ namespace MTGBot.Commands
                 // Send message - New document created. 
                 await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().SetChannelSuccess(channel).Build());
             }
-            else
+            else if (!discordServerInformation.channelID.Equals(channel.Id))
             {
+                // Channel wasn't set.
                 discordServerInformation.channelID = channel.Id;
                 MoversShakersJSONController.UpdateServerInfo(discordServerInformation);
-                // Send message - Doucment Updated.
                 await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().SetChannelSuccess(channel).Build());
+            }
+            else
+            {
+                // Channel was already set.
+                await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().ChannelAlreadyConfiguredErrorMessage(channel.Name).Build());
             }
         }
 
-        [Command("mtgaddformat")]
+        [Command("mtgaddformat", RunMode = RunMode.Sync)]
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task AddFormatForScrape(string formatName)
         {
@@ -53,11 +58,17 @@ namespace MTGBot.Commands
                     // Send message to user to have them set a channel.
                     await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().NoConfiguredServerErrorOutput().Build());
                 }
-                else
+                else if (!serverInformation.ListOfFormats.Contains(userInput))
                 {
+                    // User didn't already have the format set.
                     MoversShakersJSONController.AddChannelFormat(serverInformation, userInput);
                     await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().AddFormatSuccess(formatName).Build());
-                }                
+                }
+                else
+                {
+                    // User already added format.
+                    await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().FormatAlreadyExistsErrorMessage(formatName).Build());
+                }
             }
             else
             {
@@ -66,7 +77,7 @@ namespace MTGBot.Commands
             }
         }
 
-        [Command("mtgremoveformat")]
+        [Command("mtgremoveformat", RunMode = RunMode.Sync)]
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task RemoveFormatForScrape(string formatName)
         {
@@ -81,11 +92,19 @@ namespace MTGBot.Commands
                 {
                     // Send message to user to have them set a channel.
                     await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().NoConfiguredServerErrorOutput().Build());
+                    return;
+                }
+                else if (serverInformation.ListOfFormats.Contains(userInput))
+                {
+                    // User did have format in the list so we're removing.
+                    MoversShakersJSONController.RemoveChannelFormat(serverInformation, userInput);
+                    await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().RemoveFormatSuccess(formatName).Build());
+                    return;
                 }
                 else
                 {
-                    MoversShakersJSONController.RemoveChannelFormat(serverInformation, userInput);
-                    await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().RemoveFormatSuccess(formatName).Build());
+                    // User already removed channel.
+                    await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().FormatDoesntExistErrorMessage(formatName).Build());
                 }
             }
             else
@@ -94,6 +113,36 @@ namespace MTGBot.Commands
                 await Context.Channel.SendMessageAsync("", false, new MTGMoversShakersOutput().IncorrectOrUnspportedFormatError().Build());
             }
         }
+
+        [Command("mtgformatadd", RunMode = RunMode.Sync)]
+        [RequireUserPermission(GuildPermission.ManageChannels)]
+        public async Task FormatAddForScrape(string formatName)
+        {
+            await AddFormatForScrape(formatName);
+        }
+
+        [Command("mtgformatremove", RunMode = RunMode.Sync)]
+        [RequireUserPermission(GuildPermission.ManageChannels)]
+        public async Task FormatRemoveForScrape(string formatName)
+        {
+            await RemoveFormatForScrape(formatName);
+        }
+
+        [Command("mtgformatdelete", RunMode = RunMode.Sync)]
+        [RequireUserPermission(GuildPermission.ManageChannels)]
+        public async Task FormatDeleteForScrape(string formatName)
+        {
+            await RemoveFormatForScrape(formatName);
+        }
+
+        [Command("mtgdeleteformat", RunMode = RunMode.Sync)]
+        [RequireUserPermission(GuildPermission.ManageChannels)]
+        public async Task DeleteFormatForScrape(string formatName)
+        {
+            await RemoveFormatForScrape(formatName);
+        }
+
+
 
     }
 }

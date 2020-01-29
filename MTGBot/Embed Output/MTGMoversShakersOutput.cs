@@ -5,9 +5,11 @@ using MTGBot.Data.ReadWriteJSON;
 using MTGBot.Helpers;
 using MTGBot.Helpers.Enums;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
+using MTGBot.Extensions;
 
 namespace MTGBot.Embed_Output
 {
@@ -26,6 +28,7 @@ namespace MTGBot.Embed_Output
             BuildEmbed.Title = $"Daily Price Winners for {cardsList.Format}!";
             BuildEmbed.Color = successfulColor;
             BuildEmbed.WithFooter(footerMessage);
+            BuildEmbed.WithTimestamp(cardsList.PageLastUpdated.ToLocalTime());
             foreach (var item in cardsList.DailyIncreaseList)
             {
                 BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
@@ -42,6 +45,7 @@ namespace MTGBot.Embed_Output
             BuildEmbed.Title = $"Daily Price Losers for {cardsList.Format}!";
             BuildEmbed.Color = Color.LightOrange;
             BuildEmbed.WithFooter(footerMessage);
+            BuildEmbed.WithTimestamp(cardsList.PageLastUpdated.ToLocalTime());
             foreach (var item in cardsList.DailyDecreaseList)
             {
                 BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
@@ -54,7 +58,9 @@ namespace MTGBot.Embed_Output
         //    cardsList.Format = char.ToUpper(cardsList.Format[0]) + cardsList.Format.Substring(1);
         //    EmbedBuilder BuildEmbed = new EmbedBuilder();
         //    BuildEmbed.Title = $"Weekly Price Losers for {cardsList.Format}!";
-        //    BuildEmbed.WithColor(000000);
+        //    BuildEmbed.Color = Color.LightOrange;
+        //    BuildEmbed.WithFooter(footerMessage);
+        //    BuildEmbed.WithTimestamp(cardsList.PageLastUpdated);
         //    foreach (var item in cardsList.WeeklyDecreaseList)
         //    {
         //        BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
@@ -67,7 +73,8 @@ namespace MTGBot.Embed_Output
         //    cardsList.Format = char.ToUpper(cardsList.Format[0]) + cardsList.Format.Substring(1);
         //    EmbedBuilder BuildEmbed = new EmbedBuilder();
         //    BuildEmbed.Title = $"Weekly Price Winners for {cardsList.Format}!";
-        //    BuildEmbed.WithColor(000000);
+        //    BuildEmbed.Color = successfulColor;
+        //    BuildEmbed.WithFooter(footerMessage);
         //    foreach (var item in cardsList.WeeklyIncreaseList)
         //    {
         //        BuildEmbed.AddField($"__{item.Name}__", $"Change: {item.PriceChange} \nPrice: ${item.TotalPrice} \nPercentage: {item.ChangePercentage}", true);
@@ -81,6 +88,18 @@ namespace MTGBot.Embed_Output
             {
                 Title = "Configuration Error",
                 Description = "Format modification failed due to lack of configuration. Please type !mtgsetchannel #<channel name> then try again.",
+                Timestamp = DateTime.Now,
+                Footer = new EmbedFooterBuilder() { Text = footerMessage },
+                Color = new Color(failedColor)
+            };
+        }
+
+        public EmbedBuilder NoConfiguredServerErrorOutputDeliverCards()
+        {
+            return new EmbedBuilder
+            {
+                Title = "Configuration Error",
+                Description = "There was a problem finding your configured channel. I was able to deliver the prices to your default channel but please type !mtgsetchannel #<channel name> for this message to disappear or contact my developer.",
                 Timestamp = DateTime.Now,
                 Footer = new EmbedFooterBuilder() { Text = footerMessage },
                 Color = new Color(failedColor)
@@ -135,13 +154,56 @@ namespace MTGBot.Embed_Output
             };
         }
 
+        public EmbedBuilder ChannelAlreadyConfiguredErrorMessage(string channelName)
+        {
+            return new EmbedBuilder
+            {
+                Title = "Channel Already Exists",
+                Description = $"{channelName.CapitalizeFirstLetter()} is already configured as your destination channel. Please choose another or let me do my thing!",
+                Timestamp = DateTime.Now,
+                Footer = new EmbedFooterBuilder() { Text = footerMessage },
+                Color = new Color(failedColor)
+            };
+        }
+
+        public EmbedBuilder FormatAlreadyExistsErrorMessage(string formatName)
+        {
+            return new EmbedBuilder
+            {
+                Title = "Format Already Exists",
+                Description = $"{formatName.CapitalizeFirstLetter()} is already configured. Please choose another format or skedaddle!",
+                Timestamp = DateTime.Now,
+                Footer = new EmbedFooterBuilder() { Text = footerMessage },
+                Color = new Color(failedColor)
+            };
+        }
+
+        public EmbedBuilder FormatDoesntExistErrorMessage(string formatName)
+        {
+            return new EmbedBuilder
+            {
+                Title = "Format Doesn't Exist",
+                Description = $"{formatName.CapitalizeFirstLetter()} isn't configured for your server. Please double check your entry or scram!",
+                Timestamp = DateTime.Now,
+                Footer = new EmbedFooterBuilder() { Text = footerMessage },
+                Color = new Color(failedColor)
+            };
+        }
+
         public async Task DeliverMoversOutputAsync(DiscordSocketClient Client, string format, ulong guild)
         {
             
             var guildConfig = MoversShakersJSONController.ReadMoversShakersConfig(guild);
             var scrapedData = MoversShakersJSONController.GetMoverCardScrapedData($"{format}.json");
-
             var channel = Client.GetGuild(guildConfig.serverID).GetChannel(guildConfig.channelID) as IMessageChannel;
+
+            if (channel == null)
+            {
+                var defaultChannel = Client.GetGuild(guildConfig.serverID).DefaultChannel;
+                channel = Client.GetGuild(guildConfig.serverID).GetChannel(defaultChannel.Id) as IMessageChannel;
+                await defaultChannel.SendMessageAsync("", false, NoConfiguredServerErrorOutputDeliverCards().Build());                
+            }            
+            
             if (scrapedData.DailyIncreaseList.Count > 0)
             {
                 await channel.SendMessageAsync("", false, GetDailyIncreaseMoversOutput(scrapedData).Build());
@@ -276,15 +338,8 @@ namespace MTGBot.Embed_Output
 
             foreach (var guild in serverInformation.ListOfRegisteredDiscordGuilds)
             {
-                var currentGuildInformation = MoversShakersJSONController.ReadMoversShakersConfig(guild) ?? new Models.DiscordServerChannelModel
-                {
-                    LastDeliveredTime_Standard = DateTime.MinValue,
-                    LastDeliveredTime_Modern = DateTime.MinValue,
-                    LastDeliveredTime_Pioneer = DateTime.MinValue,
-                    LastDeliveredTime_Pauper = DateTime.MinValue,
-                    LastDeliveredTime_Legacy = DateTime.MinValue,
-                    LastDeliveredTime_Vintage = DateTime.MinValue
-                };
+                var currentGuildInformation = MoversShakersJSONController.ReadMoversShakersConfig(guild);                   
+
                 foreach (var format in currentGuildInformation.ListOfFormats)
                 {                    
                     Enum.TryParse(format, out MTGFormatsEnum parsedEnumValue);
