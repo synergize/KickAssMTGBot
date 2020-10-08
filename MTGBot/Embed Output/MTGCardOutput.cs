@@ -147,7 +147,8 @@ namespace MTGBot.Embed_Output
             Helping.Description = "Below is a list of commands and features of this bot! It's a work in progress.";
             Helping.AddField("Card Lookup: ", "Cards can be located with double open and closing brackets [[like this]]. They can be anywhere in your sentence!");
             Helping.AddField("Rules Lookup:", "Rulings of cards can be acquired with double open brackets followed by a question mark and closing brackets. Example: [[?Tarmogoyf]].");
-            Helping.AddField("Movers and Shakers:", "This bot has the ability to scrape the Mover and Shaker data from MTGGoldFish. Type !mtgsetchannel #<channel name> to get started!");
+            Helping.AddField("Movers and Shakers:", "This bot has the ability to scrape the Mover and Shaker data from MTGGoldFish. Type mtg!setchannel #<channel name> to get started! [Currently Not Working]");
+            Helping.AddField("Dice Roller:",  "Triggered by doing mtg!roll <numberOfDice>d<numberOfSides> Example: mtg!roll 1d20.");
             Helping.WithFooter(successfulFooter);
             Helping.WithColor(successfulColor);
 
