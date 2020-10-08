@@ -6,18 +6,11 @@ namespace MTGBot.Commands
 {
     public class MTGHelpCommand : ModuleBase<SocketCommandContext>
     {
-        [Command("mtghelp")]
+        [Command("help")]
         public async Task MTGHelp()
         {
             MTGCardOutput Help = new MTGCardOutput();
             await Context.Channel.SendMessageAsync("", false, Help.GettingHelp().Build());
         }
-
-        [Command("helpmtg")]
-        public async Task HelpMTG()
-        {
-            await MTGHelp();
-        }
-
     }
 }

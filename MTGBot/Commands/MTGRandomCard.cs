@@ -7,7 +7,7 @@ namespace MTGBot.Commands
 {
     public class MTGRandomCard : ModuleBase<SocketCommandContext>
     {
-        [Command("mtgrandom")]
+        [Command("random")]
         public async Task MTGRandomCards(bool isCommander = true)
         {
             MTGCardOutput Output = new MTGCardOutput();

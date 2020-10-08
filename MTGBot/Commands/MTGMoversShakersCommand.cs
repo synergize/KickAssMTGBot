@@ -11,7 +11,7 @@ namespace MTGBot.Commands
 {
     public class MTGMoversShakersCommand : ModuleBase<SocketCommandContext>
     {
-        [Command("mtgsetchannel", RunMode = RunMode.Sync)]
+        [Command("setchannel", RunMode = RunMode.Sync)]
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task SetChannelConfiguration(ISocketMessageChannel channel)
         {
@@ -42,7 +42,7 @@ namespace MTGBot.Commands
             }
         }
 
-        [Command("mtgaddformat", RunMode = RunMode.Sync)]
+        [Command("addformat", RunMode = RunMode.Sync)]
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task AddFormatForScrape(string formatName)
         {
@@ -77,7 +77,7 @@ namespace MTGBot.Commands
             }
         }
 
-        [Command("mtgremoveformat", RunMode = RunMode.Sync)]
+        [Command("removeformat", RunMode = RunMode.Sync)]
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task RemoveFormatForScrape(string formatName)
         {
@@ -114,28 +114,28 @@ namespace MTGBot.Commands
             }
         }
 
-        [Command("mtgformatadd", RunMode = RunMode.Sync)]
+        [Command("formatadd", RunMode = RunMode.Sync)]
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task FormatAddForScrape(string formatName)
         {
             await AddFormatForScrape(formatName);
         }
 
-        [Command("mtgformatremove", RunMode = RunMode.Sync)]
+        [Command("formatremove", RunMode = RunMode.Sync)]
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task FormatRemoveForScrape(string formatName)
         {
             await RemoveFormatForScrape(formatName);
         }
 
-        [Command("mtgformatdelete", RunMode = RunMode.Sync)]
+        [Command("formatdelete", RunMode = RunMode.Sync)]
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task FormatDeleteForScrape(string formatName)
         {
             await RemoveFormatForScrape(formatName);
         }
 
-        [Command("mtgdeleteformat", RunMode = RunMode.Sync)]
+        [Command("deleteformat", RunMode = RunMode.Sync)]
         [RequireUserPermission(GuildPermission.ManageChannels)]
         public async Task DeleteFormatForScrape(string formatName)
         {
