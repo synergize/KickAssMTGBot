@@ -195,9 +195,8 @@ namespace MTGBot.Embed_Output
             
             var guildConfig = MoversShakersJSONController.ReadMoversShakersConfig(guild);
             var scrapedData = MoversShakersJSONController.GetMoverCardScrapedData($"{format}.json");
-            var channel = Client.GetGuild(guildConfig.serverID).GetChannel(guildConfig.channelID) as IMessageChannel;
 
-            if (channel == null)
+            if (!(Client.GetGuild(guildConfig.serverID).GetChannel(guildConfig.channelID) is IMessageChannel channel))
             {
                 var defaultChannel = Client.GetGuild(guildConfig.serverID).DefaultChannel;
                 channel = Client.GetGuild(guildConfig.serverID).GetChannel(defaultChannel.Id) as IMessageChannel;
