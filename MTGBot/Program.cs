@@ -80,7 +80,7 @@ namespace MTGBot
         }
         private async Task Client_Ready()
         {
-            await Client.SetGameAsync("Magic: The Gathering !mtghelp", null, ActivityType.Playing);
+            await Client.SetGameAsync("mtg!help to get started!", null, ActivityType.Playing);
         }
 
         //If someone adds a reaction, run x code. 
