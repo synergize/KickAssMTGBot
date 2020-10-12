@@ -35,8 +35,8 @@ namespace MTGBot
             Client.MessageReceived += Client_MessageRecieved;
             Client.Ready += Client_Ready;
 
-            Thread.Sleep(10000); //10 seconds, sleeps a different thread from the bot so that it can finish loading before we begin.
-            new MTGMoversShakersOutput().DetermineDelivery(Client);
+            //Thread.Sleep(10000); //10 seconds, sleeps a different thread from the bot so that it can finish loading before we begin.
+            //new MTGMoversShakersOutput().DetermineDelivery(Client);
             await Task.Delay(-1);
         }
 
