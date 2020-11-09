@@ -5,11 +5,15 @@ using MTGBot.Embed_Output;
 using MTGBot.Helpers;
 using MTGBot.User_Message_Handler;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using DiscordNetHelperLibrary;
+using log4net;
+using log4net.Config;
 using MTGBot.DataLookup;
 using Timer = System.Timers.Timer;
 
@@ -25,11 +29,13 @@ namespace MTGBot
             Console.WriteLine(ConsoleWriteOverride.AddTimeStamp("Loading Filters."));
             LegalityDictionary.LoadLegalityDict();
 
-            var aTimer = new Timer(1800000); //thirty minutes in milliseconds
-            aTimer.BeginInit();
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.EndInit();
-            aTimer.Start();
+            //var aTimer = new Timer(1800000); //thirty minutes in milliseconds
+            //aTimer.BeginInit();
+            //aTimer.Elapsed += OnTimedEvent;
+            //aTimer.EndInit();
+            //aTimer.Start();
+            var logRepository = LogManager.GetRepository(typeof(Program).Assembly);
+            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
             await MainAsync(Token);
             await Commands.AddModulesAsync(typeof(Program).Assembly, null);
             Client.MessageReceived += Client_MessageRecieved;
