@@ -48,7 +48,7 @@ namespace MTGBot
 
         private async Task Client_MessageRecieved(SocketMessage messageParam)
         {
-            var message = messageParam as SocketUserMessage;
+            if (!(messageParam is SocketUserMessage message)) return;
             var context = new SocketCommandContext(Client, message);
             var getCard = new MTGCardOutput();
 
