@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using DiscordNetHelperLibrary;
+using DiscordNetHelperLibrary.Constants;
 using log4net;
 using log4net.Config;
 using MTGBot.DataLookup;
@@ -21,7 +22,7 @@ namespace MTGBot
 {
     internal class Program : DiscordBotBase
     {
-        private static string Token => Environment.GetEnvironmentVariable("MTG_BOT");
+        private static readonly string Token = ApiAccessKeys.KickAssCardBotKey;
         private static void Main(string[] args) => new Program().MtgMainAsync().GetAwaiter().GetResult();
 
         private async Task MtgMainAsync()
