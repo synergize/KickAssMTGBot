@@ -20,3 +20,4 @@
 /MTGBot/obj
 /MTGBot/bin/Release/netcoreapp2.2
 /.vs/MTGBot/DesignTimeBuild
+/MTGBot/bin/Debug/netcoreapp3.1
